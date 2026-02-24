@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Category {
+  id String @default(uuid()) @id 
+  name String
+  slug String @unique
+  image String?
+
+  parentId String? @map("parent_id")
+  parent Category? @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryToCategory")
+
+  ads Ad[]
+
+  
+
+  @@map("categories")
+}
+
+model Ad {
+  id String @default(uuid()) @id 
+
+  title String
+  slug String @unique
+  price Int
+  discount Int?
+  address String
+  description String
+  images String[]
+  views Int
+  isFinished Boolean @default(false) @map("is_finished")
+  condition EAdCondition
+
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId String @map("category_id")
+  characteristics Characteristic[]
+  
+  seller User @relation(fields: [sellerId], references: [id])
+  sellerId String @map("seller_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+  @@map("ads")
+}
+
+model Characteristic {
+  id String @default(uuid()) @id 
+  name String
+  value String
+
+  ads Ad[]
+
+  @@map("characteristics")
+}
+
+model User {
+  id String @default(uuid()) @id 
+  ads Ad[]
+
+  name String
+  avatar String?
+  phone String?
+  email String?
+  isPhoneVerified Boolean @default(false) @map("is_phone_verified")
+  isEmailVerified Boolean @default(false) @map("is_email_verified")
+
+  subscribtions Subscription[] @relation(name: "subscribeTo")
+  subscribers Subscription[] @relation(name: "subscribeFrom")
+
+  writtenReviews Review[] @relation(name: "writer")
+  receiverReviews Review[] @relation(name: "receiver")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+}
+
+model Review {
+  id String @default(uuid()) @id 
+
+  rating Int
+  text String
+  replyTo String @map("reply_to")
+
+  writer User @relation(name: "writer", references: [id], fields: [writerId], onDelete: Cascade)
+  writerId String @map("writer_id")
+  receiver User @relation(name: "receiver", references: [id], fields: [receiverId], onDelete: Cascade)
+  receiverId String @map("receiver_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+}
+
+model Subscription {
+  id String @default(uuid()) @id 
+
+  subscribeTo User @relation(name: "subscribeTo", references: [id], fields: [subscribeToId], onDelete: Cascade) 
+  subscribeToId String @map("subscribe_to_id") @unique
+  
+  subscribeFrom User @relation(name: "subscribeFrom", references: [id], fields: [subscribeFromId], onDelete: Cascade) 
+  subscribeFromId String @map("subscribe_from_id") @unique
+
+}
+
+enum EAdCondition {
+  NEW
+  USED
+}

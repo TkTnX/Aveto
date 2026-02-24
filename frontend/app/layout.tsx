@@ -23,7 +23,7 @@ export default function RootLayout({
 		<html suppressHydrationWarning={true} lang='ru'>
 			<body className={`${fontFamily.variable} antialiased`}>
 				<Header />
-				{children}
+				<main className='mt-4'>{children}</main>
 			</body>
 		</html>
 	)
