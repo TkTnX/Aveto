@@ -1,7 +1,8 @@
 import { Category } from '@/src/entities'
+import { ICategory } from '@/src/shared/types'
 
 // TODO: TEMP DATA
-const categories = [
+export const CATEGORIES: ICategory[] = [
 	{
 		id: '1',
 		name: 'Электроника',
@@ -77,7 +78,7 @@ const categories = [
 export const CategoriesList = () => {
 	return (
 		<div className='container hidden grid-cols-5 gap-2 sm:grid lg:grid-cols-7'>
-			{categories.map(category => (
+			{CATEGORIES.map(category => (
 				<Category key={category.id} category={category} />
 			))}
 		</div>

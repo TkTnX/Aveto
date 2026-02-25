@@ -9,7 +9,7 @@ interface Props {
 
 export const Category = ({ category }: Props) => {
 	return (
-		<div className='relative h-22.5 w-full grid-flow-dense rounded-lg bg-[#f2f1f0] px-3.5 py-2.5 hover:brightness-95'>
+		<div className='bg-gray-2 relative h-22.5 w-full grid-flow-dense rounded-lg px-3.5 py-2.5 hover:brightness-95'>
 			<Link
 				className='absolute inset-0 z-2'
 				href={`/category/${category.slug}`}

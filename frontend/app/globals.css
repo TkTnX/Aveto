@@ -41,6 +41,7 @@
 	--color-gray: var(--color-gray);
 	--color-gray-light: var(--color-gray-light);
 	--color-red: var(--color-red);
+	--color-gray-2: var(--color-gray-dark);
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
@@ -89,6 +90,7 @@
 	--color-green: #97cf26;
 	--color-gray-light: #cccccc;
 	--color-gray: #757575;
+	--color-gray-dark: #f2f1f0;
 	--color-red: #ff4053;
 }
 
