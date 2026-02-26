@@ -1,4 +1,6 @@
+'use client'
 import { Category } from '@/src/entities'
+import { ErrorMessage, Skeleton, useCategories } from '@/src/shared'
 import { ICategory } from '@/src/shared/types'
 
 // TODO: TEMP DATA
@@ -76,11 +78,18 @@ export const CATEGORIES: ICategory[] = [
 ]
 
 export const CategoriesList = () => {
+	const { getAllQuery } = useCategories()
+	const { data, isPending, error } = getAllQuery()
+	if (error) return <ErrorMessage error={error} />
 	return (
 		<div className='container hidden grid-cols-5 gap-2 sm:grid lg:grid-cols-7'>
-			{CATEGORIES.map(category => (
-				<Category key={category.id} category={category} />
-			))}
+			{isPending
+				? [...new Array(10)].map((_, index) => (
+						<Skeleton key={index} className='h-22.5 w-full' />
+					))
+				: data.map(category => (
+						<Category key={category.id} category={category} />
+					))}
 		</div>
 	)
 }

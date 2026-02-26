@@ -1,6 +1,7 @@
 import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
 import { EAdCondition } from 'generated/prisma/enums'
 
+// TODO: Добавить документацию swagger
 export class AdRequest {
 	@IsNotEmpty({ message: 'Название обязательно!' })
 	@IsString({ message: 'Название должно быть строкой!' })

@@ -39,11 +39,11 @@ model Ad {
   isFinished Boolean @default(false) @map("is_finished")
   condition EAdCondition
 
-  category Category @relation(fields: [categoryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id], onDelete: NoAction)
   categoryId String @map("category_id")
   characteristics Characteristic[]
   
-  seller User @relation(fields: [sellerId], references: [id])
+  seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId String @map("seller_id")
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -81,6 +81,7 @@ model User {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+@@map("users")
 }
 
 model Review {
@@ -97,6 +98,8 @@ model Review {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  @@map("reviews")
+
 }
 
 model Subscription {
@@ -106,8 +109,9 @@ model Subscription {
   subscribeToId String @map("subscribe_to_id") @unique
   
   subscribeFrom User @relation(name: "subscribeFrom", references: [id], fields: [subscribeFromId], onDelete: Cascade) 
-  subscribeFromId String @map("subscribe_from_id") @unique
+  subscribeFromId String @map("subscribe_from_id")  @unique 
 
+@@map("subscriptions")
 }
 
 enum EAdCondition {
