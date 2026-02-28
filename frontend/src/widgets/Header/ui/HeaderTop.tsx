@@ -7,6 +7,8 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
+import { LoginModal } from '@/src/shared'
+
 export const HeaderTop = () => {
 	return (
 		<div className='flex h-13.5 items-center justify-between justify-self-end lg:justify-self-auto'>
@@ -44,15 +46,17 @@ export const HeaderTop = () => {
 						color='var(--color-gray-light)'
 					/>
 				</Link>
-				<button className='flex items-center gap-1'>
-					<LockKeyholeIcon
-						className='vsm:size-3.5 size-6'
-						size={14}
-					/>
-					<span className='vsm:inline hidden'>
-						Вход и регистрация
-					</span>
-				</button>
+				<LoginModal>
+					<button className='flex items-center gap-1'>
+						<LockKeyholeIcon
+							className='vsm:size-3.5 size-6'
+							size={14}
+						/>
+						<span className='vsm:inline hidden'>
+							Вход и регистрация
+						</span>
+					</button>
+				</LoginModal>
 				<button className='flex items-center gap-1'>
 					<Plus className='vsm:size-3.5 size-6' size={14} />
 					<span className='vsm:inline hidden'>

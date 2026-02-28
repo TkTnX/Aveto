@@ -48,7 +48,7 @@ export class AuthService {
 			}
 		})
 
-		if (!user) throw new NotFoundException('Пользователь не найден')
+		if (!user) throw new NotFoundException('Неверные данные!')
 
 		const verifyPassword = await argon2.verify(user.password, dto.password)
 		if (!verifyPassword) throw new UnauthorizedException('Неверные данные!')
