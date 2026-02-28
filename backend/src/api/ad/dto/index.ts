@@ -1,1 +1,1 @@
-export * from './AdRequest.dto'
+export * from './ad-request.dto'

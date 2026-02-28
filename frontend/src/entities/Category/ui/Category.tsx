@@ -12,7 +12,7 @@ export const Category = ({ category }: Props) => {
 		<div className='bg-gray-2 relative h-22.5 w-full grid-flow-dense rounded-lg px-3.5 py-2.5 hover:brightness-95'>
 			<Link
 				className='absolute inset-0 z-2'
-				href={`/category/${category.slug}`}
+				href={`/c/${category.slug}`}
 			></Link>
 			<p className=''>{category.name}</p>
 			{category.image && (

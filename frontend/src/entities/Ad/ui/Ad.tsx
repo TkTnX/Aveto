@@ -2,33 +2,23 @@
 import { Heart, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 
 import { IAd } from '@/src/shared/types'
+
+import { getIndexOnMove } from '../helpers'
 
 interface Props {
 	ad: IAd
 }
 
 export const Ad = ({ ad }: Props) => {
-	// TODO: Перенести в другой компонент этот функционал
-	const [currentIndex, setCurrentIndex] = useState(0)
-
-	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-		const { left, width } = e.currentTarget.getBoundingClientRect()
-		const x = e.clientX - left
-
-		const zoneWidth = width / ad.images.length
-		const newIndex = Math.floor(x / zoneWidth)
-
-		setCurrentIndex(newIndex)
-	}
-
-	const handleMouseLeave = () => setCurrentIndex(0)
+	const { handleMouseLeave, currentIndex, handleMouseMove } = getIndexOnMove(
+		ad.images.length
+	)
 
 	return (
 		<div className=''>
-			<Link className='hover:text-red' href={`/p/${ad.slug}`}>
+			<Link href={`/p/${ad.slug}`}>
 				<div
 					onMouseMove={handleMouseMove}
 					onMouseLeave={handleMouseLeave}

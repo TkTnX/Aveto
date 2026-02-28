@@ -11,12 +11,7 @@ export const Footer = () => {
 					<ul className='flex items-center justify-between'>
 						{NAV_ITEMS.map((item, index) => (
 							<li key={index}>
-								<Link
-									className='hover:text-red transition'
-									href={item.href}
-								>
-									{item.label}
-								</Link>
+								<Link href={item.href}>{item.label}</Link>
 							</li>
 						))}
 					</ul>

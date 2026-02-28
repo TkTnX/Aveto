@@ -32,7 +32,7 @@ export class AdService {
 			data: {
 				...restDto,
 				slug,
-				sellerId: '1'
+				sellerId: 'ddbd30ae-7f2b-423c-a393-0237032bfa8d'
 			}
 		})
 

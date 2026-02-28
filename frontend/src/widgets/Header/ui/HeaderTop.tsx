@@ -17,10 +17,10 @@ export const HeaderTop = () => {
 						Для бизнеса
 						<ChevronDown size={14} />
 					</li>
-					<li className='hover:text-red flex cursor-pointer items-center gap-1 transition'>
+					<li className='flex cursor-pointer items-center gap-1 transition'>
 						<Link href={'/career'}>Карьера в Авето</Link>
 					</li>
-					<li className='hover:text-red flex cursor-pointer items-center gap-1 transition'>
+					<li className='flex cursor-pointer items-center gap-1 transition'>
 						<Link href={'/support'}>Помощь</Link>
 					</li>
 					<li className='hover:text-red flex cursor-pointer items-center gap-1 transition'>
@@ -30,27 +30,21 @@ export const HeaderTop = () => {
 				</ul>
 			</nav>
 			<div className='flex items-center gap-3'>
-				<Link
-					className='hover:text-red text-gray-light group'
-					href='/favorites'
-				>
+				<Link className='text-gray-light group' href='/favorites'>
 					<Heart
 						className='group-hover:fill-gray group-hover:stroke-gray transition'
 						fill='var(--color-gray-light)'
 						color='var(--color-gray-light)'
 					/>
 				</Link>
-				<Link
-					className='hover:text-red text-gray-light group'
-					href='/cart'
-				>
+				<Link className='text-gray-light group' href='/cart'>
 					<ShoppingCartIcon
 						className='group-hover:fill-gray group-hover:stroke-gray transition'
 						fill='var(--color-gray-light)'
 						color='var(--color-gray-light)'
 					/>
 				</Link>
-				<button className='hover:text-red flex items-center gap-1'>
+				<button className='flex items-center gap-1'>
 					<LockKeyholeIcon
 						className='vsm:size-3.5 size-6'
 						size={14}
@@ -59,7 +53,7 @@ export const HeaderTop = () => {
 						Вход и регистрация
 					</span>
 				</button>
-				<button className='hover:text-red flex items-center gap-1'>
+				<button className='flex items-center gap-1'>
 					<Plus className='vsm:size-3.5 size-6' size={14} />
 					<span className='vsm:inline hidden'>
 						Разместить объявление

@@ -114,3 +114,7 @@ body {
 button {
 	@apply cursor-pointer transition-all;
 }
+
+a {
+	@apply hover:text-red transition;
+}

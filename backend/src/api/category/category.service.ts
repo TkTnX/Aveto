@@ -12,7 +12,9 @@ export class CategoryService {
 	public constructor(private readonly prismaService: PrismaService) {}
 
 	public async getAll() {
-		const categories = await this.prismaService.category.findMany()
+		const categories = await this.prismaService.category.findMany({
+			include: { children: true }
+		})
 
 		if (!categories) throw new NotFoundException('Категории не найдены')
 
@@ -24,7 +26,7 @@ export class CategoryService {
 			replacement: '_',
 			lower: true,
 			locale: 'ru',
-			remove: /[*+~.()'"!:@]/g
+			remove: /[*+~.(),'"!:@]/g
 		})
 
 		const newCategory = await this.prismaService.category.create({
@@ -32,7 +34,7 @@ export class CategoryService {
 				name: dto.name,
 				slug,
 				// TODO: Сделать добавление изображений
-				// image
+				image: dto.image,
 				parentId: dto.parentId
 			}
 		})

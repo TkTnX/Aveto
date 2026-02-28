@@ -5,6 +5,7 @@ export class CategoryRequest {
     @IsString({message: "Название должно быть строкой!"})
     name: string
 
-    image?: File
+    // TODO: TEMP STRING VALUE
+    image?: string
     parentId?:string
 }
