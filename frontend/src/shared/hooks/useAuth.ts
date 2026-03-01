@@ -1,51 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query'
 
-
-
-import { login, sendEmailCode, verifyCode } from '@/src/api';
-import { EmailSchemaType, LoginSchemaType, VerifyCodeSchemaType } from '@/src/shared/schemas';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { login, register, sendEmailCode, verifyCode } from '@/src/api'
+import {
+	EmailSchemaType,
+	LoginSchemaType,
+	RegisterSchemaType,
+	VerifyCodeSchemaType
+} from '@/src/shared/schemas'
 
 export function useAuth() {
 	const loginMutation = () =>
@@ -59,11 +20,23 @@ export function useAuth() {
 			mutationKey: ['send phone code'],
 			mutationFn: (phone: EmailSchemaType) => sendEmailCode(phone)
 		})
-	
-	const checkCodeMutation = () => useMutation({
-		mutationKey: ['verify code'],
-		mutationFn: (code: VerifyCodeSchemaType) => verifyCode(code)
-	})
 
-	return { loginMutation, sendEmailCodeMutation, checkCodeMutation }
+	const checkCodeMutation = () =>
+		useMutation({
+			mutationKey: ['verify code'],
+			mutationFn: (code: VerifyCodeSchemaType) => verifyCode(code)
+		})
+
+	const registerMutation = () =>
+		useMutation({
+			mutationKey: ['register'],
+			mutationFn: (values: RegisterSchemaType) => register(values)
+		})
+
+	return {
+		loginMutation,
+		sendEmailCodeMutation,
+		checkCodeMutation,
+		registerMutation
+	}
 }

@@ -1,4 +1,7 @@
+'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import {
@@ -8,11 +11,15 @@ import {
 	InputOTP,
 	InputOTPGroup,
 	InputOTPSlot,
-	useAuth
+	useAuth,
+	useAuthStore
 } from '@/src/shared'
 import { verifyCodeSchema, VerifyCodeSchemaType } from '@/src/shared/schemas'
 
+
 export const EnterCodeForm = () => {
+	const {setOpenRegister, setOpenConfirm} = useAuthStore()
+	const [serverError, setServerError] = useState<null | string>(null)
 	const { checkCodeMutation } = useAuth()
 	const { mutate, isPending } = checkCodeMutation()
 	const {
@@ -26,13 +33,17 @@ export const EnterCodeForm = () => {
 		}
 	})
 	const onSubmit = (values: VerifyCodeSchemaType) => {
-		console.log(values)
-		// mutate(values, {
-		// 	onSuccess: () => {},
-		// 	onError: error => {
-		// 		console.log(error)
-		// 	}
-		// })
+		mutate(values, {
+			onSuccess: () => {
+				setOpenRegister(true)
+				setOpenConfirm(false)
+			},
+			onError: error => {
+				if (error instanceof AxiosError) {
+					setServerError(error?.response?.data.message)
+				}
+			}
+		})
 	}
 	return (
 		<>
@@ -86,6 +97,7 @@ export const EnterCodeForm = () => {
 					Проверить
 				</Button>
 			</form>
+			{serverError && <p className='text-red mt-3'>{serverError}</p>}
 			{errors.code?.message && (
 				<FieldError className='mt-3' errors={[errors.code]} />
 			)}

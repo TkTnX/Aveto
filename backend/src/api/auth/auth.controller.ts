@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
-import { LoginRequest, RegisterRequest, SendCodeRequest } from 'src/api/auth/dto'
+import { LoginRequest, RegisterRequest, SendCodeRequest, VerifyCodeRequest } from 'src/api/auth/dto'
 
 import { AuthService } from './auth.service'
 
@@ -27,5 +27,10 @@ export class AuthController {
 	@Post('send-code')
 	public async sendCode(@Body() dto: SendCodeRequest) {
 		return this.authService.sendCode(dto)
+	}
+
+	@Post('verify')
+	public async verifyCode(@Body() dto: VerifyCodeRequest) {
+		return this.authService.verifyCode(dto)
 	}
 }

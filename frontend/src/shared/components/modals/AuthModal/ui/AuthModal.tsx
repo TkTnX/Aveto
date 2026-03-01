@@ -1,10 +1,12 @@
 'use client'
 import { X } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
 
 import { AuthSocialsList, LoginForm } from '@/src/features'
-import { ConfirmEmailModal } from '@/src/shared/components/modals'
+import {
+	ConfirmEmailModal,
+	RegisterModal
+} from '@/src/shared/components/modals'
 import {
 	AlertDialog,
 	AlertDialogContent,
@@ -14,14 +16,14 @@ import {
 	AlertDialogTrigger,
 	Button
 } from '@/src/shared/components/ui'
+import { useAuthStore } from '@/src/shared/stores'
 
 interface Props {
 	children: React.ReactNode
 }
 
-export const LoginModal = ({ children }: Props) => {
-	const [openLogin, setOpenLogin] = useState(false)
-	const [openConfirm, setOpenConfirm] = useState(false)
+export const AuthModal = ({ children }: Props) => {
+	const { openLogin, setOpenLogin, setOpenConfirm } = useAuthStore()
 	return (
 		<>
 			<AlertDialog open={openLogin} onOpenChange={setOpenLogin}>
@@ -80,10 +82,8 @@ export const LoginModal = ({ children }: Props) => {
 					</div>
 				</AlertDialogContent>
 			</AlertDialog>
-			<ConfirmEmailModal
-				open={openConfirm}
-				onOpenChange={setOpenConfirm}
-			/>
+			<ConfirmEmailModal />
+			<RegisterModal  />
 		</>
 	)
 }

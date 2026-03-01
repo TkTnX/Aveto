@@ -37,6 +37,7 @@ export class AdService {
 			data: {
 				...restDto,
 				slug,
+				// TODO: SET ANOTHER SELLER ID
 				sellerId: '68aa7664-f17c-4984-b9a5-bb312c069f6c'
 			}
 		})

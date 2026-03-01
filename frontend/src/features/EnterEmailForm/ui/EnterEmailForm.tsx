@@ -1,14 +1,19 @@
+'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Button, Field, FieldError, Input, useAuth } from '@/src/shared'
+import {
+	Button,
+	Field,
+	FieldError,
+	Input,
+	useAuth,
+	useAuthStore
+} from '@/src/shared'
 import { emailSchema, EmailSchemaType } from '@/src/shared/schemas'
 
-interface Props {
-	setIsCodeSent: (bool: boolean) => void
-}
-
-export const EnterEmailForm = ({ setIsCodeSent }: Props) => {
+export const EnterEmailForm = () => {
+	const { setIsCodeSent, setEmail } = useAuthStore()
 	const { sendEmailCodeMutation } = useAuth()
 	const { mutate, isPending } = sendEmailCodeMutation()
 	const {
@@ -25,6 +30,7 @@ export const EnterEmailForm = ({ setIsCodeSent }: Props) => {
 		mutate(values, {
 			onSuccess: () => {
 				setIsCodeSent(true)
+				setEmail(values.email)
 			},
 			onError: error => {
 				console.log(error)

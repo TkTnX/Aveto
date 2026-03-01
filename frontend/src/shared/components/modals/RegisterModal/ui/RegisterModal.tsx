@@ -1,9 +1,7 @@
-'use client'
 import { X } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
 
-import { EnterCodeForm, EnterEmailForm } from '@/src/features'
+import { RegisterForm } from '@/src/features'
 import {
 	AlertDialog,
 	AlertDialogContent,
@@ -12,20 +10,20 @@ import {
 } from '@/src/shared/components/ui'
 import { useAuthStore } from '@/src/shared/stores'
 
-export const ConfirmEmailModal = () => {
-	const { openConfirm, setOpenConfirm, isCodeSent, setIsCodeSent } =
-		useAuthStore()
+export const RegisterModal = () => {
+	const { openRegister, setOpenRegister } = useAuthStore()
 	return (
-		<AlertDialog open={openConfirm} onOpenChange={setOpenConfirm}>
+		<AlertDialog open={openRegister} onOpenChange={setOpenRegister}>
 			<AlertDialogContent>
 				<div className='flex h-full flex-col justify-between overflow-y-auto'>
 					<AlertDialogHeader>
 						<AlertDialogTitle className='text-2xl font-bold'>
-							{!isCodeSent ? 'Введите почту' : 'Подтвердите код'}
+							Придумайте имя и пароль
 						</AlertDialogTitle>
 					</AlertDialogHeader>
 
-					{!isCodeSent ? <EnterEmailForm /> : <EnterCodeForm />}
+					<RegisterForm />
+
 					<p className='mt-5 text-[#999]'>
 						Регистрируясь, вы принимаете{' '}
 						<Link
@@ -44,7 +42,7 @@ export const ConfirmEmailModal = () => {
 						.
 					</p>
 					<button
-						onClick={() => setOpenConfirm(false)}
+						onClick={() => setOpenRegister(false)}
 						className='absolute -top-3 -right-20 text-white'
 					>
 						<X size={50} />

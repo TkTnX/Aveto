@@ -11,7 +11,8 @@ import { User } from 'generated/prisma/client'
 import {
 	LoginRequest,
 	RegisterRequest,
-	SendCodeRequest
+	SendCodeRequest,
+	VerifyCodeRequest
 } from 'src/api/auth/dto'
 import { EmailService } from 'src/api/email/email.service'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -63,6 +64,7 @@ export class AuthService {
 	}
 
 	public async sendCode(dto: SendCodeRequest) {
+		const now = new Date()
 		const { email } = dto
 
 		const isEmailExists = await this.prismaService.user.findUnique({
@@ -72,15 +74,35 @@ export class AuthService {
 		if (isEmailExists) throw new UnauthorizedException('Почта занята!')
 
 		const code = Math.floor(1000 + Math.random() * 1000000).toString()
-
 		await this.prismaService.code.create({
 			data: {
 				code,
-				expiresAt: new Date(new Date().getMinutes() + 5)
+				expiresAt: new Date(now.setMinutes(now.getMinutes() + 5))
 			}
 		})
 
-		await this.emailService.sendCodeEmail(email, "Код для регистрации", code)
+		await this.emailService.sendCodeEmail(
+			email,
+			'Код для регистрации',
+			code
+		)
+
+		return { ok: true }
+	}
+
+	public async verifyCode(dto: VerifyCodeRequest) {
+		const { code } = dto
+
+		const isCodeExists = await this.prismaService.code.findUnique({
+			where: { code }
+		})
+		if (!isCodeExists) throw new NotFoundException('Код неверный!')
+
+		if (isCodeExists.expiresAt < new Date()) {
+			await this.prismaService.code.delete({ where: { code } })
+			throw new NotFoundException('Код истёк! Попробуйте ещё раз')
+		}
+		await this.prismaService.code.delete({ where: { code } })
 
 		return { ok: true }
 	}
