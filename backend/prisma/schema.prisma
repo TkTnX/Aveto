@@ -116,6 +116,13 @@ model Subscription {
 @@map("subscriptions")
 }
 
+model Code {
+  code String @id @unique
+  expiresAt DateTime
+
+  @@map("codes")
+}
+
 enum EAdCondition {
   NEW
   USED

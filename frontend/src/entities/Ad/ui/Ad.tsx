@@ -30,7 +30,7 @@ export const Ad = ({ ad }: Props) => {
 								fill
 								src={ad.images[currentIndex]}
 								alt={`${ad.title}-${index}`}
-								className='rounded-2xl'
+								className='rounded-2xl object-cover'
 							/>
 						</div>
 					))}

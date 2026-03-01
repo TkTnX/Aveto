@@ -1,11 +1,16 @@
-import {
-	BadGatewayException,
-	Injectable,
-	NotFoundException
-} from '@nestjs/common'
-import slugify from 'slugify'
-import { AdRequest } from 'src/api/ad/dto'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
+import slugify from 'slugify';
+import { AdRequest } from 'src/api/ad/dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+
+
+
+
+
+
+
+
 
 @Injectable()
 export class AdService {
@@ -32,7 +37,7 @@ export class AdService {
 			data: {
 				...restDto,
 				slug,
-				sellerId: 'ddbd30ae-7f2b-423c-a393-0237032bfa8d'
+				sellerId: '68aa7664-f17c-4984-b9a5-bb312c069f6c'
 			}
 		})
 

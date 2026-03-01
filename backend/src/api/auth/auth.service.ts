@@ -8,7 +8,12 @@ import { JwtService } from '@nestjs/jwt'
 import * as argon2 from 'argon2'
 import { Response } from 'express'
 import { User } from 'generated/prisma/client'
-import { LoginRequest, RegisterRequest } from 'src/api/auth/dto'
+import {
+	LoginRequest,
+	RegisterRequest,
+	SendCodeRequest
+} from 'src/api/auth/dto'
+import { EmailService } from 'src/api/email/email.service'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
@@ -16,7 +21,8 @@ export class AuthService {
 	public constructor(
 		private readonly prismaService: PrismaService,
 		private readonly configService: ConfigService,
-		private readonly jwtService: JwtService
+		private readonly jwtService: JwtService,
+		private readonly emailService: EmailService
 	) {}
 
 	public async register(res: Response, dto: RegisterRequest) {
@@ -56,6 +62,29 @@ export class AuthService {
 		return this.auth(res, user)
 	}
 
+	public async sendCode(dto: SendCodeRequest) {
+		const { email } = dto
+
+		const isEmailExists = await this.prismaService.user.findUnique({
+			where: { email }
+		})
+
+		if (isEmailExists) throw new UnauthorizedException('Почта занята!')
+
+		const code = Math.floor(1000 + Math.random() * 1000000).toString()
+
+		await this.prismaService.code.create({
+			data: {
+				code,
+				expiresAt: new Date(new Date().getMinutes() + 5)
+			}
+		})
+
+		await this.emailService.sendCodeEmail(email, "Код для регистрации", code)
+
+		return { ok: true }
+	}
+
 	private async generateTokens(user: User) {
 		const payload = {
 			userId: user.id,
@@ -79,7 +108,7 @@ export class AuthService {
 
 		res.cookie('refreshToken', refreshToken, {
 			httpOnly: true,
-			maxAge: 60480000,
+			maxAge: 60480000
 		})
 
 		return { accessToken }
