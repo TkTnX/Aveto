@@ -1,23 +1,18 @@
-import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
-import slugify from 'slugify';
-import { AdRequest } from 'src/api/ad/dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-
-
-
-
-
-
-
-
-
+import {
+	BadGatewayException,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common'
+import slugify from 'slugify'
+import { AdRequest } from 'src/api/ad/dto'
+import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
 export class AdService {
 	public constructor(private readonly prismaService: PrismaService) {}
 
 	public async getAll(query: Record<string, string>) {
-		const ads = await this.prismaService.ad.findMany()
+		const ads = await this.prismaService.ad.findMany({ where: query })
 
 		if (!ads) throw new NotFoundException('Объявления не найдены!')
 

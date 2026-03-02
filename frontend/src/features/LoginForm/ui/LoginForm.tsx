@@ -1,21 +1,30 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { AxiosError } from 'axios'
-import Cookies from 'js-cookie'
-import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import {
-	Button,
-	Field,
-	FieldError,
-	FieldGroup,
-	Input,
-	useAuth
-} from '@/src/shared'
-import { loginSchema, LoginSchemaType } from '@/src/shared/schemas'
+
+
+import { Button, Field, FieldError, FieldGroup, Input, useAuth, useAuthStore } from '@/src/shared';
+import { loginSchema, LoginSchemaType } from '@/src/shared/schemas';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const LoginForm = () => {
+	const {setOpenLogin} = useAuthStore()
 	const [serverError, setServerError] = useState<null | string>(null)
 	const { loginMutation } = useAuth()
 	const { mutate, isPending } = loginMutation()
@@ -31,6 +40,7 @@ export const LoginForm = () => {
 		mutate(values, {
 			onSuccess: data => {
 				Cookies.set('accessToken', data.accessToken)
+				setOpenLogin(false)
 			},
 			onError: error => {
 				console.log()

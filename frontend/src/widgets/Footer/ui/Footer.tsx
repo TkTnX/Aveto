@@ -8,7 +8,7 @@ export const Footer = () => {
 		<footer className='mt-10 bg-[#f7f7f5] py-10'>
 			<div className='container'>
 				<nav>
-					<ul className='flex items-center justify-between'>
+					<ul className='flex flex-wrap items-center justify-between gap-5'>
 						{NAV_ITEMS.map((item, index) => (
 							<li key={index}>
 								<Link href={item.href}>{item.label}</Link>

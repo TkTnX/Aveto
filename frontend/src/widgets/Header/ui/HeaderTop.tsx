@@ -1,13 +1,8 @@
-import {
-	ChevronDown,
-	Heart,
-	LockKeyholeIcon,
-	Plus,
-	ShoppingCartIcon
-} from 'lucide-react'
+'use client'
+import { ChevronDown, Heart, Plus, ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
 
-import { AuthModal } from '@/src/shared'
+import { UserButton } from './UserButton'
 
 export const HeaderTop = () => {
 	return (
@@ -46,17 +41,7 @@ export const HeaderTop = () => {
 						color='var(--color-gray-light)'
 					/>
 				</Link>
-				<AuthModal>
-					<button className='flex items-center gap-1'>
-						<LockKeyholeIcon
-							className='vsm:size-3.5 size-6'
-							size={14}
-						/>
-						<span className='vsm:inline hidden'>
-							Вход и регистрация
-						</span>
-					</button>
-				</AuthModal>
+				<UserButton />
 				<button className='flex items-center gap-1'>
 					<Plus className='vsm:size-3.5 size-6' size={14} />
 					<span className='vsm:inline hidden'>

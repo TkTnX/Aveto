@@ -1,3 +1,4 @@
 export * from './categories.api'
 export * from './ads.api'
 export * from './auth.api'
+export * from './users.api'

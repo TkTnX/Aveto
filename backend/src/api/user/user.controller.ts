@@ -12,6 +12,6 @@ export class UserController {
 	@UseGuards(AuthGuard)
 	@Get('me')
 	public async getMe(@User() user: IAuthPayload) {
-		return user
+		return this.userService.getMe(user)
 	}
 }

@@ -25,7 +25,7 @@ export const Ad = ({ ad }: Props) => {
 					className='relative flex'
 				>
 					{ad.images.map((_, index) => (
-						<div key={index} className='h-58.75 w-full'>
+						<div key={index} className='h-30 w-full md:h-58.75'>
 							<Image
 								fill
 								src={ad.images[currentIndex]}
@@ -42,6 +42,7 @@ export const Ad = ({ ad }: Props) => {
 					</button>
 				</div>
 			</Link>
+			{/* TODO: PRICE FORMAT */}
 			<p className='font-bold'>{ad.price}₽</p>
 			<div className='flex items-center gap-1 text-sm'>
 				<MapPin size={14} />
