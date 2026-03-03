@@ -1,19 +1,13 @@
 'use client'
-import { CheckCircle2, Edit, Pencil } from 'lucide-react';
-import Image from 'next/image';
+import { CheckCircle2, Edit, Pencil } from 'lucide-react'
+import Image from 'next/image'
 
-
-
-import { EditProfileModal, Skeleton, UserBadge, useUserStore } from '@/src/shared';
-
-
-
-
-
-
-
-
-
+import {
+	EditProfileModal,
+	Skeleton,
+	UserBadge,
+	useUserStore
+} from '@/src/shared'
 
 export const UserInfo = () => {
 	const { user } = useUserStore()
@@ -25,10 +19,11 @@ export const UserInfo = () => {
 				<div className='bg-accent relative flex h-18 w-18 items-center justify-center rounded-full text-4xl'>
 					{user.avatar ? (
 						<Image
-							className='object-cover'
+							className='rounded-full object-cover'
 							src={user.avatar}
 							fill
-							alt='Аватарка не найдена!'
+							alt='Аватарка!'
+							unoptimized
 						/>
 					) : (
 						user.name[0]

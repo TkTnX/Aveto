@@ -1,54 +1,29 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Camera } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
+import { Camera } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
-
-
-import { Button, Field, FieldError, Input, Skeleton, useUserStore } from '@/src/shared';
-import { Label } from '@/src/shared';
-import { useUsers } from '@/src/shared/hooks/useUsers';
-import { editUserSchema, EditUserSchemaType } from '@/src/shared/schemas';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import {
+	Button,
+	Field,
+	FieldError,
+	Input,
+	Skeleton,
+	useUserStore
+} from '@/src/shared'
+import { Label } from '@/src/shared'
+import { useUsers } from '@/src/shared/hooks/useUsers'
+import { editUserSchema, EditUserSchemaType } from '@/src/shared/schemas'
 
 export const EditUserForm = () => {
+	const queryClient = useQueryClient()
 	const [image, setImage] = useState<File | null>(null)
 	const { user } = useUserStore()
 	const { updateMutation } = useUsers()
-	const {mutate, isPending} = updateMutation()
+	const { mutate, isPending } = updateMutation()
 	const {
 		control,
 		formState: { errors },
@@ -61,13 +36,18 @@ export const EditUserForm = () => {
 	})
 	const onSubmit = (values: EditUserSchemaType) => {
 		const formData = new FormData()
+		console.log(image)
 		if (image) {
-			formData.set('image', image)
+			formData.set('avatar', image)
 		}
 
 		formData.set('name', values.name)
 
-		mutate(formData)
+		mutate(formData, {
+			onSuccess: () => {
+				queryClient.invalidateQueries({ queryKey: ['get me'] })
+			}
+		})
 	}
 
 	if (!user) return <Skeleton className='h-10 w-full' />
@@ -77,15 +57,25 @@ export const EditUserForm = () => {
 			<label className='bg-accent relative mt-4 flex h-30 w-30 cursor-pointer items-center justify-center overflow-hidden rounded-full text-3xl'>
 				{user.avatar ? (
 					<Image
-						className='object-cover'
+						className='rounded-full object-cover'
 						src={user.avatar}
 						fill
-						alt='Аватарка не найдена!'
+						alt='Аватарка!'
+						unoptimized
 					/>
 				) : (
 					user.name[0]
 				)}
-				<input hidden type='file' accept='image/*' />
+				<input
+					onChange={e => {
+						if (e.target.files?.[0]) {
+							setImage(e.target.files[0])
+						}
+					}}
+					hidden
+					type='file'
+					accept='image/*'
+				/>
 				<div className='absolute inset-0 flex items-center justify-center bg-black/30'>
 					<Camera color='#fff' />
 				</div>

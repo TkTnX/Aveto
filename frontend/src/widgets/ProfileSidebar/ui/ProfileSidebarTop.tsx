@@ -16,10 +16,11 @@ export const ProfileSidebarTop = () => {
 			<div className='bg-accent relative flex h-25 w-25 items-center justify-center rounded-full text-6xl'>
 				{user.avatar ? (
 					<Image
-						className='object-cover'
+						className='rounded-full object-cover'
 						src={user.avatar}
 						fill
-						alt='Аватарка не найдена!'
+						alt='Аватарка!'
+						unoptimized
 					/>
 				) : (
 					user.name[0]

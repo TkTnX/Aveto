@@ -21,8 +21,6 @@ export class UploadController {
     })
   )
   public uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return {
-      url: `/uploads/${file.filename}`
-    }
+    return this.uploadService.upload(file)
   }
 }

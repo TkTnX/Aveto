@@ -30,10 +30,11 @@ export const UserButton = () => {
 					>
 						{data.avatar ? (
 							<Image
-								className='object-cover'
+								className='rounded-full object-cover'
 								src={data.avatar}
 								fill
-								alt='Аватарка не найдена!'
+								alt='Аватарка!'
+								unoptimized
 							/>
 						) : (
 							data.name[0]

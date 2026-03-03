@@ -18,7 +18,7 @@ export const Category = ({ category }: Props) => {
 			{category.image && (
 				<div className='absolute right-0 bottom-0 h-full w-full'>
 					<Image
-						className='object-cover'
+						className='rounded-full object-cover'
 						fill
 						src={category.image}
 						alt={category.slug}

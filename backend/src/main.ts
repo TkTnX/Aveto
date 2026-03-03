@@ -1,15 +1,32 @@
-import { Logger, ValidationPipe } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { NestFactory } from '@nestjs/core'
-import * as cookieParser from 'cookie-parser'
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import * as cookieParser from 'cookie-parser';
+import { join } from 'path';
 
-import { AppModule } from './app.module'
+
+
+import { AppModule } from './app.module';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 async function bootstrap() {
 	const logger = new Logger()
 	const config = new ConfigService()
 
-	const app = await NestFactory.create(AppModule)
+	const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
 	app.useGlobalPipes(new ValidationPipe())
 	app.use(cookieParser())
@@ -18,6 +35,9 @@ async function bootstrap() {
 	app.enableCors({
 		origin: config.getOrThrow('CLIENT_URL'),
 		credentials: true
+	})
+	app.useStaticAssets(join(process.cwd(), 'uploads'), {
+		prefix: '/uploads/'
 	})
 
 	try {

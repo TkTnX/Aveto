@@ -7,4 +7,6 @@ export class UserUpdateRequest {
 		message: 'Имя пользователя должно быть от 3 до 50 символов!'
 	})
 	name: string
+
+	avatar?:string
 }
