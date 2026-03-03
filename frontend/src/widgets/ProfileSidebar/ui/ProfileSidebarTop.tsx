@@ -25,7 +25,7 @@ export const ProfileSidebarTop = () => {
 					user.name[0]
 				)}
 				<Link
-					href={'/extended'}
+					href={'/profile/extended'}
 					className='absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full bg-[#ebebeb]'
 				>
 					<Camera fill='#000' stroke='#ebebeb' />

@@ -37,6 +37,7 @@ export class AuthService {
 				name: dto.name,
 				// TODO: ADD AVATARS,
 				// avatar,
+				isEmailVerified: true,
 				[type]: dto.emailOrPhone,
 				password: hashedPassword
 			}

@@ -1,10 +1,4 @@
-import { IAd, IReview, ISubscription } from ".";
-
-
-
-
-
-
+import { IAd, IReview, ISubscription } from '.'
 
 export interface IUser {
 	id: string
