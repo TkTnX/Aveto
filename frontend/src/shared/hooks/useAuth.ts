@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, UseMutationOptions } from '@tanstack/react-query'
 
-import { login, register, sendEmailCode, verifyCode } from '@/src/api'
+import { login, logout, register, sendEmailCode, verifyCode } from '@/src/api'
 import {
 	EmailSchemaType,
 	LoginSchemaType,
@@ -33,10 +33,23 @@ export function useAuth() {
 			mutationFn: (values: RegisterSchemaType) => register(values)
 		})
 
+	const logoutMutation = (
+		options?: Omit<
+			UseMutationOptions<unknown, unknown, unknown>,
+			'mutationKey' | 'mutationFn'
+		>
+	) =>
+		useMutation({
+			mutationKey: ['logout'],
+			mutationFn: () => logout(),
+			...options
+		})
+
 	return {
 		loginMutation,
 		sendEmailCodeMutation,
 		checkCodeMutation,
-		registerMutation
+		registerMutation,
+		logoutMutation
 	}
 }

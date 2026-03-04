@@ -1,8 +1,14 @@
-import { Body, Controller, Post, Res } from '@nestjs/common'
+import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common'
 import { Response } from 'express'
-import { LoginRequest, RegisterRequest, SendCodeRequest, VerifyCodeRequest } from 'src/api/auth/dto'
+import {
+	LoginRequest,
+	RegisterRequest,
+	SendCodeRequest,
+	VerifyCodeRequest
+} from 'src/api/auth/dto'
 
 import { AuthService } from './auth.service'
+import { AuthGuard } from 'src/api/auth/guards/auth.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +30,11 @@ export class AuthController {
 		return this.authService.login(res, dto)
 	}
 
-
+	@UseGuards(AuthGuard)
+	@Post('logout')
+	public async logout(@Res({ passthrough: true }) res: Response) {
+		return this.authService.logout(res)
+	}
 
 	@Post('send-code')
 	public async sendCode(@Body() dto: SendCodeRequest) {

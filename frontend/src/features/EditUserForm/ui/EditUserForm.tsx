@@ -12,6 +12,7 @@ import {
 	FieldError,
 	Input,
 	Skeleton,
+	UserAvatar,
 	useUserStore
 } from '@/src/shared'
 import { Label } from '@/src/shared'
@@ -55,17 +56,7 @@ export const EditUserForm = () => {
 	return (
 		<>
 			<label className='bg-accent relative mt-4 flex h-30 w-30 cursor-pointer items-center justify-center overflow-hidden rounded-full text-3xl'>
-				{user.avatar ? (
-					<Image
-						className='rounded-full object-cover'
-						src={user.avatar}
-						fill
-						alt='Аватарка!'
-						unoptimized
-					/>
-				) : (
-					user.name[0]
-				)}
+				<UserAvatar name={user.name} avatar={user.avatar} />
 				<input
 					onChange={e => {
 						if (e.target.files?.[0]) {

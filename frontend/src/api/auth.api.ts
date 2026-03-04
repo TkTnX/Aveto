@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie'
+
 import { axiosInstance } from '@/src/shared'
 import {
 	EmailSchemaType,
@@ -26,6 +28,23 @@ export async function sendEmailCode(email: EmailSchemaType) {
 
 export async function verifyCode(code: VerifyCodeSchemaType) {
 	const { data } = await axiosInstance.post('auth/verify', code)
+
+	return data
+}
+
+export async function logout() {
+	const token = Cookies.get('accessToken')
+	if (!token) throw Error('Вы не авторизованы!')
+
+	const { data } = await axiosInstance.post(
+		'auth/logout',
+		{},
+		{
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		}
+	)
 
 	return data
 }

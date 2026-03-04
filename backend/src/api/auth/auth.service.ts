@@ -64,6 +64,12 @@ export class AuthService {
 		return this.auth(res, user)
 	}
 
+	public async logout(res: Response) {
+		res.clearCookie('refreshToken')
+
+		return { ok: true }
+	}
+
 	public async sendCode(dto: SendCodeRequest) {
 		const now = new Date()
 		const { email } = dto

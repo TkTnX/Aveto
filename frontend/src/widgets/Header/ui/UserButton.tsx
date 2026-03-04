@@ -4,16 +4,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
-import { AuthModal, Skeleton, useUserStore } from '@/src/shared'
+import {
+	AuthModal,
+	Skeleton,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+	UserAvatar,
+	useUserStore
+} from '@/src/shared'
 import { useUsers } from '@/src/shared/hooks/useUsers'
+import { UserMenu } from '@/src/widgets'
 
 export const UserButton = () => {
 	const { getMeQuery } = useUsers()
-	const { setUser } = useUserStore()
+	const { setUser, user } = useUserStore()
 	const { data, isPending } = getMeQuery()
 
 	useEffect(() => {
 		if (data) {
+			console.log(data)
 			setUser(data)
 		}
 	}, [data, setUser])
@@ -22,24 +32,24 @@ export const UserButton = () => {
 		<>
 			{isPending ? (
 				<Skeleton className='flex h-5 w-25' />
-			) : data ? (
+			) : user ? (
 				<>
-					<Link
-						href={'/profile'}
-						className='bg-accent relative flex h-10 w-10 items-center justify-center rounded-full'
-					>
-						{data.avatar ? (
-							<Image
-								className='rounded-full object-cover'
-								src={data.avatar}
-								fill
-								alt='Аватарка!'
-								unoptimized
-							/>
-						) : (
-							data.name[0]
-						)}
-					</Link>
+					<Tooltip>
+						<TooltipTrigger>
+							<Link
+								href={'/profile'}
+								className='bg-accent relative flex h-10 w-10 items-center justify-center rounded-full'
+							>
+								<UserAvatar
+									name={user.name}
+									avatar={user.avatar}
+								/>
+							</Link>
+						</TooltipTrigger>
+						<TooltipContent className='px-0'>
+							<UserMenu />
+						</TooltipContent>
+					</Tooltip>
 					<Link className='flex items-center gap-1' href={'/profile'}>
 						<GalleryVerticalEnd
 							className='vsm:size-3.5 size-6'

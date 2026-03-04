@@ -5,6 +5,7 @@ import Image from 'next/image'
 import {
 	EditProfileModal,
 	Skeleton,
+	UserAvatar,
 	UserBadge,
 	useUserStore
 } from '@/src/shared'
@@ -17,17 +18,7 @@ export const UserInfo = () => {
 		<>
 			<div className='relative mt-6 flex items-start gap-4 rounded-2xl bg-white p-5 shadow'>
 				<div className='bg-accent relative flex h-18 w-18 items-center justify-center rounded-full text-4xl'>
-					{user.avatar ? (
-						<Image
-							className='rounded-full object-cover'
-							src={user.avatar}
-							fill
-							alt='Аватарка!'
-							unoptimized
-						/>
-					) : (
-						user.name[0]
-					)}
+					<UserAvatar name={user.name} avatar={user.avatar} />
 				</div>
 				<div>
 					<h5 className='text-xl font-bold'>{user.name}</h5>
