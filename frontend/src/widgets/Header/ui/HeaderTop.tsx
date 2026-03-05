@@ -42,12 +42,8 @@ export const HeaderTop = () => {
 					/>
 				</Link>
 				<UserButton />
-				<button className='flex items-center gap-1'>
-					<Plus className='vsm:size-3.5 size-6' size={14} />
-					<span className='vsm:inline hidden'>
-						Разместить объявление
-					</span>
-				</button>
+				
+				
 			</div>
 		</div>
 	)

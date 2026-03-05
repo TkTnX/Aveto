@@ -32,10 +32,8 @@ export class UserService {
 		payload: IAuthPayload
 	) {
 		const { userId } = payload
-		console.log(file)
 		if (file) {
 			const imageUrl = await this.uploadService.upload(file)
-			console.log(imageUrl)
 			body.avatar = `${this.configService.getOrThrow('SERVER_URL')}${imageUrl}`
 		}
 

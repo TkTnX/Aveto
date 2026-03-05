@@ -37,7 +37,6 @@ export const EditUserForm = () => {
 	})
 	const onSubmit = (values: EditUserSchemaType) => {
 		const formData = new FormData()
-		console.log(image)
 		if (image) {
 			formData.set('avatar', image)
 		}

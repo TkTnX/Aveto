@@ -6,16 +6,17 @@ import { useRouter } from 'next/navigation'
 import { useAuth, useUserStore } from '@/src/shared'
 
 export const LogoutButton = () => {
-    const {setUser} = useUserStore()
+	const { setUser } = useUserStore()
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const { logoutMutation } = useAuth()
 	const { mutate } = logoutMutation({
-        onSuccess: () => {
+		onSuccess: () => {
 			Cookies.remove('accessToken')
-			queryClient.invalidateQueries({ queryKey: ['get me'] })
-            router.push('/')
-            setUser(null)
+			queryClient.setQueryData(['get me'], null)
+			queryClient.removeQueries({ queryKey: ['get me'] })
+			router.push('/')
+			setUser(null)
 		}
 	})
 

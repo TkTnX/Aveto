@@ -1,5 +1,5 @@
 'use client'
-import { GalleryVerticalEnd, LockKeyholeIcon } from 'lucide-react'
+import { GalleryVerticalEnd, LockKeyholeIcon, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react'
@@ -10,6 +10,7 @@ import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
+	useAuthStore,
 	UserAvatar,
 	useUserStore
 } from '@/src/shared'
@@ -17,17 +18,16 @@ import { useUsers } from '@/src/shared/hooks/useUsers'
 import { UserMenu } from '@/src/widgets'
 
 export const UserButton = () => {
+	const { setOpenLogin } = useAuthStore()
 	const { getMeQuery } = useUsers()
 	const { setUser, user } = useUserStore()
 	const { data, isPending } = getMeQuery()
 
 	useEffect(() => {
 		if (data) {
-			console.log(data)
 			setUser(data)
 		}
 	}, [data, setUser])
-
 	return (
 		<>
 			{isPending ? (
@@ -72,6 +72,24 @@ export const UserButton = () => {
 						</span>
 					</button>
 				</AuthModal>
+			)}
+			{user ? (
+				<Link href={'/additem'} className='flex items-center gap-1'>
+					<Plus className='vsm:size-3.5 size-6' size={14} />
+					<span className='vsm:inline hidden'>
+						Разместить объявление
+					</span>
+				</Link>
+			) : (
+				<button
+					onClick={() => setOpenLogin(true)}
+					className='flex items-center gap-1'
+				>
+					<Plus className='vsm:size-3.5 size-6' size={14} />
+					<span className='vsm:inline hidden'>
+						Разместить объявление
+					</span>
+				</button>
 			)}
 		</>
 	)

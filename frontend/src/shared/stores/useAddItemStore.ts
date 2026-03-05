@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
 interface AddItemStoreProps {
-    step: number
-    setStep: (num: number) => void
+	category: null | string
+	setCategory: (categoryId: string) => void
 }
 
 export const useAddItemStore = create<AddItemStoreProps>(set => ({
-    step: 0,
-    setStep: (step: number) => set({step})
+	category: null,
+	setCategory: category => set({ category })
 }))

@@ -35,7 +35,7 @@ export const Ad = ({ ad }: Props) => {
 						</div>
 					))}
 				</div>
-				<div className='mt-2 flex items-center justify-between'>
+				<div className='mt-2 flex items-center justify-between gap-1'>
 					<h6>{ad.title}</h6>
 					<button>
 						<Heart />

@@ -38,6 +38,7 @@ model Ad {
   views Int @default(0)
   isFinished Boolean @default(false) @map("is_finished")
   condition EAdCondition
+  quantity Int? 
 
   category Category @relation(fields: [categoryId], references: [id], onDelete: NoAction)
   categoryId String @map("category_id")

@@ -39,7 +39,6 @@ export const LoginForm = () => {
 				queryClient.invalidateQueries({ queryKey: ['get me'] })
 			},
 			onError: error => {
-				console.log()
 				if (error instanceof AxiosError) {
 					setServerError(error?.response?.data.message)
 				}

@@ -47,7 +47,6 @@ export class UserController {
 		@Body() body: UserUpdateRequest,
 		@User() payload: IAuthPayload
 	) {
-		console.log(file)
 		return this.userService.update(body, file, payload)
 	}
 }
