@@ -9,6 +9,8 @@ export const axiosInstance = axios.create({
 	}
 })
 
+// TODO: Сделать refresh авторизации
+
 axiosInstance.interceptors.request.use(
 	config => {
 		const token = Cookies.get('accessToken')

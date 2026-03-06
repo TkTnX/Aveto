@@ -32,7 +32,7 @@ export class AdService {
 		user: IAuthPayload
 	) {
 		const images: string[] = []
-		const slug = slugify(dto.title, {
+		const baseSlug = slugify(dto.title, {
 			replacement: '_',
 			lower: true,
 			locale: 'ru',
@@ -49,7 +49,7 @@ export class AdService {
 		const newAd = await this.prismaService.ad.create({
 			data: {
 				...dto,
-				slug,
+				slug: `${baseSlug}_${Math.floor(1000 + Math.random() * 1000000).toString()}`,
 				price: Number(dto.price),
 				quantity: Number(dto.quantity),
 				sellerId: user.userId,

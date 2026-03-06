@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -10,12 +11,14 @@ import {
 	Input,
 	Label,
 	Textarea,
+	useAddItemStore,
 	useAds,
 	useUserStore
 } from '@/src/shared'
 import { addAdSchema, AddAdSchemaType } from '@/src/shared/schemas'
-import { EAdCondition, IAd, ICategory } from '@/src/shared/types'
+import { EAdCondition, IAd } from '@/src/shared/types'
 
+import { AddToDrafts } from './AddToDrafts'
 import { AdFormCondition } from './AdFormCondition'
 import { AdFormContacts } from './AdFormContacts'
 import { AdFormPhotos } from './AdFormPhotos'
@@ -27,6 +30,8 @@ interface Props {
 }
 
 export const AddAdForm = ({ category }: Props) => {
+	const { draft } = useAddItemStore()
+	const [errors, setErrors] = useState<string[]>([])
 	const router = useRouter()
 	const { user } = useUserStore()
 	const [photos, setPhotos] = useState<File[]>([])
@@ -34,13 +39,15 @@ export const AddAdForm = ({ category }: Props) => {
 	const { mutate, isPending } = createMutation()
 	const [location, setLocation] = useState('')
 	const [condition, setCondition] = useState<null | EAdCondition>(null)
-	const { handleSubmit, control } = useForm<AddAdSchemaType>({
+	const { handleSubmit, control, getValues } = useForm<AddAdSchemaType>({
 		resolver: zodResolver(addAdSchema),
 		defaultValues: {
-			title: '',
-			description: '',
-			email: user?.email,
-			phone: user?.phone
+			title: draft?.title || '',
+			description: draft?.description || '',
+			email: draft?.email || user?.email || '',
+			phone: draft?.phone || user?.phone || '',
+			price: draft?.price || '',
+			quantity: draft?.quantity || ''
 		}
 	})
 
@@ -64,9 +71,15 @@ export const AddAdForm = ({ category }: Props) => {
 		mutate(formData, {
 			onSuccess: (data: IAd) => {
 				router.push(`/p/${data.slug}`)
+			},
+			onError: err => {
+				if (err instanceof AxiosError) {
+					setErrors(err?.response?.data.message)
+				}
 			}
 		})
 	}
+
 	return (
 		<form className='mt-3 max-w-158.75' onSubmit={handleSubmit(onSubmit)}>
 			{/* TITLE */}
@@ -149,9 +162,19 @@ export const AddAdForm = ({ category }: Props) => {
 				<Button type='submit' className='bg-black text-white'>
 					Разместить
 				</Button>
-				<Button className='bg-accent text-black'>
-					Сохранить и выйти
-				</Button>
+				<AddToDrafts
+					values={{
+						...getValues(),
+						location,
+						condition,
+						category
+					}}
+				/>
+			</div>
+			<div className='text-red mt-3 flex flex-col gap-1 text-center'>
+				{errors.map(err => (
+					<p key={err}>{err}</p>
+				))}
 			</div>
 			<p className='text-gray mt-2'>
 				Вы публикуете объявление и данные в нём, чтобы их мог посмотреть
