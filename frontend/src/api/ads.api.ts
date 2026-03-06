@@ -5,3 +5,13 @@ export async function getAds(params?: Record<string, string>) {
 
 	return data
 }
+
+export async function createAd(formData: FormData) {
+	const { data } = await axiosInstance.post('ads', formData, {
+		headers: {
+			'Content-Type': 'multipart/form-data'
+		}
+	})
+
+	return data
+}

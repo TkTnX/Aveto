@@ -33,18 +33,7 @@ export async function verifyCode(code: VerifyCodeSchemaType) {
 }
 
 export async function logout() {
-	const token = Cookies.get('accessToken')
-	if (!token) throw Error('Вы не авторизованы!')
-
-	const { data } = await axiosInstance.post(
-		'auth/logout',
-		{},
-		{
-			headers: {
-				Authorization: `Bearer ${token}`
-			}
-		}
-	)
+	const { data } = await axiosInstance.post('auth/logout', {})
 
 	return data
 }

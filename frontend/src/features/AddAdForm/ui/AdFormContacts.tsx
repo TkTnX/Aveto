@@ -1,8 +1,9 @@
 import { Field, Input, Label } from "@/src/shared"
+import { AddAdSchemaType } from "@/src/shared/schemas"
 import { Control, Controller, FieldValues } from "react-hook-form"
 
 interface Props {
-    control: Control<FieldValues, unknown, FieldValues>
+    control: Control<AddAdSchemaType, unknown, AddAdSchemaType>
 }
 
 export const AdFormContacts = ({control}: Props) => {

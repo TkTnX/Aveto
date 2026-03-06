@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
-import { AdService } from './ad.service';
-import { AdController } from './ad.controller';
+import { Module } from '@nestjs/common'
+import { UploadModule } from 'src/api/upload/upload.module'
+
+import { AdController } from './ad.controller'
+import { AdService } from './ad.service'
 
 @Module({
-  controllers: [AdController],
-  providers: [AdService],
+	imports: [UploadModule],
+	controllers: [AdController],
+	providers: [AdService]
 })
 export class AdModule {}

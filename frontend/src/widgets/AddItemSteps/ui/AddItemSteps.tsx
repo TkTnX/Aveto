@@ -39,7 +39,7 @@ export const AddItemSteps = () => {
 								<AddItemCategory key={cat.id} cat={cat} />
 							))}
 				</div>
-			) : <AddAdForm />}
+			) : <AddAdForm category={category} />}
 		</div>
 	)
 }

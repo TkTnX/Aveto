@@ -16,6 +16,7 @@ export const Ad = ({ ad }: Props) => {
 		ad.images.length
 	)
 
+	// TODO: На картинке выводить блоки NEW, ЕСТЬ НЕСКОЛЬКО и тд
 	return (
 		<div className=''>
 			<Link href={`/p/${ad.slug}`}>
@@ -31,6 +32,7 @@ export const Ad = ({ ad }: Props) => {
 								src={ad.images[currentIndex]}
 								alt={`${ad.title}-${index}`}
 								className='rounded-2xl object-cover'
+								unoptimized
 							/>
 						</div>
 					))}

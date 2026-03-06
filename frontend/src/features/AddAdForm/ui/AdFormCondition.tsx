@@ -1,18 +1,27 @@
-import { Button, cn, Label, Tooltip, TooltipContent, TooltipTrigger } from "@/src/shared"
-import { EAdCondition } from "@/src/shared/types"
-import { CircleQuestionMarkIcon } from "lucide-react"
+import { CircleQuestionMarkIcon } from 'lucide-react'
+
+import {
+	Button,
+	cn,
+	Label,
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger
+} from '@/src/shared'
+import { EAdCondition } from '@/src/shared/types'
 
 interface Props {
-    condition: EAdCondition | null,
-    setCondition: (condition: EAdCondition) => void
+	condition: EAdCondition | null
+	setCondition: (condition: EAdCondition) => void
 }
 
-export const AdFormCondition = ({condition, setCondition}: Props) => {
-  return (
+export const AdFormCondition = ({ condition, setCondition }: Props) => {
+	return (
 		<div className='mt-10'>
 			<Label className='font-bold'>Состояние</Label>
 			<div className='mt-3 flex items-center gap-1.5'>
 				<Button
+					type='button'
 					onClick={() => setCondition(EAdCondition.NEW)}
 					className={cn('bg-[#ebeae8] text-black', {
 						'bg-black text-white': condition === EAdCondition.NEW
@@ -21,6 +30,7 @@ export const AdFormCondition = ({condition, setCondition}: Props) => {
 					Новое
 				</Button>
 				<Button
+					type='button'
 					onClick={() => setCondition(EAdCondition.USED)}
 					className={cn('bg-[#ebeae8] text-black', {
 						'bg-black text-white': condition === EAdCondition.USED
@@ -48,5 +58,5 @@ export const AdFormCondition = ({condition, setCondition}: Props) => {
 				</Tooltip>
 			</p>
 		</div>
-  )
+	)
 }

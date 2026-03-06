@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { getAds } from '@/src/api'
+import { createAd, getAds } from '@/src/api'
 import { IAd } from '@/src/shared/types'
 
 export function useAds() {
@@ -10,5 +10,11 @@ export function useAds() {
 			queryFn: (): Promise<IAd[]> => getAds(query)
 		})
 
-	return { getAllQuery }
+	const createMutation = () => useMutation({
+		mutationKey: ['create ad'],
+		mutationFn: (formData: FormData):Promise<IAd> => createAd(formData) 
+		})
+
+	return { getAllQuery, createMutation }
 }
+

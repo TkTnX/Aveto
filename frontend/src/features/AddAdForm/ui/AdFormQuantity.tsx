@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Control, Controller, FieldValues } from 'react-hook-form'
+import { Control, Controller } from 'react-hook-form'
 
 import { Field, Input, Label, Switch } from '@/src/shared'
+import { AddAdSchemaType } from '@/src/shared/schemas'
 
 interface Props {
-  control: Control<FieldValues, unknown, FieldValues>
+  control: Control<AddAdSchemaType, unknown, AddAdSchemaType>
 }
 
 export const AdFormQuantity = ({control}: Props) => {
@@ -22,7 +23,7 @@ export const AdFormQuantity = ({control}: Props) => {
 			</div>
 			{showSomeQuantity && (
 				<Controller
-					name='description'
+					name='quantity'
 					control={control}
 					render={({ field }) => (
 						<Field className='mt-3 gap-0'>

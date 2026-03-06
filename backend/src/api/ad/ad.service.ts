@@ -3,13 +3,20 @@ import {
 	Injectable,
 	NotFoundException
 } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import slugify from 'slugify'
 import { AdRequest } from 'src/api/ad/dto'
+import { UploadService } from 'src/api/upload/upload.service'
 import { PrismaService } from 'src/prisma/prisma.service'
+import { IAuthPayload } from 'src/types'
 
 @Injectable()
 export class AdService {
-	public constructor(private readonly prismaService: PrismaService) {}
+	public constructor(
+		private readonly prismaService: PrismaService,
+		private readonly uploadService: UploadService,
+		private readonly configService: ConfigService
+	) {}
 
 	public async getAll(query: Record<string, string>) {
 		const ads = await this.prismaService.ad.findMany({ where: query })
@@ -19,8 +26,12 @@ export class AdService {
 		return ads
 	}
 
-	public async create(dto: AdRequest) {
-		const { images, ...restDto } = dto
+	public async create(
+		dto: AdRequest,
+		files: Express.Multer.File[],
+		user: IAuthPayload
+	) {
+		const images: string[] = []
 		const slug = slugify(dto.title, {
 			replacement: '_',
 			lower: true,
@@ -28,12 +39,21 @@ export class AdService {
 			remove: /[*+~.(),'"!:@]/g
 		})
 
+		for (let i = 0; i < files.length; i++) {
+			const photoUrl = await this.uploadService.upload(files[i])
+			images.push(
+				`${this.configService.getOrThrow('SERVER_URL')}${photoUrl}`
+			)
+		}
+
 		const newAd = await this.prismaService.ad.create({
 			data: {
-				...restDto,
+				...dto,
 				slug,
-				// TODO: SET ANOTHER SELLER ID
-				sellerId: '68aa7664-f17c-4984-b9a5-bb312c069f6c'
+				price: Number(dto.price),
+				quantity: Number(dto.quantity),
+				sellerId: user.userId,
+				images
 			}
 		})
 

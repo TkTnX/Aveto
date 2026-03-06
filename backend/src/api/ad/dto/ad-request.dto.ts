@@ -1,4 +1,12 @@
-import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import {
+	IsEmail,
+	IsEnum,
+	IsInt,
+	IsNotEmpty,
+	IsOptional,
+	IsPhoneNumber,
+	IsString
+} from 'class-validator'
 import { EAdCondition } from 'generated/prisma/enums'
 
 // TODO: Добавить документацию swagger
@@ -8,10 +16,11 @@ export class AdRequest {
 	title: string
 
 	@IsNotEmpty({ message: 'Цена обязательна!' })
-	@IsInt({ message: 'Цена должна быть ценой' })
-	price: number
+	price: string
 
-    @IsOptional()
+	quantity: string
+
+	@IsOptional()
 	@IsInt({ message: 'Скидка должна быть числом!' })
 	discount?: number
 
@@ -23,7 +32,7 @@ export class AdRequest {
 	@IsString({ message: 'Описание должно быть строкой!' })
 	description: string
 
-	images: File[]
+	images: string[]
 
 	@IsNotEmpty({ message: 'Состояние обязательно' })
 	@IsEnum(EAdCondition, {
@@ -34,4 +43,12 @@ export class AdRequest {
 	@IsNotEmpty({ message: 'Категория обязательна!' })
 	@IsString({ message: 'Категория должна быть строкой!' })
 	categoryId: string
+
+	@IsNotEmpty({ message: 'Почта обязательна!' })
+	@IsEmail({}, { message: 'Неверный формат почты!' })
+	email: string
+
+	@IsNotEmpty({ message: 'Телефон обязателен!' })
+	@IsPhoneNumber('RU', { message: 'Неверный формат телефона!' })
+	phone: string
 }

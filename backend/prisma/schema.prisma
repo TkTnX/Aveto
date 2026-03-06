@@ -40,6 +40,9 @@ model Ad {
   condition EAdCondition
   quantity Int? 
 
+  email String
+  phone String
+
   category Category @relation(fields: [categoryId], references: [id], onDelete: NoAction)
   categoryId String @map("category_id")
   characteristics Characteristic[]
