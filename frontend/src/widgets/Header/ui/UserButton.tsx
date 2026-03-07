@@ -62,7 +62,7 @@ export const UserButton = () => {
 				</>
 			) : (
 				<AuthModal>
-					<button className='flex items-center gap-1'>
+					<button className='hover:text-red flex items-center gap-1'>
 						<LockKeyholeIcon
 							className='vsm:size-3.5 size-6'
 							size={14}
@@ -74,7 +74,10 @@ export const UserButton = () => {
 				</AuthModal>
 			)}
 			{user ? (
-				<Link href={'/additem'} className='flex items-center gap-1'>
+				<Link
+					href={'/additem'}
+					className='hover:text-red flex items-center gap-1'
+				>
 					<Plus className='vsm:size-3.5 size-6' size={14} />
 					<span className='vsm:inline hidden'>
 						Разместить объявление
@@ -83,7 +86,7 @@ export const UserButton = () => {
 			) : (
 				<button
 					onClick={() => setOpenLogin(true)}
-					className='flex items-center gap-1'
+					className='hover:text-red flex items-center gap-1'
 				>
 					<Plus className='vsm:size-3.5 size-6' size={14} />
 					<span className='vsm:inline hidden'>

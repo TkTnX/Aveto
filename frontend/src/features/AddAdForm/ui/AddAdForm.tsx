@@ -18,6 +18,7 @@ import {
 import { addAdSchema, AddAdSchemaType } from '@/src/shared/schemas'
 import { EAdCondition, IAd } from '@/src/shared/types'
 
+import { AddAdCharacteristics } from './AddAdCharacteristics'
 import { AddToDrafts } from './AddToDrafts'
 import { AdFormCondition } from './AdFormCondition'
 import { AdFormContacts } from './AdFormContacts'
@@ -30,7 +31,7 @@ interface Props {
 }
 
 export const AddAdForm = ({ category }: Props) => {
-	const { draft } = useAddItemStore()
+	const { draft, characteristics } = useAddItemStore()
 	const [errors, setErrors] = useState<string[]>([])
 	const router = useRouter()
 	const { user } = useUserStore()
@@ -68,6 +69,7 @@ export const AddAdForm = ({ category }: Props) => {
 		}
 		formData.set('address', location)
 		formData.set('categoryId', category)
+		formData.set('characteristics', JSON.stringify(characteristics))
 		mutate(formData, {
 			onSuccess: (data: IAd) => {
 				router.push(`/p/${data.slug}`)
@@ -128,6 +130,8 @@ export const AddAdForm = ({ category }: Props) => {
 					)}
 				/>
 			</div>
+
+			<AddAdCharacteristics />
 
 			{/* PRICE */}
 			<Controller

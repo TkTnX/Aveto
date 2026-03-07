@@ -5,6 +5,7 @@ export interface IAd {
 	title: string
 	slug: string
 	price: number
+	quantity: number
 	images: string[]
 	discount?: number
 	description: string

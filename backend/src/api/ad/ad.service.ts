@@ -63,6 +63,7 @@ export class AdService {
 		files: Express.Multer.File[],
 		user: IAuthPayload
 	) {
+		const { characteristics, ...restDto } = dto
 		const images: string[] = []
 		const baseSlug = slugify(dto.title, {
 			replacement: '_',
@@ -79,7 +80,7 @@ export class AdService {
 		}
 		const newAd = await this.prismaService.ad.create({
 			data: {
-				...dto,
+				...restDto,
 				slug: `${baseSlug}_${Math.floor(1000 + Math.random() * 1000000).toString()}`,
 				price: Number(dto.price),
 				quantity: Number(dto.quantity),
@@ -87,6 +88,18 @@ export class AdService {
 				images
 			}
 		})
+		if (characteristics) {
+			const jsonChars = JSON.parse(characteristics)
+			for (let i = 0; i < jsonChars?.length; i++) {
+				await this.prismaService.characteristic.create({
+					data: {
+						name: jsonChars[i].name,
+						value: jsonChars[i].value,
+						adId: newAd.id
+					}
+				})
+			}
+		}
 
 		if (!newAd) throw new BadGatewayException('Объявление не было создано')
 

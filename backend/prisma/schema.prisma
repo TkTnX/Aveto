@@ -60,7 +60,8 @@ model Characteristic {
   name String
   value String
 
-  ads Ad[]
+  ad Ad @relation( references: [id], fields: [adId], onDelete: Cascade)
+  adId String
 
   @@map("characteristics")
 }

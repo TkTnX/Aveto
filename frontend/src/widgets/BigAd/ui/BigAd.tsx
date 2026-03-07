@@ -10,9 +10,11 @@ interface Props {
 	ad: IAd
 }
 
+// TODO: Продолжать доделывать bigAd
+
 export const BigAd = ({ ad }: Props) => {
 	return (
-		<div className='mt-2.5 max-w-150'>
+		<div className='w-full md:max-w-150'>
 			<h1 className='text-3xl font-black'>{ad.title}</h1>
 			<BigAdImages images={ad.images} />
 			<div className='mt-12'>
@@ -25,11 +27,15 @@ export const BigAd = ({ ad }: Props) => {
 			</div>
 			<div className='mt-12'>
 				<h3 className='text-2xl font-black'>Характеристики</h3>
-				<div>
+				<div className='mt-4 grid grid-cols-2 gap-y-4'>
 					{ad.characteristics.length > 0 ? (
 						ad.characteristics.map(char => (
-							<div key={char.id}>
-								<p>{char.name}:</p> <p>{char.value}</p>
+							<div
+								className='flex items-center gap-1'
+								key={char.id}
+							>
+								<p className='text-gray'>{char.name}:</p>{' '}
+								<p>{char.value}</p>
 							</div>
 						))
 					) : (
@@ -49,7 +55,7 @@ export const BigAd = ({ ad }: Props) => {
 			</div>
 
 			<p className='mt-12 flex items-center'>
-				#{ad.id} <Dot />{' '}
+				№{ad.id.split('-')[0]} <Dot />{' '}
 				{new Date(ad.createdAt).toLocaleDateString('ru-RU')} <Dot />{' '}
 				{ad.views} просмотра
 			</p>

@@ -51,4 +51,6 @@ export class AdRequest {
 	@IsNotEmpty({ message: 'Телефон обязателен!' })
 	@IsPhoneNumber('RU', { message: 'Неверный формат телефона!' })
 	phone: string
+
+	characteristics?: string
 }

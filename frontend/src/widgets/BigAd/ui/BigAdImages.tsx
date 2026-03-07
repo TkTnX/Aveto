@@ -26,11 +26,11 @@ export const BigAdImages = ({ images }: Props) => {
 		}
 	}
 
-    // TODO: Сделать открывание картинки
+	// TODO: Сделать открывание картинки
 
-    return (
+	return (
 		<div className='mt-7'>
-			<div className='relative h-114 w-full'>
+			<div className='relative h-80 w-full md:h-114'>
 				<Image
 					src={images[currImage]}
 					alt={images[currImage]}
@@ -51,10 +51,10 @@ export const BigAdImages = ({ images }: Props) => {
 					<ChevronRight color='#fff' />
 				</button>
 			</div>
-			<div className='mt-5 flex items-center gap-1'>
+			<div className='mt-5 grid grid-cols-7 items-center gap-1'>
 				{images.map((image, index) => (
 					<button
-						className={cn('border-2 border-transparent', {
+						className={cn('relative border-2 border-transparent', {
 							'border-blue': currImage === index
 						})}
 						onClick={() => setCurrImage(index)}

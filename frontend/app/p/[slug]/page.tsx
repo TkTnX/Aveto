@@ -1,6 +1,6 @@
 import { getAd } from '@/src/api'
 import { BreadcrumbsList } from '@/src/shared'
-import { BigAd } from '@/src/widgets'
+import { AdSidebar, BigAd } from '@/src/widgets'
 
 export async function generateMetadata({
 	params
@@ -35,8 +35,9 @@ const AdPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 				]}
 			/>
 
-			<div className='container'>
+			<div className='container mt-2.5 flex flex-col items-start gap-12.5 md:flex-row'>
 				<BigAd ad={ad} />
+				<AdSidebar ad={ad} />
 			</div>
 		</>
 	)
