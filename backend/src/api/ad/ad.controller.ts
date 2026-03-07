@@ -2,6 +2,7 @@ import {
 	Body,
 	Controller,
 	Get,
+	Param,
 	Post,
 	Query,
 	UploadedFiles,
@@ -25,6 +26,11 @@ export class AdController {
 	@Get()
 	public async getAll(@Query() query: Record<string, string>) {
 		return this.adService.getAll(query)
+	}
+
+	@Get(':slug')
+	public async getBySlug(@Param('slug') slug: string) {
+		return this.adService.getBySlug(slug)
 	}
 
 	@UseGuards(AuthGuard)

@@ -33,7 +33,6 @@ export class CategoryService {
 			data: {
 				name: dto.name,
 				slug,
-				// TODO: Сделать добавление изображений
 				image: dto.image,
 				parentId: dto.parentId
 			}

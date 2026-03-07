@@ -6,6 +6,11 @@ export async function getAds(params?: Record<string, string>) {
 	return data
 }
 
+export async function getAd(slug: string) {
+	const { data } = await axiosInstance.get(`ads/${slug}`)
+	return data
+}
+
 export async function createAd(formData: FormData) {
 	const { data } = await axiosInstance.post('ads', formData, {
 		headers: {

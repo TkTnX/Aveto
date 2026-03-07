@@ -7,6 +7,7 @@ export interface IAd {
 	price: number
 	images: string[]
 	discount?: number
+	description: string
 	address: string
 	views: number
 	isFinished: boolean 

@@ -26,6 +26,38 @@ export class AdService {
 		return ads
 	}
 
+	public async getBySlug(slug: string) {
+		const ad = await this.prismaService.ad.findUnique({
+			where: { slug },
+			include: {
+				characteristics: true,
+				seller: {
+					omit: {
+						password: true
+					}
+				},
+				category: {
+					include: {
+						parent: true
+					}
+				}
+			}
+		})
+
+		if (!ad) throw new NotFoundException('Объявление не найдено!')
+
+		await this.prismaService.ad.update({
+			where: { id: ad.id },
+			data: {
+				views: {
+					increment: 1
+				}
+			}
+		})
+
+		return ad
+	}
+
 	public async create(
 		dto: AdRequest,
 		files: Express.Multer.File[],
@@ -45,7 +77,6 @@ export class AdService {
 				`${this.configService.getOrThrow('SERVER_URL')}${photoUrl}`
 			)
 		}
-
 		const newAd = await this.prismaService.ad.create({
 			data: {
 				...dto,
