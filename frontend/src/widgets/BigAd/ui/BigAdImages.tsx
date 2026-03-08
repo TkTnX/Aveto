@@ -1,6 +1,9 @@
+'use client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
+import Lightbox from 'yet-another-react-lightbox'
+import 'yet-another-react-lightbox/styles.css'
 
 import { cn } from '@/src/shared'
 
@@ -9,6 +12,7 @@ interface Props {
 }
 
 export const BigAdImages = ({ images }: Props) => {
+	const [openImage, setOpenImage] = useState(false)
 	const [currImage, setCurrImage] = useState(0)
 
 	const onShowNext = () => {
@@ -25,19 +29,27 @@ export const BigAdImages = ({ images }: Props) => {
 			setCurrImage(currImage - 1)
 		}
 	}
-
-	// TODO: Сделать открывание картинки
-
 	return (
 		<div className='mt-7'>
-			<div className='relative h-80 w-full md:h-114'>
-				<Image
-					src={images[currImage]}
-					alt={images[currImage]}
-					fill
-					unoptimized
-					className='object-cover'
-				/>
+			<Lightbox
+				index={currImage}
+				open={openImage}
+				close={() => setOpenImage(false)}
+				slides={images.map(img => ({ src: img }))}
+			/>
+			<div className='relative w-full'>
+				<button
+					onClick={() => setOpenImage(true)}
+					className='h-80 md:h-114'
+				>
+					<Image
+						src={images[currImage]}
+						alt={images[currImage]}
+						fill
+						unoptimized
+						className='object-cover'
+					/>
+				</button>
 				<button
 					onClick={onShowPrev}
 					className='absolute top-0 bottom-0 left-0 flex h-full w-12.5 items-center justify-center hover:bg-black/30'
