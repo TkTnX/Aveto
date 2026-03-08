@@ -50,6 +50,8 @@ model Ad {
   seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId String @map("seller_id")
 
+  favorites FavAd[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
   @@map("ads")
@@ -68,16 +70,18 @@ model Characteristic {
 
 model User {
   id String @default(uuid()) @id 
-  ads Ad[]
 
   name String
   avatar String?
   phone String? @unique
   email String? @unique
-  password String 
+  password String? 
   isPhoneVerified Boolean @default(false) @map("is_phone_verified")
   isEmailVerified Boolean @default(false) @map("is_email_verified")
   provider EProviders @default(CREDENTIALS)
+
+  ads Ad[]
+  favorites FavAd[]
 
   subscribtions Subscription[] @relation(name: "subscribeTo")
   subscribers Subscription[] @relation(name: "subscribeFrom")
@@ -126,6 +130,18 @@ model Code {
   expiresAt DateTime
 
   @@map("codes")
+}
+
+model FavAd {
+  id String @default(uuid()) @id 
+
+   ad Ad @relation( references: [id], fields: [adId], onDelete: Cascade)
+  adId String
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String
+
+  @@map("favoriteAdItems")
 }
 
 enum EAdCondition {

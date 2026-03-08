@@ -6,7 +6,7 @@ import {
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import * as argon2 from 'argon2'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { User } from 'generated/prisma/client'
 import {
 	LoginRequest,
@@ -58,8 +58,14 @@ export class AuthService {
 
 		if (!user) throw new NotFoundException('Неверные данные!')
 
-		const verifyPassword = await argon2.verify(user.password, dto.password)
-		if (!verifyPassword) throw new UnauthorizedException('Неверные данные!')
+		if (user.password) {
+			const verifyPassword = await argon2.verify(
+				user.password,
+				dto.password
+			)
+			if (!verifyPassword)
+				throw new UnauthorizedException('Неверные данные!')
+		}
 
 		return this.auth(res, user)
 	}
@@ -141,5 +147,29 @@ export class AuthService {
 		})
 
 		return { accessToken }
+	}
+
+	// SOCIALS
+	public async googleLogin(user: any, res: Response) {
+		const isUserExists = await this.prismaService.user.findUnique({
+			where: {
+				email: user.email
+			}
+		})
+
+		let dbUser = isUserExists
+
+		if (!isUserExists) {
+			dbUser = await this.prismaService.user.create({
+				data: {
+					email: user.email,
+					name: user.name,
+					avatar: user.avatar,
+					provider: 'GOOGLE'
+				}
+			})
+		}
+
+		return await this.auth(res, dbUser!)
 	}
 }

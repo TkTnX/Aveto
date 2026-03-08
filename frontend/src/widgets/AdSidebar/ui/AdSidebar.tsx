@@ -1,7 +1,8 @@
-import { Dot, Heart, SendHorizonal } from 'lucide-react'
-import Image from 'next/image'
+import { Dot, SendHorizonal } from 'lucide-react'
 import Link from 'next/link'
 
+import { AdPrice } from '@/src/entities'
+import { AddAdToFavButton } from '@/src/features'
 import { Button, UserAvatar } from '@/src/shared'
 import { IAd } from '@/src/shared/types'
 import { UserReviews } from '@/src/widgets'
@@ -9,16 +10,12 @@ import { UserReviews } from '@/src/widgets'
 interface Props {
 	ad: IAd
 }
-
 export const AdSidebar = ({ ad }: Props) => {
 	return (
 		<div className='sticky top-5 w-full md:w-75 lg:w-80.5'>
 			<div className='flex items-start justify-between'>
-				{/* // TODO: ADD FORMAT PRICE  */}
-				<h3 className='text-3xl font-black'>{ad.price} ₽</h3>
-				<button>
-					<Heart size={28} strokeWidth={3} />
-				</button>
+				<AdPrice  price={ad.price} discount={ad.discount} />
+				<AddAdToFavButton adId={ad.id} />
 			</div>
 			{ad.quantity > 0 && (
 				<p className='text-green mt-1 flex items-center text-xl font-bold'>

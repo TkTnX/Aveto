@@ -105,4 +105,35 @@ export class AdService {
 
 		return newAd
 	}
+
+	public async addToFav(payload: IAuthPayload, adId: string) {
+		const ad = await this.prismaService.ad.findUnique({
+			where: { id: adId }
+		})
+		if (!ad) throw new NotFoundException()
+
+		const isLiked = await this.prismaService.favAd.findFirst({
+			where: {
+				AND: [
+					{
+						userId: payload.userId
+					},
+					{
+						adId
+					}
+				]
+			}
+		})
+
+		if (isLiked) {
+			await this.prismaService.favAd.delete({ where: { id: isLiked.id } })
+
+			return { isLiked: false }
+		}
+
+		await this.prismaService.favAd.create({
+			data: { adId, userId: payload.userId }
+		})
+		return { isLiked: true }
+	}
 }

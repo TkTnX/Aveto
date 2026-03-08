@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { Request } from 'express'
 import { UploadService } from 'src/api/upload/upload.service'
 import { UserUpdateRequest } from 'src/api/user/dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -18,7 +17,12 @@ export class UserService {
 		const user = await this.prismaService.user.findUnique({
 			where: { id: userPayload.userId },
 			include: {
-				ads: true
+				ads: true,
+				favorites: {
+					include: {
+						ad: true
+					}
+				}
 			}
 		})
 		if (!user) throw new NotFoundException('Пользователь не найден!')

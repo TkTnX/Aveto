@@ -20,3 +20,10 @@ export async function createAd(formData: FormData) {
 
 	return data
 }
+
+
+export async function addAdToFav(id: string) {
+	const { data } = await axiosInstance.post(`ads/fav/${id}`) 
+	
+	return data
+}

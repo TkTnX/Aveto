@@ -1,7 +1,18 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { createAd, getAds } from '@/src/api'
-import { IAd } from '@/src/shared/types'
+
+
+import { addAdToFav, createAd, getAds } from '@/src/api';
+import { IAd } from '@/src/shared/types';
+
+
+
+
+
+
+
+
+
 
 export function useAds() {
 	const getAllQuery = (query?: Record<string, string>) =>
@@ -10,11 +21,17 @@ export function useAds() {
 			queryFn: (): Promise<IAd[]> => getAds(query)
 		})
 
-	const createMutation = () => useMutation({
-		mutationKey: ['create ad'],
-		mutationFn: (formData: FormData):Promise<IAd> => createAd(formData) 
+	const createMutation = () =>
+		useMutation({
+			mutationKey: ['create ad'],
+			mutationFn: (formData: FormData): Promise<IAd> => createAd(formData)
 		})
 
-	return { getAllQuery, createMutation }
-}
+	const addAdToFavMutation = () =>
+		useMutation({
+			mutationKey: ['add to fav'],
+			mutationFn: (id: string) => addAdToFav(id)
+		})
 
+	return { getAllQuery, createMutation, addAdToFavMutation }
+}

@@ -27,7 +27,10 @@ export const HeaderTop = () => {
 				</ul>
 			</nav>
 			<div className='flex items-center gap-3'>
-				<Link className='text-gray-light group' href='/favorites'>
+				<Link
+					className='text-gray-light group'
+					href='/profile/favorites'
+				>
 					<Heart
 						className='group-hover:fill-gray group-hover:stroke-gray transition'
 						fill='var(--color-gray-light)'
@@ -42,8 +45,6 @@ export const HeaderTop = () => {
 					/>
 				</Link>
 				<UserButton />
-				
-				
 			</div>
 		</div>
 	)

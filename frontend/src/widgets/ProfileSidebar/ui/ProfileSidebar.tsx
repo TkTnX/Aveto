@@ -6,7 +6,7 @@ import { ProfileSidebarTop } from './ProfileSidebarTop'
 
 export const ProfileSidebar = () => {
 	return (
-		<div className='w-70'>
+		<div className='w-full sm:w-70'>
 			<ProfileSidebarTop />
 
 			<nav className='mt-3'>

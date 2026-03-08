@@ -1,4 +1,4 @@
-import { IAd, IReview, ISubscription } from '.'
+import { IAd, IFavorite, IReview, ISubscription } from '.'
 
 export interface IUser {
 	id: string
@@ -13,6 +13,8 @@ export interface IUser {
 
 	subscriptions: ISubscription[]
 	subscribers: ISubscription[]
+	favorites: IFavorite[]
+
 
 	writterReviews: IReview[]
 	receiverReviews: IReview[]

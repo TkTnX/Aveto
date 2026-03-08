@@ -53,4 +53,13 @@ export class AdController {
 	) {
 		return this.adService.create(dto, images, user)
 	}
+
+	@UseGuards(AuthGuard)
+	@Post('fav/:adId')
+	public async addToFav(
+		@User() payload: IAuthPayload,
+		@Param('adId') adId: string
+	) {
+		return this.adService.addToFav(payload, adId)
+	}
 }
