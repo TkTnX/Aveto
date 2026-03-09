@@ -172,4 +172,49 @@ export class AuthService {
 
 		return await this.auth(res, dbUser!)
 	}
+
+	public async yandexAuth(user: any, res: Response) {
+		const isUserExists = await this.prismaService.user.findUnique({
+			where: {
+				email: user.email
+			}
+		})
+
+		let dbUser = isUserExists
+
+		if (!isUserExists) {
+			dbUser = await this.prismaService.user.create({
+				data: {
+					email: user.email,
+					name: user.name,
+					avatar: user.avatar,
+					provider: 'YANDEX'
+				}
+			})
+		}
+
+		return await this.auth(res, dbUser!)
+	}
+	public async vkAuth(user: any, res: Response) {
+		const isUserExists = await this.prismaService.user.findUnique({
+			where: {
+				email: user.email
+			}
+		})
+
+		let dbUser = isUserExists
+
+		if (!isUserExists) {
+			dbUser = await this.prismaService.user.create({
+				data: {
+					email: user.email,
+					name: user.name,
+					avatar: user.avatar,
+					provider: 'VK'
+				}
+			})
+		}
+
+		return await this.auth(res, dbUser!)
+	}
 }

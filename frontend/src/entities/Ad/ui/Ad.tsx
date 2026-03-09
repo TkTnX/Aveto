@@ -21,15 +21,13 @@ export const Ad = ({ ad }: Props) => {
 	return (
 		<div className='group relative'>
 			<Link
+				onMouseMove={e => handleMouseMove(e)}
+				onMouseLeave={handleMouseLeave}
 				className='absolute inset-0 z-1'
 				href={`/p/${ad.slug}`}
 			></Link>
 
-			<div
-				onMouseMove={handleMouseMove}
-				onMouseLeave={handleMouseLeave}
-				className='relative flex'
-			>
+			<div className='relative flex'>
 				{ad.quantity > 0 && (
 					<div className='bg-green absolute top-2 right-2 z-3 rounded-lg px-2 py-1 text-xs text-white'>
 						Есть несколько

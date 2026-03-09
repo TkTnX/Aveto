@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 export const AuthSocialsList = () => {
-	return (
+		return (
 		<div className=''>
 			<p>Или продолжить через</p>
 			<div className='mt-3 flex items-center gap-3'>
@@ -13,23 +13,16 @@ export const AuthSocialsList = () => {
 						alt='Google'
 					/>
 				</a>
-				<button>
-					<Image
-						src={'/images/icons/vkFilled.svg'}
-						width={44}
-						height={44}
-						alt='VK'
-					/>
-				</button>
-				<button>
+			
+				<a href={process.env.NEXT_PUBLIC_YANDEX_AUTH}>
 					<Image
 						src={'/images/icons/yandex.svg'}
 						width={44}
 						height={44}
-						alt='VK'
+						alt='Яндекс'
 						className='rounded-full'
 					/>
-				</button>
+				</a>
 			</div>
 		</div>
 	)
