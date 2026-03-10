@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/src/shared'
 
-export async function getAds(params?: Record<string, string>) {
+export async function getAds(params?: Record<string, unknown>) {
 	const { data } = await axiosInstance.get('ads', { params })
 
 	return data

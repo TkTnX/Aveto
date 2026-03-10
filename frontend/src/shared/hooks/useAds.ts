@@ -15,7 +15,7 @@ import { IAd } from '@/src/shared/types';
 
 
 export function useAds() {
-	const getAllQuery = (query?: Record<string, string>) =>
+	const getAllQuery = (query?: Record<string, unknown>) =>
 		useQuery({
 			queryKey: ['ads'],
 			queryFn: (): Promise<IAd[]> => getAds(query)

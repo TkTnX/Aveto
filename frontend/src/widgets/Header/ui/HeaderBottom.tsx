@@ -46,7 +46,9 @@ export const HeaderBottom = () => {
 				</div>
 				<CityPicker />
 			</div>
-			{openCategories && <CategoriesModal />}
+			{openCategories && (
+				<CategoriesModal onClose={() => setOpenCategories(false)} />
+			)}
 		</>
 	)
 }

@@ -18,8 +18,18 @@ export class AdService {
 		private readonly configService: ConfigService
 	) {}
 
-	public async getAll(query: Record<string, string>) {
-		const ads = await this.prismaService.ad.findMany({ where: query })
+	public async getAll(query: Record<string, any>) {
+		const { categories, ...restQuery } = query
+		const ads = await this.prismaService.ad.findMany({
+			where: {
+				category: {
+					id: {
+						in: categories?.split(',')?.map((cat: string) => cat)
+					}
+				},
+				...restQuery
+			}
+		})
 
 		if (!ads) throw new NotFoundException('Объявления не найдены!')
 

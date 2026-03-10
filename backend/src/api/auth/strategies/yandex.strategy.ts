@@ -20,7 +20,6 @@ export class YandexStrategy extends PassportStrategy(Strategy, 'yandex') {
 		done: any
 	): Promise<any> {
 		const { name, emails, photos } = profile
-		console.log(profile)
 		const user = {
 			email: emails[0].value,
 			name: name.display_name,

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getCategories } from '@/src/api'
+import { getBySlugWithChildren, getCategories } from '@/src/api'
 import { ICategory } from '@/src/shared/types'
 
 export function useCategories() {
@@ -10,5 +10,11 @@ export function useCategories() {
 			queryFn: (): Promise<ICategory[]> => getCategories()
 		})
 
-	return { getAllQuery }
+	const getBySlugWithChildrenQuery = (slug: string) =>
+		useQuery({
+			queryKey: ['category', slug],
+			queryFn: (): Promise<ICategory> => getBySlugWithChildren(slug)
+		})
+
+	return { getAllQuery, getBySlugWithChildrenQuery }
 }

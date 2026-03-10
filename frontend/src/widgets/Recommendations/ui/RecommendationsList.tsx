@@ -2,9 +2,15 @@
 import { Ad } from '@/src/entities'
 import { ErrorMessage, Skeleton, useAds } from '@/src/shared'
 
-export const Recommendations = () => {
+interface Props {
+	categories?: (string | undefined)[]
+}
+
+export const Recommendations = ({ categories }: Props) => {
 	const { getAllQuery } = useAds()
-	const { data, isPending, error } = getAllQuery()
+	const { data, isPending, error } = getAllQuery({
+		categories: categories?.join(',')
+	})
 
 	if (error) return <ErrorMessage error={error} />
 	return (
