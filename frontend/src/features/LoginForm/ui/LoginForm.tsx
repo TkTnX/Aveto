@@ -19,7 +19,7 @@ import { loginSchema, LoginSchemaType } from '@/src/shared/schemas'
 
 export const LoginForm = () => {
 	const queryClient = useQueryClient()
-	const { setOpenLogin } = useAuthStore()
+	const { setOpenLogin, setOpenConfirm } = useAuthStore()
 	const [serverError, setServerError] = useState<null | string>(null)
 	const { loginMutation } = useAuth()
 	const { mutate, isPending } = loginMutation()
@@ -86,8 +86,14 @@ export const LoginForm = () => {
 				/>
 			</FieldGroup>
 			{serverError && <p className='text-red mt-3'>{serverError}</p>}
-			{/* TODO: ADD PASSWORD RESET */}
-			<button type='button' className='text-blue hover:text-red mt-3'>
+			<button
+				onClick={() => {
+					setOpenLogin(false)
+					setOpenConfirm("reset")
+				}}
+				type='button'
+				className='text-blue hover:text-red mt-3'
+			>
 				Забыли пароль?
 			</button>
 			<Button type='submit' className='mt-6.5 text-base'>

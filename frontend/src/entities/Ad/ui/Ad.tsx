@@ -58,7 +58,6 @@ export const Ad = ({ ad }: Props) => {
 					adId={ad.id}
 				/>
 			</div>
-			{/* // TODO: PRICE FORMAT */}
 			<AdPrice size={'sm'} price={ad.price} discount={ad.discount} />
 			<div className='flex items-center gap-1 text-sm'>
 				<MapPin size={14} />

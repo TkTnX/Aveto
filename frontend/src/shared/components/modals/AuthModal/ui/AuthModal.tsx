@@ -47,7 +47,7 @@ export const AuthModal = ({ children }: Props) => {
 								<p>Нет аккаунта на Авето?</p>
 								<Button
 									onClick={() => {
-										setOpenConfirm(true)
+										setOpenConfirm("confirm")
 										setOpenLogin(false)
 									}}
 									className='mt-3 bg-white text-sm text-black shadow-xl'

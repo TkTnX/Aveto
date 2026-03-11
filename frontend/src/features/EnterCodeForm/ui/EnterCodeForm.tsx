@@ -36,7 +36,7 @@ export const EnterCodeForm = () => {
 		mutate(values, {
 			onSuccess: () => {
 				setOpenRegister(true)
-				setOpenConfirm(false)
+				setOpenConfirm(null)
 			},
 			onError: error => {
 				if (error instanceof AxiosError) {

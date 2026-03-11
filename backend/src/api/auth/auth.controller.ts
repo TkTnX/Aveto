@@ -1,8 +1,9 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common'
+import { Body, Controller, Param, Patch, Post, Res, UseGuards } from '@nestjs/common'
 import { Response } from 'express'
 import {
 	LoginRequest,
 	RegisterRequest,
+	ResetPasswordReqest,
 	SendCodeRequest,
 	VerifyCodeRequest
 } from 'src/api/auth/dto'
@@ -36,10 +37,15 @@ export class AuthController {
 		return this.authService.logout(res)
 	}
 
-	@Post('send-code')
-	public async sendCode(@Body() dto: SendCodeRequest) {
-		return this.authService.sendCode(dto)
+	@Post('send-code/:type')
+	public async sendCode(@Body() dto: SendCodeRequest, @Param('type') type:string) {
+		return this.authService.sendCode(dto, type)
 	}
+
+	@Patch('reset-password')
+	public async resetPassword(@Body() dto: ResetPasswordReqest) {
+		return this.authService.resetPassword(dto)
+		}
 
 	@Post('verify')
 	public async verifyCode(@Body() dto: VerifyCodeRequest) {

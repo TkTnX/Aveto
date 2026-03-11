@@ -1,7 +1,14 @@
 'use client'
-import Cookies from 'js-cookie'
-import { useRouter, useSearchParams } from 'next/navigation'
+import Cookies from 'js-cookie';
+import { Metadata } from 'next';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react'
+
+export const metadata: Metadata = {
+	robots: {
+		index: false
+	}
+}
 
 const RedirectPage = () => {
 	const searchParams = useSearchParams()

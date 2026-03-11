@@ -1,4 +1,4 @@
-import { cn } from '@/src/shared'
+import { cn, formatPrice } from '@/src/shared'
 
 interface Props {
 	price: number
@@ -16,14 +16,16 @@ export const AdPrice = ({ price, size = 'lg', discount }: Props) => {
 							'text-base': size === 'sm'
 						})}
 					>
-						{price - (price / 100) * parseFloat(`${discount}%`)} ₽
+						{formatPrice(
+							price - (price / 100) * parseFloat(`${discount}%`)
+						)}{' '}
 					</h3>
 					<p
 						className={cn('text-xl font-black line-through', {
 							'text-xs': size === 'sm'
 						})}
 					>
-						{price} ₽
+						{formatPrice(price)}
 					</p>
 				</div>
 			) : (
@@ -32,7 +34,7 @@ export const AdPrice = ({ price, size = 'lg', discount }: Props) => {
 						'text-base': size === 'sm'
 					})}
 				>
-					{price} ₽
+					{formatPrice(price)}
 				</h3>
 			)}
 		</>

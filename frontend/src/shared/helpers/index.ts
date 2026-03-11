@@ -1,2 +1,2 @@
-export * from './createCategoriesTree'
 export * from './getAllCategoryIds'
+export * from './formatPrice'

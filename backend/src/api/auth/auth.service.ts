@@ -11,6 +11,7 @@ import { User } from 'generated/prisma/client'
 import {
 	LoginRequest,
 	RegisterRequest,
+	ResetPasswordReqest,
 	SendCodeRequest,
 	VerifyCodeRequest
 } from 'src/api/auth/dto'
@@ -35,8 +36,6 @@ export class AuthService {
 		const newUser = await this.prismaService.user.create({
 			data: {
 				name: dto.name,
-				// TODO: ADD AVATARS,
-				// avatar,
 				isEmailVerified: true,
 				[type]: dto.emailOrPhone,
 				password: hashedPassword
@@ -76,7 +75,7 @@ export class AuthService {
 		return { ok: true }
 	}
 
-	public async sendCode(dto: SendCodeRequest) {
+	public async sendCode(dto: SendCodeRequest, type: string) {
 		const now = new Date()
 		const { email } = dto
 
@@ -84,7 +83,11 @@ export class AuthService {
 			where: { email }
 		})
 
-		if (isEmailExists) throw new UnauthorizedException('Почта занята!')
+		if (isEmailExists && type === 'confirm')
+			throw new UnauthorizedException('Почта занята!')
+
+		if (type === 'reset' && !isEmailExists)
+			throw new NotFoundException('Пользователь не найден!')
 
 		const code = Math.floor(1000 + Math.random() * 1000000).toString()
 		await this.prismaService.code.create({
@@ -94,11 +97,38 @@ export class AuthService {
 			}
 		})
 
-		await this.emailService.sendCodeEmail(
-			email,
-			'Код для регистрации',
-			code
-		)
+		if (type === 'confirm') {
+			await this.emailService.sendCodeEmail(
+				email,
+				'Код для регистрации',
+				code
+			)
+		} else if (type === 'reset') {
+			await this.emailService.sendResetEmail(
+				email,
+				'Восстановление пароля',
+				code
+			)
+		}
+
+		return { ok: true }
+	}
+
+	public async resetPassword(dto: ResetPasswordReqest) {
+		const { email, password, code } = dto
+		await this.verifyCode({ code })
+
+		const user = await this.prismaService.user.findUnique({
+			where: { email }
+		})
+		if (!user) throw new NotFoundException('Пользователь не найден!')
+
+		const hashedPassword = await argon2.hash(password)
+
+		await this.prismaService.user.update({
+			where: { id: user.id },
+			data: { password: hashedPassword }
+		})
 
 		return { ok: true }
 	}

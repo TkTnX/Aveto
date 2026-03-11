@@ -1,8 +1,17 @@
+import { cn } from "@/src/shared/lib";
+
+
+
+
+
+
+
 interface Props {
 	error: Error
+	className?:string
 }
 
-export const ErrorMessage = ({ error }: Props) => {
+export const ErrorMessage = ({ error, className }: Props) => {
 	console.log(error)
-	return <p className='text-red my-10 text-center'>{error.message}</p>
+	return <p className={cn('text-red my-10 text-center', className)}>{error.message}</p>
 }

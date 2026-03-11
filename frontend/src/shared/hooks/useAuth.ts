@@ -1,12 +1,40 @@
-import { useMutation, UseMutationOptions } from '@tanstack/react-query'
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-import { login, logout, register, sendEmailCode, verifyCode } from '@/src/api'
-import {
-	EmailSchemaType,
-	LoginSchemaType,
-	RegisterSchemaType,
-	VerifyCodeSchemaType
-} from '@/src/shared/schemas'
+
+
+import { login, logout, register, resetPassword, sendEmailCode, verifyCode } from '@/src/api';
+import { EmailSchemaType, LoginSchemaType, RegisterSchemaType, ResetPasswordSchemaType, VerifyCodeSchemaType } from '@/src/shared/schemas';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export function useAuth() {
 	const loginMutation = () =>
@@ -15,10 +43,10 @@ export function useAuth() {
 			mutationFn: (values: LoginSchemaType) => login(values)
 		})
 
-	const sendEmailCodeMutation = () =>
+	const sendEmailCodeMutation = (theme: string) =>
 		useMutation({
-			mutationKey: ['send phone code'],
-			mutationFn: (phone: EmailSchemaType) => sendEmailCode(phone)
+			mutationKey: ['send email code'],
+			mutationFn: (email: EmailSchemaType) => sendEmailCode(email, theme)
 		})
 
 	const checkCodeMutation = () =>
@@ -31,6 +59,13 @@ export function useAuth() {
 		useMutation({
 			mutationKey: ['register'],
 			mutationFn: (values: RegisterSchemaType) => register(values)
+		})
+	
+	const resetPasswordMutation = () =>
+		useMutation({
+			mutationKey: ['reset password'],
+			mutationFn: (values: ResetPasswordSchemaType) =>
+				resetPassword(values)
 		})
 
 	const logoutMutation = (
@@ -50,6 +85,7 @@ export function useAuth() {
 		sendEmailCodeMutation,
 		checkCodeMutation,
 		registerMutation,
-		logoutMutation
+		logoutMutation,
+		resetPasswordMutation
 	}
 }

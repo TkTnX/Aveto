@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
+import { AddAdForm } from '@/src/features'
 import {
-	createCategoriesTree,
 	ErrorMessage,
 	Skeleton,
 	useAddItemStore,
@@ -11,8 +11,9 @@ import {
 } from '@/src/shared'
 import { ICategory } from '@/src/shared/types'
 
+import { createCategoriesTree } from '../helpers'
+
 import { AddItemCategory } from './AddItemCategory'
-import { AddAdForm } from '@/src/features'
 
 export const AddItemSteps = () => {
 	const { category } = useAddItemStore()
@@ -39,7 +40,9 @@ export const AddItemSteps = () => {
 								<AddItemCategory key={cat.id} cat={cat} />
 							))}
 				</div>
-			) : <AddAdForm category={category} />}
+			) : (
+				<AddAdForm category={category} />
+			)}
 		</div>
 	)
 }

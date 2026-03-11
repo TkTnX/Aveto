@@ -23,7 +23,6 @@ const CategoryPage = async ({
 		data.category
     )
     
-    // TODO: Почему-то сейчас во вкладке все категории не видно подкатегорию Айфоны и iPhone 11
 	return (
 		<div>
 			<div className='container'>
