@@ -19,15 +19,29 @@ export class AdService {
 	) {}
 
 	public async getAll(query: Record<string, any>) {
-		const { categories, ...restQuery } = query
+		const { categories,  priceFrom, priceTo, search, ...restQuery } = query
 		const ads = await this.prismaService.ad.findMany({
 			where: {
+				title: {
+					contains: search,
+					mode: 'insensitive'
+				},
+				price: {
+					gte: Number(priceFrom) || undefined,
+					lte: Number(priceTo) || undefined
+				},
 				category: {
 					id: {
 						in: categories?.split(',')?.map((cat: string) => cat)
 					}
 				},
 				...restQuery
+			},
+			include: {
+				seller: {
+					omit: { password: true }
+				},
+				category: true
 			}
 		})
 

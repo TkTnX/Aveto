@@ -12,9 +12,12 @@ import { PrismaService } from 'src/prisma/prisma.service'
 export class CategoryService {
 	public constructor(private readonly prismaService: PrismaService) {}
 
-	public async getAll() {
+	public async getAll(params?: Record<string, unknown>) {
 		const categories = await this.prismaService.category.findMany({
-			include: { children: true }
+			include: { children: true },
+			where: {
+				parentId: params?.parentId === 'null' ? null : undefined
+			}
 		})
 
 		if (!categories) throw new NotFoundException('Категории не найдены')

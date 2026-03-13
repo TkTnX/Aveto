@@ -1,6 +1,6 @@
+@import 'shadcn/tailwind.css';
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
 
 @theme inline {
 	--color-background: var(--background);
@@ -94,7 +94,7 @@
 	--color-gray-dark: #f2f1f0;
 	--color-red: #ff4053;
 
-	--font-family: 'Manrope'
+	--font-family: 'Manrope';
 }
 
 @layer base {
@@ -107,7 +107,7 @@
 }
 
 body {
-	@apply text-sm font-normal font-family;
+	@apply font-family text-sm font-normal;
 }
 
 .container {

@@ -4,16 +4,19 @@ import { getBySlugWithChildren, getCategories } from '@/src/api'
 import { ICategory } from '@/src/shared/types'
 
 export function useCategories() {
-	const getAllQuery = () =>
+	const getAllQuery = (params?: Record<string, unknown>) =>
 		useQuery({
-			queryKey: ['categories'],
-			queryFn: (): Promise<ICategory[]> => getCategories()
+			queryKey: ['categories', params],
+			queryFn: (): Promise<ICategory[]> => getCategories(params)
 		})
 
 	const getBySlugWithChildrenQuery = (slug: string) =>
 		useQuery({
 			queryKey: ['category', slug],
-			queryFn: (): Promise<ICategory> => getBySlugWithChildren(slug)
+			queryFn: (): Promise<{
+				category: ICategory
+				children: ICategory[]
+			}> => getBySlugWithChildren(slug)
 		})
 
 	return { getAllQuery, getBySlugWithChildrenQuery }

@@ -1,26 +1,15 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CategoryRequest } from 'src/api/category/dto';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { CategoryRequest } from 'src/api/category/dto'
 
-
-
-import { CategoryService } from './category.service';
-
-
-
-
-
-
-
-
-
+import { CategoryService } from './category.service'
 
 @Controller('categories')
 export class CategoryController {
 	public constructor(private readonly categoryService: CategoryService) {}
 
 	@Get()
-	public async getAll() {
-		return this.categoryService.getAll()
+	public async getAll(@Query() params?: Record<string, unknown>) {
+		return this.categoryService.getAll(params)
 	}
 
 	@Get(':slug')

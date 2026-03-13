@@ -10,7 +10,7 @@ import { useState } from 'react';
 export function getIndexOnMove(length: number) {
 	const [currentIndex, setCurrentIndex] = useState(0)
 
-	const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+	const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
 		const { left, width } = e.currentTarget.getBoundingClientRect()
 		const x = e.clientX - left
 

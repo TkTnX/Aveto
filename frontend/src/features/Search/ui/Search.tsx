@@ -1,49 +1,36 @@
 'use client'
-import { SearchIcon, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { SearchIcon, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { SubmitEvent, useEffect, useState } from 'react'
 
-
-
-import { Button } from '@/src/shared';
-import { cn } from '@/src/shared/lib';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { Button } from '@/src/shared'
+import { cn } from '@/src/shared/lib'
 
 export const Search = () => {
+	const router = useRouter()
 	const [value, setValue] = useState('')
 	const [isFocused, setIsFocused] = useState(false)
 
-		useEffect(() => {
-			if (isFocused) document.body.style.overflow = 'hidden'
+	useEffect(() => {
+		if (isFocused) document.body.style.overflow = 'hidden'
 
-			return () => {
-				document.body.style.overflow = 'visible'
-			}
-		}, [isFocused])
-	
+		return () => {
+			document.body.style.overflow = 'visible'
+		}
+	}, [isFocused])
+
+	const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		router.push(`/catalog?search=${value}`)
+		setIsFocused(false)
+	}
+
 	return (
 		<>
-			<form className='bg-blue relative z-6 flex items-center overflow-hidden rounded-lg sm:flex-1 sm:p-0.5 md:h-13'>
+			<form
+				onSubmit={e => onSubmit(e)}
+				className='bg-blue relative z-6 flex items-center overflow-hidden rounded-lg sm:flex-1 sm:p-0.5 md:h-13'
+			>
 				<label className='hidden flex-1 items-center gap-1 rounded-lg bg-white px-2 sm:flex'>
 					<SearchIcon size={12} color='var(--color-gray)' />
 					<input

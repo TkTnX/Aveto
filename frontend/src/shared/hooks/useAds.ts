@@ -1,23 +1,12 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-
-
-import { addAdToFav, createAd, getAds } from '@/src/api';
-import { IAd } from '@/src/shared/types';
-
-
-
-
-
-
-
-
-
+import { addAdToFav, createAd, getAds } from '@/src/api'
+import { IAd } from '@/src/shared/types'
 
 export function useAds() {
 	const getAllQuery = (query?: Record<string, unknown>) =>
 		useQuery({
-			queryKey: ['ads'],
+			queryKey: ['ads', query],
 			queryFn: (): Promise<IAd[]> => getAds(query)
 		})
 
