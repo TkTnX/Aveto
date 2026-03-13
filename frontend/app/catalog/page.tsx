@@ -9,7 +9,7 @@ export async function generateMetadata({ searchParams }: Props) {
 	const { search } = await searchParams
 
 	return {
-		title: `${search} - Aveto | Недвижимость, транспорт, работа, услуги, вещи`
+		title: `${search || 'Каталог'} - Aveto | Недвижимость, транспорт, работа, услуги, вещи`
 	}
 }
 const CatalogPage = async ({ searchParams }: Props) => {

@@ -5,7 +5,7 @@ import { AdPrice } from '@/src/entities'
 import { AddAdToFavButton } from '@/src/features'
 import { Button, UserAvatar } from '@/src/shared'
 import { IAd } from '@/src/shared/types'
-import { UserReviews } from '@/src/widgets'
+import { UserReviews } from '@/src/widgets/UserReviews'
 
 interface Props {
 	ad: IAd
@@ -14,7 +14,7 @@ export const AdSidebar = ({ ad }: Props) => {
 	return (
 		<div className='sticky top-5 w-full md:w-75 lg:w-80.5'>
 			<div className='flex items-start justify-between'>
-				<AdPrice  price={ad.price} discount={ad.discount} />
+				<AdPrice price={ad.price} discount={ad.discount} />
 				<AddAdToFavButton adId={ad.id} />
 			</div>
 			{ad.quantity > 0 && (
@@ -40,7 +40,10 @@ export const AdSidebar = ({ ad }: Props) => {
 						>
 							{ad.seller.name}
 						</Link>
-						<UserReviews />
+						<UserReviews
+							userId={ad.seller.id}
+							rating={ad.seller.rating}
+						/>
 						<p>
 							На Авето с{' '}
 							{new Date(ad.seller.createdAt).getFullYear()}

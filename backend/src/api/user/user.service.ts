@@ -22,7 +22,7 @@ export class UserService {
 					include: {
 						ad: true
 					}
-				}
+				},
 			}
 		})
 		if (!user) throw new NotFoundException('Пользователь не найден!')

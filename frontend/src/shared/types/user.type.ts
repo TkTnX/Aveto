@@ -10,6 +10,7 @@ export interface IUser {
 	email?: string
 	isPhoneVerified: boolean
 	isEmailVerified: boolean
+	rating: number
 
 	subscriptions: ISubscription[]
 	subscribers: ISubscription[]

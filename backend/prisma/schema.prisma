@@ -79,6 +79,7 @@ model User {
   isPhoneVerified Boolean @default(false) @map("is_phone_verified")
   isEmailVerified Boolean @default(false) @map("is_email_verified")
   provider EProviders @default(CREDENTIALS)
+  rating Float @default(0.0)
 
   ads Ad[]
   favorites FavAd[]
@@ -100,7 +101,6 @@ model Review {
 
   rating Int
   text String
-  replyTo String @map("reply_to")
 
   writer User @relation(name: "writer", references: [id], fields: [writerId], onDelete: Cascade)
   writerId String @map("writer_id")
