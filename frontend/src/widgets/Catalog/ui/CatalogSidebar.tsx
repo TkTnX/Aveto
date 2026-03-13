@@ -26,7 +26,7 @@ export const CatalogSidebar = () => {
 		router.push(`?${params.toString()}`)
 	}
 	return (
-		<div className='w-75'>
+		<div className='w-full sm:max-w-50 md:w-75'>
 			<CategoriesAccordion />
 			<div className='mt-4'>
 				<p className='font-black'>Цена, ₽ </p>

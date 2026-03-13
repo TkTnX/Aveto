@@ -17,7 +17,7 @@ export const CatalogList = ({ search }: Props) => {
 
 	if (error) return <ErrorMessage error={error} />
 	return (
-		<section>
+		<section className='w-full'>
 			<h1 className='text-3xl font-black'>
 				{search && `«${search}»:`} объявления на Авето{' '}
 				<span className='text-gray'>{data?.length}</span>{' '}

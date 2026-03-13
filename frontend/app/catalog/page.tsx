@@ -12,7 +12,6 @@ export async function generateMetadata({ searchParams }: Props) {
 		title: `${search} - Aveto | Недвижимость, транспорт, работа, услуги, вещи`
 	}
 }
-
 const CatalogPage = async ({ searchParams }: Props) => {
 	const { search } = await searchParams
 	return (
@@ -20,12 +19,12 @@ const CatalogPage = async ({ searchParams }: Props) => {
 			<BreadcrumbsList
 				items={[
 					{
-						href: `/catalog?search=${search}`,
-						label: search
+						href: search ? `/catalog?search=${search}` : '/',
+						label: search || "Каталог"
 					}
 				]}
 			/>
-			<div className='container mt-3 flex items-start gap-9'>
+			<div className='container sm:flex-row flex-col mt-3 flex items-start gap-9'>
 				<CatalogSidebar />
 				<CatalogList search={search} />
 			</div>

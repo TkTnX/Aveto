@@ -16,12 +16,8 @@ export const CatalogAd = ({ ad }: Props) => {
 	return (
 		<div className='relative grid grid-cols-2 items-start gap-4 md:grid-cols-3'>
 			<Link href={`/p/${ad.slug}`} className='absolute inset-0'></Link>
-			<AdImages
-				slug={ad.slug}
-				className={'max-w-52 flex-1'}
-				images={ad.images}
-			/>
-			<div className='flex-1'>
+			<AdImages slug={ad.slug} className={'flex-1'} images={ad.images} />
+			<div className='col-[2/4] flex-1 md:col-auto'>
 				<div className='flex items-center justify-between'>
 					<h6 className='text-lg'>{ad.title}</h6>
 					<AddAdToFavButton adId={ad.id} size={16} />
@@ -38,7 +34,7 @@ export const CatalogAd = ({ ad }: Props) => {
 				<p className='text-gray'>{ad.category?.name}</p>
 			</div>
 			{ad.seller && (
-				<div className='flex flex-col items-start justify-between gap-2'>
+				<div className='col-[1/3] flex flex-col items-start justify-between gap-2 lg:col-auto'>
 					<Link
 						href={`/brand/${ad.seller.id}`}
 						className='relative block h-10 w-10'
