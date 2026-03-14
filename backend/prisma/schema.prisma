@@ -51,6 +51,7 @@ model Ad {
   sellerId String @map("seller_id")
 
   favorites FavAd[]
+  reviews Review[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
@@ -101,6 +102,9 @@ model Review {
 
   rating Int
   text String
+
+  ad Ad @relation( references: [id], fields: [adId], onDelete: Cascade)
+  adId String @map("ad_id")
 
   writer User @relation(name: "writer", references: [id], fields: [writerId], onDelete: Cascade)
   writerId String @map("writer_id")

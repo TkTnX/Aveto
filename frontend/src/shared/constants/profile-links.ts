@@ -9,7 +9,7 @@ export const PROFILE_LINKS = [
 	},
 	{
 		label: 'Мои отзывы',
-		href: '/profile/reviews'
+		href: '/profile/rating'
 	},
 	{
 		label: 'Избранное',

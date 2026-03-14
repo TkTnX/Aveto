@@ -1,7 +1,13 @@
 import { axiosInstance } from '@/src/shared'
 
 export async function getMe() {
-	const { data } = await axiosInstance.get('users/me')
+	const {data} = await axiosInstance.get('users/me')
+	return data
+}
+
+export async function getBrand(brandId: string) {
+	const { data } = await axiosInstance.get(`users/brand/${brandId}`)
+
 	return data
 }
 

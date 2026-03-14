@@ -1,19 +1,19 @@
-'use client'
 import { Star } from 'lucide-react'
-import Link from 'next/link'
 
-import { cn } from '@/src/shared'
+import { cn, Skeleton, UserReviewsModal } from '@/src/shared'
+import { IUser } from '@/src/shared/types'
 
 interface Props {
 	className?: string
 	rating: number
-	userId: string
+	user?: IUser
 }
 
-export const UserReviews = ({ className, rating, userId }: Props) => {
+export const UserReviews = ({ className, rating, user }: Props) => {
+	if (!user) return <Skeleton className='h-10 w-full' />
 	return (
 		<div className={cn('flex items-center gap-1', className)}>
-			<p className='text-lg font-bold'>{rating.toFixed(1)}</p>
+			{user && <p className='text-lg font-bold'>{rating?.toFixed(1)}</p>}
 			<div className='flex items-center gap-1'>
 				{[...new Array(rating)].map((_, index) => (
 					<Star
@@ -32,9 +32,11 @@ export const UserReviews = ({ className, rating, userId }: Props) => {
 					/>
 				))}
 			</div>
-			<Link href={`/brand/${userId}`} className='text-blue'>
-				{rating === 0 ? 'Нет отзывов' : `Все отзывы`}
-			</Link>
+			<UserReviewsModal user={user}>
+				<p className='text-blue'>
+					{rating === 0 ? 'Нет отзывов' : `Все отзывы`}
+				</p>
+			</UserReviewsModal>
 		</div>
 	)
 }

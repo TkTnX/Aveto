@@ -41,7 +41,7 @@ export const AdSidebar = ({ ad }: Props) => {
 							{ad.seller.name}
 						</Link>
 						<UserReviews
-							userId={ad.seller.id}
+							user={ad.seller}
 							rating={ad.seller.rating}
 						/>
 						<p>

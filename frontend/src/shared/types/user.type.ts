@@ -17,7 +17,7 @@ export interface IUser {
 	favorites: IFavorite[]
 
 
-	writterReviews: IReview[]
+	writtenReviews: IReview[]
 	receiverReviews: IReview[]
 
 	createdAt: string

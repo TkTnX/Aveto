@@ -52,7 +52,7 @@ export const CatalogAd = ({ ad }: Props) => {
 						>
 							{ad.seller.name}
 						</Link>
-						<UserReviews />
+						<UserReviews user={ad.seller} rating={ad.seller.rating} />
 					</div>
 				</div>
 			)}

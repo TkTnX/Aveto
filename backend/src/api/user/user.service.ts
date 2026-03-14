@@ -18,14 +18,34 @@ export class UserService {
 			where: { id: userPayload.userId },
 			include: {
 				ads: true,
-				favorites: {
+				receiverReviews: {
 					include: {
 						ad: true
 					}
 				},
+				writtenReviews: {
+					include: {
+						ad: true
+					}
+				},
+				favorites: {
+					include: {
+						ad: true
+					}
+				}
 			}
 		})
 		if (!user) throw new NotFoundException('Пользователь не найден!')
+
+		return user
+	}
+
+	public async getBrand(brandId: string) {
+		const user = await this.prismaService.user.findUnique({
+			where: { id: brandId },
+			include: { ads: true }
+		})
+		if (!user) throw new NotFoundException('Пользователь не найден')
 
 		return user
 	}

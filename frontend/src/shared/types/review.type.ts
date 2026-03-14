@@ -1,4 +1,4 @@
-import { IUser } from "."
+import { IAd, IUser } from "."
 
 export interface IReview {
     id: string
@@ -10,6 +10,8 @@ export interface IReview {
     writerId: string
     receiver?: IUser
     receiverId: string
+    ad?: IAd
+    adId: string
 
     createdAt: string
 }

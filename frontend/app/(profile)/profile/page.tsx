@@ -6,8 +6,8 @@ export const metadata: Metadata = {
 	title: 'Личный кабинет - Мои объявления'
 }
 
-const ProfilePage = () => {
-	return <UserAdsList />
+const ProfilePage =  () => {
+	return <UserAdsList  />
 }
 
 export default ProfilePage

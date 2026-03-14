@@ -1,20 +1,26 @@
 'use client'
-
 import Link from 'next/link'
 
 import { Ad } from '@/src/entities'
 import { Skeleton, useUserStore } from '@/src/shared'
+import { IUser } from '@/src/shared/types'
 
-export const UserAdsList = () => {
-	const { user } = useUserStore()
+interface Props {
+	user?: IUser
+}
 
-	if (!user) return <Skeleton className='h-100 w-full' />
+export const UserAdsList = ({ user }: Props) => {
+	const { user: profileUser } = useUserStore()
+	const data = user ? user : profileUser!
+	if (!data) return <Skeleton className='h-100 w-full' />
 	return (
-		<section>
-			<h2 className='text-3xl font-black'>Мои объявления</h2>
-			{user.ads.length > 0 ? (
+		<section className='flex-1'>
+			<h2 className='text-3xl font-black'>
+				{!user ? 'Мои объявления' : `Объявления пользователя`}
+			</h2>
+			{data.ads.length > 0 ? (
 				<div className='mt-3 grid grid-cols-2 gap-3 md:grid-cols-3'>
-					{user.ads.map(ad => (
+					{data.ads.map(ad => (
 						<Ad key={ad.id} ad={ad} />
 					))}
 				</div>

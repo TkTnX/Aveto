@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { ProfileSidebar } from '@/src/widgets'
 
 export const metadata: Metadata = {
+	title: 'Личный кабинет',
 	description: 'Aveto: недвижимость, транспорт, работа, услуги, вещи'
 }
 

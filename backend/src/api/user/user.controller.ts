@@ -2,6 +2,7 @@ import {
 	Body,
 	Controller,
 	Get,
+	Param,
 	Patch,
 	Req,
 	UploadedFile,
@@ -27,6 +28,11 @@ export class UserController {
 	@Get('me')
 	public async getMe(@User() user: IAuthPayload) {
 		return this.userService.getMe(user)
+	}
+
+	@Get('brand/:brandId')
+	public async getBrand(@Param('brandId') brandId: string) {
+		return this.userService.getBrand(brandId)
 	}
 
 	@UseGuards(AuthGuard)

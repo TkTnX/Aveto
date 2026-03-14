@@ -13,7 +13,11 @@ export class ReviewService {
 		if (!user) throw new NotFoundException('Пользователь не найден')
 
 		const reviews = await this.prismaService.review.findMany({
-			where: { writerId: user.id }
+			where: { receiverId: user.id },
+			include: {
+				ad: true,
+				writer: true
+			}
 		})
 		if (!reviews) throw new NotFoundException('Отзывы не найдены!')
 
@@ -21,7 +25,7 @@ export class ReviewService {
 	}
 
 	public async writeReview(dto: ReviewRequest, writerId: string) {
-		const { rating, receiverId, text } = dto
+		const { rating, receiverId, text, adId } = dto
 
 		const receiver = await this.prismaService.user.findUnique({
 			where: { id: receiverId },
@@ -36,7 +40,8 @@ export class ReviewService {
 				rating,
 				receiverId,
 				text,
-				writerId
+				writerId,
+				adId
 			}
 		})
 

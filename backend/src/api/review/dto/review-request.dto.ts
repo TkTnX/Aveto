@@ -14,4 +14,8 @@ export class ReviewRequest {
 	@IsNotEmpty({ message: 'Получатель обязателен' })
 	@IsString({ message: 'ID получателя должен быть строкой' })
 	receiverId: string
+
+	@IsNotEmpty({ message: 'Объявление обязателено' })
+	@IsString({ message: 'ID объявления должен быть строкой' })
+	adId: string
 }
