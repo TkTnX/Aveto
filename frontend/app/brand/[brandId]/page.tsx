@@ -20,7 +20,9 @@ const BrandPage = async ({ params }: Props) => {
 
 	return (
 		<div className='container mt-10 flex items-start gap-9'>
-			<ProfileSidebarTop user={user} />
+			<div className='sticky top-2'>
+				<ProfileSidebarTop user={user} />
+			</div>
 			<UserAdsList user={user} />
 		</div>
 	)

@@ -1,10 +1,4 @@
-import { create } from 'zustand';
-
-
-
-
-
-
+import { create } from 'zustand'
 
 interface AuthStoreType {
 	openLogin: boolean

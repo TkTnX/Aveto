@@ -1,6 +1,17 @@
-import { getUserReviews } from "@/src/api";
-import { IReview } from "@/src/shared/types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+
+
+import { getUserReviews, writeReview } from "@/src/api";
+import { IReview, IWriteReview } from "@/src/shared/types";
+
+
+
+
+
+
+
+
 
 export function useReviews() {
     const userReviewsQuery = (userId: string) => useQuery({
@@ -8,8 +19,13 @@ export function useReviews() {
         queryFn: (): Promise<IReview[]> => getUserReviews(userId)
     }) 
 
+    const writeReviewMutation = () => useMutation({
+        mutationKey: ['write review'],
+        mutationFn: (values: IWriteReview): Promise<IReview> => writeReview(values)
+    })
 
     return {
-        userReviewsQuery
+        userReviewsQuery,
+        writeReviewMutation
     }
 }

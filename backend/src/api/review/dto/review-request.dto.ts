@@ -18,4 +18,12 @@ export class ReviewRequest {
 	@IsNotEmpty({ message: 'Объявление обязателено' })
 	@IsString({ message: 'ID объявления должен быть строкой' })
 	adId: string
+
+	@IsNotEmpty({ message: 'Нужно указать, куплен ли товар' })
+	@IsString()
+	isBought: string
+
+	@IsNotEmpty({ message: 'Итог обращения обязателен' })
+	@IsString({ message: 'Итог обращения должен быть строкой' })
+	howFinished: string
 }

@@ -25,7 +25,7 @@ export class ReviewService {
 	}
 
 	public async writeReview(dto: ReviewRequest, writerId: string) {
-		const { rating, receiverId, text, adId } = dto
+		const { rating, receiverId, text, adId, howFinished, isBought } = dto
 
 		const receiver = await this.prismaService.user.findUnique({
 			where: { id: receiverId },
@@ -41,7 +41,9 @@ export class ReviewService {
 				receiverId,
 				text,
 				writerId,
-				adId
+				adId,
+				howFinished,
+				isBought
 			}
 		})
 

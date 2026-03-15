@@ -15,3 +15,12 @@ export interface IReview {
 
     createdAt: string
 }
+
+export interface IWriteReview {
+    isBought: string
+    howFinished: string
+    adId: string
+    text: string
+    rating: number
+    receiverId: string
+}

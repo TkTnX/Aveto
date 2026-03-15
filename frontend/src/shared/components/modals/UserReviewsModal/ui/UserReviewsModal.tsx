@@ -1,5 +1,5 @@
 'use client'
-import { Star, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -17,6 +17,7 @@ import {
 } from '@/src/shared/components/ui'
 import { useReviews } from '@/src/shared/hooks'
 import { IUser } from '@/src/shared/types'
+import { StarsList } from '@/src/widgets'
 
 interface Props {
 	user: IUser
@@ -58,28 +59,7 @@ export const UserReviewsModal = ({ user, children }: Props) => {
 									<h3 className='text-6xl font-black'>
 										{user.rating.toFixed(1)}
 									</h3>
-									<div className='flex items-center gap-1'>
-										{[...new Array(user.rating)].map(
-											(_, index) => (
-												<Star
-													fill='#ffb021'
-													key={index}
-													stroke='#ffb021'
-													size={16}
-												/>
-											)
-										)}
-										{[...new Array(5 - user.rating)].map(
-											(_, index) => (
-												<Star
-													fill='#e0e0e0'
-													key={index}
-													stroke='#e0e0e0'
-													size={16}
-												/>
-											)
-										)}
-									</div>
+									<StarsList rating={user.rating} />
 									<p className='text-center'>
 										{data.length} отзыва
 									</p>
@@ -90,26 +70,7 @@ export const UserReviewsModal = ({ user, children }: Props) => {
 											className='flex items-center'
 											key={index}
 										>
-											{[...new Array(index + 1)].map(
-												(_, index) => (
-													<Star
-														fill='#ffb021'
-														key={index}
-														stroke='#ffb021'
-														size={16}
-													/>
-												)
-											)}
-											{[...new Array(5 - index - 1)].map(
-												(_, index) => (
-													<Star
-														fill='#e0e0e0'
-														key={index}
-														stroke='#e0e0e0'
-														size={16}
-													/>
-												)
-											)}
+											<StarsList rating={index + 1} />
 											<p className='ml-4'>{rating}</p>
 										</div>
 									))}
@@ -121,7 +82,7 @@ export const UserReviewsModal = ({ user, children }: Props) => {
 									</p>
 									<Button className='mt-2 w-full justify-center bg-black p-0'>
 										<Link
-											href={'#!'}
+											href={`/review?uid=${user.id}`}
 											className='px-4 py-2 hover:text-white!'
 										>
 											Написать отзыв

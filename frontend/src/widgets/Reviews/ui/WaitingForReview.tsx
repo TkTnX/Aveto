@@ -1,4 +1,4 @@
 export const WaitingForReview = () => {
-	// TODO: Сделать добавление отзывов на клиенте
+	// TODO: Сделать заказы
 	return <div className=''>WaitingForReview</div>
 }
