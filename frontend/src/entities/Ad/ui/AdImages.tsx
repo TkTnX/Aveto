@@ -15,6 +15,9 @@ export const AdImages = ({ slug, images, className }: Props) => {
 	const { handleMouseLeave, currentIndex, handleMouseMove } = getIndexOnMove(
 		images.length
 	)
+	const currImage = images[currentIndex]
+
+	if(!currImage) return null
 	return (
 		<div
 			onMouseMove={e => handleMouseMove(e)}

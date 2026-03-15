@@ -9,11 +9,12 @@ interface Props {
 	ads: IAd[]
 }
 
+
 export const SellerAds = ({ ads }: Props) => {
 	const { setAd, ad } = useAddReviewStore()
 	return (
-		<div className='mt-6 flex gap-6'>
-			<p className='font-black w-48.25'>Что вы обсуждали?</p>
+		<div className='vsm:flex-row mt-6 flex flex-col gap-6'>
+			<p className='font-black sm:w-48.25'>Что вы обсуждали?</p>
 			{ad ? (
 				<div
 					className='relative flex flex-1 items-start gap-2 rounded-xl p-1.5 text-left'

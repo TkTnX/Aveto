@@ -17,15 +17,15 @@ interface Props {
 
 export const AddReview = ({ ads }: Props) => {
 	const { setIsBought, setHowFinished, ad, isBought, howFinished } =
-    useAddReviewStore()
-  
+		useAddReviewStore()
+
 	return (
 		<div className='container mt-9 max-w-158!'>
 			<h1 className='text-3xl font-black'>Отзывы о пользователе</h1>
 			<SellerAds ads={ads} />
 			{ad && (
-				<div className='mt-6 mr-5.25 flex gap-6'>
-					<p className='w-48.75 font-black'>Вы купили товар?</p>
+				<div className='vsm:flex-row mt-6 flex flex-col gap-6 sm:mr-5.25'>
+					<p className='font-black sm:w-48.75'>Вы купили товар?</p>
 					<RadioGroup onValueChange={setIsBought}>
 						<div className='flex items-center gap-3'>
 							<RadioGroupItem value='Да' id='Да' />
@@ -39,8 +39,10 @@ export const AddReview = ({ ads }: Props) => {
 				</div>
 			)}
 			{isBought && (
-				<div className='mt-6 mr-5.25 flex gap-6'>
-					<p className='w-48.75 font-black'>Чем всё закончилось?</p>
+				<div className='vsm:flex-row mt-6 flex flex-col gap-6 sm:mr-5.25'>
+					<p className='font-black sm:w-48.75'>
+						Чем всё закончилось?
+					</p>
 					<RadioGroup onValueChange={setHowFinished}>
 						{REVIEW_FINISHED.map(str => (
 							<div key={str} className='flex items-center gap-3'>

@@ -54,7 +54,7 @@ export const UserReviewsModal = ({ user, children }: Props) => {
 						<Skeleton className='h-50 w-full' />
 					) : (
 						<div className='w-full'>
-							<div className='flex items-stretch justify-between gap-2'>
+							<div className='flex flex-wrap items-stretch justify-center gap-2 sm:flex-nowrap sm:justify-between'>
 								<div className='w-fit'>
 									<h3 className='text-6xl font-black'>
 										{user.rating.toFixed(1)}

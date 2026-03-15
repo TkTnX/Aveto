@@ -16,7 +16,8 @@ export class ReviewService {
 			where: { receiverId: user.id },
 			include: {
 				ad: true,
-				writer: true
+				writer: {omit: {password: true}},
+				receiver: {omit: {password: true}},
 			}
 		})
 		if (!reviews) throw new NotFoundException('Отзывы не найдены!')

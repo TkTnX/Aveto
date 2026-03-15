@@ -1,34 +1,46 @@
-import { Star } from 'lucide-react'
-import Image from 'next/image'
+import { Dot } from 'lucide-react'
 import Link from 'next/link'
 
+import { UserAvatar } from '@/src/shared'
 import { IReview } from '@/src/shared/types'
-import { StarsList, UserReviews } from '@/src/widgets'
+import { StarsList } from '@/src/widgets'
 
 interface Props {
 	review: IReview
 }
 
 export const Review = ({ review }: Props) => {
+	console.log(review)
 	return (
 		<div className='border-b pb-4'>
-			<Link
-				href={`/p/${review.ad?.slug}`}
-				className='flex items-start justify-between gap-2'
-			>
-				<Image
-					width={80}
-					height={80}
-					src={review.ad?.images[0] || ''}
-					alt={review.ad?.title || 'Заголовок'}
-					unoptimized
-				/>
-				<div>
-					<h6>{review.ad?.title}</h6>
-				<StarsList rating={review.rating} />
+			<div className='flex items-center gap-1'>
+				<div className='relative h-10 w-10'>
+					<UserAvatar
+						name={review.receiver?.name || ''}
+						avatar={review.receiver?.avatar}
+					/>
 				</div>
-			</Link>
-			<p className='text-gray mt-1'>{review.text}</p>
+				<div>
+					<p className='font-black'>{review.receiver?.name}</p>
+					<p className='text-gray text-xs'>
+						{new Date(review.createdAt).toLocaleDateString(
+							'ru-RU',
+							{ day: '2-digit', month: 'long', year: 'numeric' }
+						)}
+					</p>
+				</div>
+			</div>
+			<div className='mt-4 flex items-start justify-between gap-2'>
+				<div className='flex flex-wrap items-center gap-1 text-xs'>
+					<StarsList rating={review.rating} />{' '}
+					<p className='text-gray'>{review.howFinished}</p>
+					<Dot size={12} className='text-gray' />
+					<Link href={`/p/${review.ad?.slug}`} className='text-gray'>
+						{review.ad?.title}
+					</Link>
+				</div>
+			</div>
+			<p className='mt-1'>{review.text}</p>
 		</div>
 	)
 }

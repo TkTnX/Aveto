@@ -13,7 +13,7 @@ import {
 } from '@/src/shared'
 
 export const AddReviewInfo = () => {
-    const router = useRouter()
+	const router = useRouter()
 	const { writeReviewMutation } = useReviews()
 	const { mutate, isPending } = writeReviewMutation()
 	const [hoveredStar, setHoveredStar] = useState<null | number>(null)
@@ -46,8 +46,8 @@ export const AddReviewInfo = () => {
 	}
 	return (
 		<div className=''>
-			<div className='mt-6 flex items-center'>
-				<p className='mr-5.25 w-48.25 font-black'>Оценка</p>
+			<div className='vsm:flex-row mt-6 flex flex-col vsm:items-center gap-3 sm:gap-0'>
+				<p className='font-black sm:mr-5.25 sm:w-48.25'>Оценка</p>
 				<div className='flex items-center gap-1'>
 					{[...new Array(5)].map((_, index) => (
 						<button
@@ -75,8 +75,10 @@ export const AddReviewInfo = () => {
 					))}
 				</div>
 			</div>
-			<div className='mt-6 flex'>
-				<p className='mr-5.25 min-w-48.25 font-black'>Комментарий</p>
+			<div className='vsm:flex-row mt-6 flex flex-col gap-3 sm:gap-0'>
+				<p className='font-black sm:mr-5.25 sm:min-w-48.25'>
+					Комментарий
+				</p>
 				<div className='w-full'>
 					<Textarea
 						disabled={isPending}
