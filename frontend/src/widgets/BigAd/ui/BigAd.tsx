@@ -1,4 +1,6 @@
+'use client'
 import { Dot } from 'lucide-react'
+import { useEffect } from 'react'
 
 import { IAd } from '@/src/shared/types'
 
@@ -11,6 +13,23 @@ interface Props {
 }
 
 export const BigAd = ({ ad }: Props) => {
+	useEffect(() => {
+		const recentWatched: IAd[] = JSON.parse(
+			localStorage.getItem('recentWatched') || '[]'
+		)
+
+		if (!recentWatched.find(storedAd => storedAd.id === ad.id)) {
+			if (recentWatched.length < 3) {
+				recentWatched.push(ad)
+			} else {
+				recentWatched.pop()
+				recentWatched.unshift(ad)
+			}
+		}
+
+		localStorage.setItem('recentWatched', JSON.stringify(recentWatched))
+	}, [ad])
+
 	return (
 		<div className='w-full md:max-w-150'>
 			<h1 className='text-3xl font-black'>{ad.title}</h1>

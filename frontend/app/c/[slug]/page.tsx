@@ -35,7 +35,7 @@ const CategoryPage = async ({
 					</div>
 				)}
 			</div>
-			<Recommendations categories={categoryIds} />
+			<Recommendations className='container mt-6' categories={categoryIds} />
 		</div>
 	)
 }

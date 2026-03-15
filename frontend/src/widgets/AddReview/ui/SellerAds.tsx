@@ -9,8 +9,6 @@ interface Props {
 	ads: IAd[]
 }
 
-// TODO: MIDDLEWARE
-// TODO: SIDEBAR с недавно просмотренными объявлениями на главной
 
 export const SellerAds = ({ ads }: Props) => {
 	const { setAd, ad } = useAddReviewStore()

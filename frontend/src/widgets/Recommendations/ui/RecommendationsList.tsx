@@ -4,9 +4,10 @@ import { ErrorMessage, Skeleton, useAds } from '@/src/shared'
 
 interface Props {
 	categories?: (string | undefined)[]
+	className?: string
 }
 
-export const Recommendations = ({ categories }: Props) => {
+export const Recommendations = ({ categories, className }: Props) => {
 	const { getAllQuery } = useAds()
 	const { data, isPending, error } = getAllQuery({
 		categories: categories?.join(',')
@@ -14,9 +15,9 @@ export const Recommendations = ({ categories }: Props) => {
 
 	if (error) return <ErrorMessage error={error} />
 	return (
-		<section className='container mt-6'>
+		<section className={className}>
 			<h3 className='text-2xl font-bold'>Рекомендации для вас</h3>
-			<div className='mt-3 grid grid-cols-2 gap-3 md:grid-cols-4'>
+			<div className='mt-3 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4'>
 				{isPending ? (
 					[...new Array(6)].map((_, index) => (
 						<Skeleton key={index} className='h-75 w-full' />

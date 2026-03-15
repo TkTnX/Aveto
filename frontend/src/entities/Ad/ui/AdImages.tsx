@@ -17,7 +17,6 @@ export const AdImages = ({ slug, images, className }: Props) => {
 	)
 	const currImage = images[currentIndex]
 
-	if(!currImage) return null
 	return (
 		<div
 			onMouseMove={e => handleMouseMove(e)}
@@ -30,13 +29,17 @@ export const AdImages = ({ slug, images, className }: Props) => {
 					key={index}
 					className='h-30 w-full md:h-58.75'
 				>
-					<Image
-						fill
-						src={images[currentIndex]}
-						alt={`${'image'}-${index}`}
-						className='rounded-2xl object-cover'
-						unoptimized
-					/>
+					{currImage ? (
+						<Image
+							fill
+							src={currImage}
+							alt={`${'image'}-${index}`}
+							className='rounded-2xl object-cover'
+							unoptimized
+						/>
+					) : (
+						<div className='bg-gray/30 h-full w-full rounded-2xl'></div>
+					)}
 				</Link>
 			))}
 		</div>
