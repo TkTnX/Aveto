@@ -18,10 +18,8 @@ export class YandexController {
 	@Get('redirect')
 	@UseGuards(AuthGuard('yandex'))
 	async yandexAuthRedirect(@Req() req: Request, @Res() res: Response) {
-		const { accessToken } = await this.authService.yandexAuth(req.user, res)
+		await this.authService.yandexAuth(req.user, res)
 
-		return res.redirect(
-			`${this.configService.getOrThrow('CLIENT_CALLBACK_URL')}?token=${accessToken}`
-		)
+		return res.redirect(`${this.configService.getOrThrow('CLIENT_URL')}`)
 	}
 }

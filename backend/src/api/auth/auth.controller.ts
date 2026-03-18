@@ -1,5 +1,5 @@
-import { Body, Controller, Param, Patch, Post, Res, UseGuards } from '@nestjs/common'
-import { Response } from 'express'
+import { Body, Controller, Param, Patch, Post, Req, Res, UseGuards } from '@nestjs/common'
+import { Request, Response } from 'express'
 import {
 	LoginRequest,
 	RegisterRequest,
@@ -50,5 +50,10 @@ export class AuthController {
 	@Post('verify')
 	public async verifyCode(@Body() dto: VerifyCodeRequest) {
 		return this.authService.verifyCode(dto)
+	}
+
+	@Post('refresh')
+	public async refresh(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
+		return this.authService.refresh(request, response)
 	}
 }

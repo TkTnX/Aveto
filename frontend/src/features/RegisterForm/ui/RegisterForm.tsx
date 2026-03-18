@@ -35,7 +35,7 @@ export const RegisterForm = () => {
 	const onSubmit = (values: RegisterSchemaType) => {
 		mutate(values, {
 			onSuccess: data => {
-				Cookies.set('accessToken', data.accessToken)
+				// Cookies.set('accessToken', data.accessToken)
 				setOpenRegister(false)
 				router.push('/profile')
 			},

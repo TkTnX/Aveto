@@ -150,6 +150,21 @@ export class AuthService {
 		return { ok: true }
 	}
 
+	public async refresh(req: Request, res: Response) {
+		const refreshToken = req.cookies.refreshToken
+		if (!refreshToken) return
+
+		const userPayload = await this.jwtService.decode(refreshToken)
+		console.log(userPayload)
+
+		const user = await this.prismaService.user.findUnique({
+			where: { id: userPayload.userId }
+		})
+		if (!user) throw new NotFoundException('Пользователь не найден')
+
+		return await this.auth(res, user)
+	}
+
 	private async generateTokens(user: User) {
 		const payload = {
 			userId: user.id,
@@ -160,7 +175,7 @@ export class AuthService {
 			expiresIn: '7d'
 		})
 		const accessToken = await this.jwtService.signAsync(payload, {
-			expiresIn: '2h'
+			expiresIn: '60min'
 		})
 		return {
 			accessToken,
@@ -176,7 +191,14 @@ export class AuthService {
 			maxAge: 60480000
 		})
 
-		return { accessToken }
+		res.cookie('accessToken', accessToken, {
+			httpOnly: false,
+			maxAge: 3600000,
+			sameSite: 'lax',
+			path: '/'
+		})
+
+		return { ok: true }
 	}
 
 	// SOCIALS
@@ -219,28 +241,6 @@ export class AuthService {
 					name: user.name,
 					avatar: user.avatar,
 					provider: 'YANDEX'
-				}
-			})
-		}
-
-		return await this.auth(res, dbUser!)
-	}
-	public async vkAuth(user: any, res: Response) {
-		const isUserExists = await this.prismaService.user.findUnique({
-			where: {
-				email: user.email
-			}
-		})
-
-		let dbUser = isUserExists
-
-		if (!isUserExists) {
-			dbUser = await this.prismaService.user.create({
-				data: {
-					email: user.email,
-					name: user.name,
-					avatar: user.avatar,
-					provider: 'VK'
 				}
 			})
 		}

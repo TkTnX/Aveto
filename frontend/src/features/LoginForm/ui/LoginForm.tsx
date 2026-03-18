@@ -34,7 +34,7 @@ export const LoginForm = () => {
 	const onSubmit = (values: LoginSchemaType) => {
 		mutate(values, {
 			onSuccess: data => {
-				Cookies.set('accessToken', data.accessToken)
+				// Cookies.set('accessToken', data.accessToken)
 				setOpenLogin(false)
 				queryClient.invalidateQueries({ queryKey: ['get me'] })
 			},

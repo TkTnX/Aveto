@@ -1,4 +1,10 @@
-import { ICategory, ICharacteristic, IUser } from '.'
+import { ICategory, ICharacteristic, IUser } from '.';
+
+
+
+
+
+
 
 export interface IAd {
 	id: string
@@ -11,7 +17,8 @@ export interface IAd {
 	description: string
 	address: string
 	views: number
-	isFinished: boolean 
+	isFinished: boolean
+	phone: string
 	condition: EAdCondition
 
 	category?: ICategory

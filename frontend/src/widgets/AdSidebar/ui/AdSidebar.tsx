@@ -1,9 +1,10 @@
+'use client'
 import { Dot, SendHorizonal } from 'lucide-react'
 import Link from 'next/link'
 
 import { AdPrice } from '@/src/entities'
 import { AddAdToFavButton } from '@/src/features'
-import { Button, UserAvatar } from '@/src/shared'
+import { Button, ShowPhoneModal, UserAvatar } from '@/src/shared'
 import { IAd } from '@/src/shared/types'
 import { UserReviews } from '@/src/widgets/UserReviews'
 
@@ -23,9 +24,11 @@ export const AdSidebar = ({ ad }: Props) => {
 				</p>
 			)}
 			<div className='mt-4 flex flex-col gap-2.5'>
-				<Button className='h-17 justify-center bg-[#02d15c] text-lg font-bold text-white'>
-					Показать телефон
-				</Button>
+				<ShowPhoneModal phone={ad.phone}>
+					<Button className='h-17 justify-center bg-[#02d15c] text-lg font-bold text-white'>
+						Показать телефон
+					</Button>
+				</ShowPhoneModal>
 				<Button className='bg-blue h-17 justify-center text-lg font-bold text-white'>
 					Написать сообщение
 				</Button>

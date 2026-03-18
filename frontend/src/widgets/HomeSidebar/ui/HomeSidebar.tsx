@@ -16,8 +16,9 @@ export const HomeSidebar = () => {
 		)
 	}, [])
 
+
 	return (
-		<div className='hidden max-w-50 sm:block sm:max-w-max lg:w-75'>
+		<div className='hidden max-w-50 sm:block sm:max-w-max w-75'>
 			{recentWatched.length > 0 && (
 				<div>
 					<h6 className='font-black'>Вы смотрели</h6>
