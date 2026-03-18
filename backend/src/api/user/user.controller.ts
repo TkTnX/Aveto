@@ -10,6 +10,7 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Request } from 'express'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
@@ -20,17 +21,20 @@ import { IAuthPayload } from 'src/types'
 
 import { UserService } from './user.service'
 
+@ApiTags('Пользователи')
 @Controller('users')
 export class UserController {
 	public constructor(private readonly userService: UserService) {}
 
 	@UseGuards(AuthGuard)
 	@Get('me')
+	@ApiResponse({ description: 'Получение личного аккаунта' })
 	public async getMe(@User() user: IAuthPayload) {
 		return this.userService.getMe(user)
 	}
 
 	@Get('brand/:brandId')
+	@ApiResponse({ description: 'Получение аккаунта продавца' })
 	public async getBrand(@Param('brandId') brandId: string) {
 		return this.userService.getBrand(brandId)
 	}
@@ -48,6 +52,7 @@ export class UserController {
 			})
 		})
 	)
+	@ApiResponse({ description: 'Обновление профиля' })
 	public async update(
 		@UploadedFile() file: Express.Multer.File,
 		@Body() body: UserUpdateRequest,

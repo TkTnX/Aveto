@@ -1,6 +1,19 @@
-import { IsNotEmpty, IsString, Length } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
+
+
+
+
+
+
+
 
 export class UserUpdateRequest {
+	@ApiProperty({
+		title: 'Имя пользователя',
+		example: 'Иван Иванов',
+		type: String
+	})
 	@IsNotEmpty({ message: 'Имя пользователя обязательно!' })
 	@IsString({ message: 'Имя пользователя должно быть строкой!' })
 	@Length(3, 50, {
@@ -8,5 +21,10 @@ export class UserUpdateRequest {
 	})
 	name: string
 
-	avatar?:string
+	@ApiProperty({
+		title: 'Аватар пользователя',
+		example: 'https://example-image.jpg',
+		type: String
+	})
+	avatar?: string
 }

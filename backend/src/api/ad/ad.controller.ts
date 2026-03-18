@@ -10,6 +10,12 @@ import {
 	UseInterceptors
 } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
+import {
+	ApiCreatedResponse,
+	ApiOkResponse,
+	ApiResponse,
+	ApiTags
+} from '@nestjs/swagger'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
 import { AdRequest } from 'src/api/ad/dto'
@@ -19,16 +25,19 @@ import { IAuthPayload } from 'src/types'
 
 import { AdService } from './ad.service'
 
+@ApiTags('Объявления')
 @Controller('ads')
 export class AdController {
 	public constructor(private readonly adService: AdService) {}
 
 	@Get()
+	@ApiResponse({ description: 'Получение всех объявлений' })
 	public async getAll(@Query() query: Record<string, string>) {
 		return this.adService.getAll(query)
 	}
 
 	@Get(':slug')
+	@ApiResponse({ description: 'Получение объявления по SLUG' })
 	public async getBySlug(@Param('slug') slug: string) {
 		return this.adService.getBySlug(slug)
 	}
@@ -46,6 +55,7 @@ export class AdController {
 		})
 	)
 	@Post()
+	@ApiResponse({ description: 'Создание объявления' })
 	public async create(
 		@UploadedFiles() images: Express.Multer.File[],
 		@Body() dto: AdRequest,
@@ -56,6 +66,7 @@ export class AdController {
 
 	@UseGuards(AuthGuard)
 	@Post('fav/:adId')
+	@ApiResponse({ description: 'Добавление объявления в любимое' })
 	public async addToFav(
 		@User() payload: IAuthPayload,
 		@Param('adId') adId: string
