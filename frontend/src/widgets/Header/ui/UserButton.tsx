@@ -1,21 +1,27 @@
 'use client'
-import { GalleryVerticalEnd, LockKeyholeIcon, Plus } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect } from 'react'
+import { GalleryVerticalEnd, LockKeyholeIcon, MessageCircle, Plus } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
-import {
-	AuthModal,
-	Skeleton,
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	useAuthStore,
-	UserAvatar,
-	useUserStore
-} from '@/src/shared'
-import { useUsers } from '@/src/shared/hooks/useUsers'
-import { UserMenu } from '@/src/widgets'
+
+
+import { AuthModal, Skeleton, Tooltip, TooltipContent, TooltipTrigger, useAuthStore, UserAvatar, useUserStore } from '@/src/shared';
+import { useUsers } from '@/src/shared/hooks/useUsers';
+import { UserMenu } from '@/src/widgets';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const UserButton = () => {
 	const { setOpenLogin } = useAuthStore()
@@ -34,6 +40,13 @@ export const UserButton = () => {
 				<Skeleton className='flex h-5 w-25' />
 			) : user ? (
 				<>
+					<Link className='text-gray-light group' href='/profile/messenger'>
+						<MessageCircle
+							className='group-hover:fill-gray group-hover:stroke-gray transition'
+							fill='var(--color-gray-light)'
+							color='var(--color-gray-light)'
+						/>
+					</Link>
 					<Tooltip>
 						<TooltipTrigger>
 							<Link

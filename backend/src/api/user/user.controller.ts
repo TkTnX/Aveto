@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiResponse, ApiTags } from '@nestjs/swagger'
-import { Request } from 'express'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
 import { User } from 'src/api/auth/decorators/user.decorator'

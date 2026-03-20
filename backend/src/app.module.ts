@@ -10,6 +10,7 @@ import { ReviewModule } from './api/review/review.module'
 import { UploadModule } from './api/upload/upload.module'
 import { UserModule } from './api/user/user.module'
 import { PrismaModule } from './prisma/prisma.module'
+import { ChatModule } from './api/chat/chat.module';
 
 @Module({
 	imports: [
@@ -27,7 +28,8 @@ import { PrismaModule } from './prisma/prisma.module'
 		AuthModule,
 		EmailModule,
 		UploadModule,
-		ReviewModule
+		ReviewModule,
+		ChatModule
 	]
 })
 export class AppModule {}

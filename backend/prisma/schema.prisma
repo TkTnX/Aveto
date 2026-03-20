@@ -52,6 +52,7 @@ model Ad {
 
   favorites FavAd[]
   reviews Review[]
+  chats Chat[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt() @map("updated_at")
@@ -91,6 +92,8 @@ model User {
   writtenReviews Review[] @relation(name: "writer")
   receiverReviews Review[] @relation(name: "receiver")
 
+  chats ChatUser[]
+  messages Message[]
 
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -148,6 +151,51 @@ model FavAd {
   userId String
 
   @@map("favoriteAdItems")
+}
+
+model Chat {
+  id String @default(uuid()) @id
+
+  participants ChatUser[]
+
+  ad Ad @relation(references: [id], fields: [adId], onDelete: Cascade)
+  adId String
+
+  messages Message[]
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+ @@map("chats") 
+}
+
+model Message {
+  id String @default(uuid()) @id
+
+  text String
+  chat Chat @relation(references: [id], fields: [chatId], onDelete: Cascade)
+  chatId String
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("messages")
+}
+
+model ChatUser {
+  id String @default(uuid()) @id
+
+  chat Chat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId String
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+  userId String
+
+  @@unique([chatId, userId])
+  @@map("chat_users")
 }
 
 enum EAdCondition {
