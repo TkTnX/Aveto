@@ -28,7 +28,7 @@ export const ChatHeaderDropdown = ({ participant, ad }: Props) => {
 	console.log(participant)
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger asChild>
 				<button
 					className='hover:bg-gray/20 flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full'
 					type='button'
