@@ -58,7 +58,6 @@ export const ResetPasswordForm = ({ code, email }: Props) => {
 			}
 		})
 	}
-	console.log(errors)
 	return (
 		<form
 			className='mx-auto mt-3 flex flex-col items-center gap-3'

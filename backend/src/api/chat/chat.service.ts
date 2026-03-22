@@ -40,6 +40,18 @@ export class ChatService {
 		return chats
 	}
 
+	public async getChat(id: string) {
+		const chat = await this.prismaService.chat.findUnique({
+			where: { id }, include: {
+				messages: {include: {user: true}},
+				ad: true,
+				participants: true
+		} })
+		if (!chat) throw new NotFoundException("Чат не найден!")
+		
+		return chat
+	}
+
 	public async createChat(dto: ChatRequest) {
 		const { adId, user1Id, user2Id } = dto
 		const user1 = await this.userService.getBrand(user1Id)

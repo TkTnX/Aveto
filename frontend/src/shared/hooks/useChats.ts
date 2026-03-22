@@ -1,13 +1,19 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { createChat, deleteChat, getUserChats } from '@/src/api'
+import { createChat, deleteChat, getChat, getUserChats } from '@/src/api'
 import { IChat, IChatRequest } from '@/src/shared/types'
 
 export function useChats() {
 	const getUserChatsQuery = () =>
 		useQuery({
-			queryKey: ['get user chat'],
+			queryKey: ['get user chats'],
 			queryFn: (): Promise<IChat[]> => getUserChats()
+		})
+
+	const getChatQuery = (chatId: string) =>
+		useQuery({
+			queryKey: ['get chat'],
+			queryFn: (): Promise<IChat> => getChat(chatId)
 		})
 
 	const createChatMutation = (values: IChatRequest) =>
@@ -25,6 +31,7 @@ export function useChats() {
 	return {
 		getUserChatsQuery,
 		createChatMutation,
-		deleteChatMutation
+		deleteChatMutation,
+		getChatQuery
 	}
 }

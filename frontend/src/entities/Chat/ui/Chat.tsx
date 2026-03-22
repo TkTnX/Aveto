@@ -12,7 +12,7 @@ export const Chat = ({ chat }: Props) => {
 	return (
 		<div className='hover:bg-gray/20 relative flex gap-2 rounded-lg px-4 pt-3.5 pb-4'>
 			<Link
-				href={`/messenger/chat/${chat.id}`}
+				href={`/profile/messenger/chat/${chat.id}`}
 				className='absolute inset-0 z-2'
 			></Link>
 			<div className='relative'>

@@ -7,6 +7,13 @@ export async function getUserChats() {
 	return data
 }
 
+export async function getChat(chatId: string) {
+
+	console.log(`chats/${chatId}`)
+	const { data } = await axiosInstance.get(`chats/${chatId}`)
+	return data
+}
+
 export async function createChat(values: IChatRequest) {
 	const { data } = await axiosInstance.post('chats', values)
 

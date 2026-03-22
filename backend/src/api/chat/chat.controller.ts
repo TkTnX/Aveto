@@ -27,6 +27,13 @@ export class ChatController {
 		return await this.chatService.getUserChats(payload.userId)
 	}
 
+	@Get(':chatId')
+	@ApiResponse({ description: 'Получение чата' })
+	@UseGuards(AuthGuard)
+	public async getChat(@Param('chatId') chatId: string) {
+		return await this.chatService.getChat(chatId)
+	}
+
 	@Post()
 	@ApiResponse({ description: 'Создание чата' })
 	@UseGuards(AuthGuard)
