@@ -1,7 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
-import { cn, UserAvatar } from '@/src/shared'
+import { cn, MessageDropdown, UserAvatar } from '@/src/shared'
 import { IMessage } from '@/src/shared/types'
 
 interface Props {
@@ -12,7 +11,7 @@ interface Props {
 export const Message = ({ message, isUserMessage }: Props) => {
 	return (
 		<div
-			className={cn('flex items-end gap-2 mb-4', {
+			className={cn('group relative mb-4 flex items-end gap-2', {
 				'flex-row-reverse': isUserMessage
 			})}
 		>
@@ -37,12 +36,16 @@ export const Message = ({ message, isUserMessage }: Props) => {
 			>
 				{message.text}
 			</div>
-			<p className='text-gray text-xs'>
+			<p className='text-gray text-xs transition group-hover:hidden'>
 				{new Date(message.createdAt).toLocaleTimeString('ru-RU', {
 					hour: '2-digit',
 					minute: '2-digit'
 				})}
 			</p>
+			<MessageDropdown
+				message={message}
+				isUserMessage={isUserMessage}
+			/>
 		</div>
 	)
 }

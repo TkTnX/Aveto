@@ -23,8 +23,8 @@ export class MessageController {
 	@Post(':chatId')
 	@UseGuards(AuthGuard)
 	public async sendMessage(
-		dto: SendMessageRequst,
-		payload: IAuthPayload,
+		@Body() dto: SendMessageRequst,
+		@User() payload: IAuthPayload,
 		@Param('chatId') chatId: string
 	) {
 		return this.messageService.sendMessage(dto, payload.userId, chatId)

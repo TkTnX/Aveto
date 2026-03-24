@@ -12,7 +12,7 @@ export function useChats() {
 
 	const getChatQuery = (chatId: string) =>
 		useQuery({
-			queryKey: ['get chat'],
+			queryKey: ['get chat', chatId],
 			queryFn: (): Promise<IChat> => getChat(chatId)
 		})
 

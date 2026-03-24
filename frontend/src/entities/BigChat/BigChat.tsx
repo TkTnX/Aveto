@@ -1,31 +1,27 @@
 'use client'
 
-import { Message } from '@/src/entities';
-import { SendMessageForm } from '@/src/features';
-import { ErrorMessage, Skeleton, useChats, useUserStore } from '@/src/shared';
+import { Message } from '@/src/entities'
+import { SendMessageForm } from '@/src/features'
+import { ErrorMessage, Skeleton, useChats, useChatStore, useUserStore } from '@/src/shared'
 
-
-
-import { BigChatHeader } from './BigChatHeader';
-
-
-
-
-
-
-
-
-
-
+import { BigChatHeader } from './BigChatHeader'
+import { useEffect } from 'react'
 
 interface Props {
 	chatId: string
 }
 
 export const BigChat = ({ chatId }: Props) => {
+	const {setChatId} = useChatStore()
 	const { user } = useUserStore()
 	const { getChatQuery } = useChats()
 	const { data, isPending, error } = getChatQuery(chatId)
+
+	useEffect(() => {
+		if(!data) return
+		setChatId(data.id)
+	}, [data, setChatId])
+
 
 	if (error) return <ErrorMessage error={error} />
 	if (isPending) return <Skeleton className='h-screen w-full max-w-157.5' />
@@ -41,7 +37,7 @@ export const BigChat = ({ chatId }: Props) => {
 					/>
 				))}
 			</div>
-			<SendMessageForm />
+			<SendMessageForm chatId={chatId} />
 		</div>
 	)
 }

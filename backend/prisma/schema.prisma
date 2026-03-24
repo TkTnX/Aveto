@@ -179,6 +179,10 @@ model Message {
   user User @relation(references: [id], fields: [userId], onDelete: Cascade)
   userId String
 
+  replyTo Message? @relation(name: "replies", references: [id], fields: [replyToId], onDelete: Cascade)
+  replyToId String?
+  replied Message[] @relation(name: "replies")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
