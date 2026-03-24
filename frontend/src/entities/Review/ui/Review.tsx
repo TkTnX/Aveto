@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const Review = ({ review }: Props) => {
-	console.log(review)
 	return (
 		<div className='border-b pb-4'>
 			<div className='flex items-center gap-1'>

@@ -33,8 +33,9 @@ export class MessageService {
 			data: {
 				text: dto.text,
 				chatId: chat.id,
-				userId: user.id
-			}
+				userId: user.id,
+				replyToId: dto.replyTo
+			},
 		})
 		if (!message) throw new BadGatewayException('Сообщение не был создано!')
 
@@ -56,7 +57,9 @@ export class MessageService {
 				id: message.id
 			},
 			data: {
-				text: dto.text
+				text: dto.text,
+				replyToId: dto.replyTo,
+				updatedAt: new Date()
 			}
 		})
 	}

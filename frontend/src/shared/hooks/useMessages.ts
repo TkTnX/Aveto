@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { deleteMessage, sendMessage } from '@/src/api'
+import { deleteMessage, editMessage, sendMessage } from '@/src/api'
 import { FullSendMessageType } from '@/src/shared/schemas'
 
 export function useMessages() {
@@ -9,14 +9,23 @@ export function useMessages() {
 			mutationKey: ['send message'],
 			mutationFn: (values: FullSendMessageType) => sendMessage(values)
 		})
-	
-	const deleteMessageMutation = () => useMutation({
-		mutationKey: ['delete message'],
-		mutationFn: (messageId: string) => deleteMessage(messageId)
-	})
+
+	const editMessageMutation = () =>
+		useMutation({
+			mutationKey: ['edit message'],
+			mutationFn: (values: FullSendMessageType ) =>
+				editMessage(values)
+		})
+
+	const deleteMessageMutation = () =>
+		useMutation({
+			mutationKey: ['delete message'],
+			mutationFn: (messageId: string) => deleteMessage(messageId)
+		})
 
 	return {
 		sendMessageMutation,
+		editMessageMutation,
 		deleteMessageMutation
 	}
 }

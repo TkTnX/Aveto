@@ -10,4 +10,7 @@ export class SendMessageRequst {
 	@IsNotEmpty({ message: 'Текст обязателен!' })
 	@IsString({ message: 'Текст должен быть строкой!' })
 	text: string
+
+	
+	replyTo?: string
 }

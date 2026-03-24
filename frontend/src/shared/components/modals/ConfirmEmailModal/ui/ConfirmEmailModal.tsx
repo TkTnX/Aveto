@@ -13,7 +13,6 @@ import { useAuthStore } from '@/src/shared/stores'
 
 export const ConfirmEmailModal = () => {
 	const { openConfirm, setOpenConfirm, isCodeSent } = useAuthStore()
-	console.log(openConfirm)
 	return (
 		<AlertDialog
 			open={openConfirm !== null}

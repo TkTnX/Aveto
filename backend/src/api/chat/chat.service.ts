@@ -35,6 +35,7 @@ export class ChatService {
 				ad: { include: { seller: true } }
 			}
 		})
+
 		if (!chats) throw new NotFoundException('Чаты не найдены!')
 
 		return chats
@@ -42,13 +43,23 @@ export class ChatService {
 
 	public async getChat(id: string) {
 		const chat = await this.prismaService.chat.findUnique({
-			where: { id }, include: {
-				messages: {include: {user: true}},
+			where: { id },
+			include: {
+				messages: {
+					include: {
+						user: true,
+						replyTo: { include: { user: true } }
+					},
+					orderBy: {
+						createdAt: 'asc'
+					}
+				},
 				ad: true,
 				participants: true
-		} })
-		if (!chat) throw new NotFoundException("Чат не найден!")
-		
+			}
+		})
+		if (!chat) throw new NotFoundException('Чат не найден!')
+
 		return chat
 	}
 

@@ -1,11 +1,13 @@
-import { MoreHorizontal, Pen, ReplyIcon, Trash } from 'lucide-react'
+'use client'
+import { MoreHorizontal, Pen, ReplyIcon } from 'lucide-react'
+import { useState } from 'react'
 
+import { DeleteMessageButton } from '@/src/features'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuTrigger
 } from '@/src/shared/components/ui'
-import { DeleteMessageButton } from '@/src/features'
 import { useChatStore } from '@/src/shared/stores'
 import { IMessage } from '@/src/shared/types'
 
@@ -15,9 +17,10 @@ interface Props {
 }
 
 export const MessageDropdown = ({ isUserMessage, message }: Props) => {
-	const {setReplyTo} = useChatStore()
+	const [open, setOpen] = useState(false)
+	const { setReplyTo, setEditMessage } = useChatStore()
 	return (
-		<DropdownMenu>
+		<DropdownMenu open={open} onOpenChange={setOpen}>
 			<DropdownMenuTrigger asChild>
 				<button
 					className='hover:bg-gray/20 flex h-8 min-h-8 w-8 min-w-8 items-center justify-center rounded-full bg-white opacity-0 shadow-xl group-hover:opacity-100'
@@ -27,13 +30,25 @@ export const MessageDropdown = ({ isUserMessage, message }: Props) => {
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='p-0'>
-				<button onClick={() => setReplyTo(message)} className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'>
+				<button
+					onClick={() => {
+						setReplyTo(message)
+						setOpen(false)
+					}}
+					className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'
+				>
 					<ReplyIcon size={16} fill='#000' />
 					Ответить
 				</button>
 				{isUserMessage && (
 					<>
-						<button className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'>
+						<button
+							onClick={() => {
+								setEditMessage(message)
+								setOpen(false)
+							}}
+							className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'
+						>
 							<Pen size={16} fill='#000' />
 							Изменить
 						</button>

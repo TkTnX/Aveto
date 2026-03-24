@@ -1,6 +1,7 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Camera, Mic, Plus, SendHorizonal, X } from 'lucide-react'
+import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Field, Input, useChatStore, useMessages } from '@/src/shared'
@@ -11,9 +12,12 @@ interface Props {
 }
 
 export const SendMessageForm = ({ chatId }: Props) => {
-	const { replyTo, setReplyTo } = useChatStore()
-	const { sendMessageMutation } = useMessages()
-	const { mutate, isPending } = sendMessageMutation()
+	const { replyTo, setReplyTo, editMessage } = useChatStore()
+	const { sendMessageMutation,editMessageMutation  } = useMessages()
+	const { mutate: sendMutate, isPending: sendPending } = sendMessageMutation()
+	const { mutate: editMutate, isPending: editPending } = editMessageMutation()
+	const isPending = sendPending || editPending
+	const mutate = editMessage ? editMutate : sendMutate
 	const {
 		handleSubmit,
 		control,
@@ -22,22 +26,27 @@ export const SendMessageForm = ({ chatId }: Props) => {
 	} = useForm<SendMessageSchemaType>({
 		resolver: zodResolver(sendMessageSchema),
 		defaultValues: {
-			text: ''
+			text: editMessage?.text || ''
 		}
 	})
 
-	console.log(replyTo)
-
 	const onSubmit = (values: SendMessageSchemaType) => {
 		mutate(
-			{ ...values, chatId },
+			{ ...values, chatId, replyTo: replyTo?.id, messageId: editMessage?.id },
 			{
 				onSuccess: () => {
 					setValue('text', '')
+					setReplyTo(null)
 				}
 			}
 		)
 	}
+
+	useEffect(() => {
+		if (!editMessage) return
+
+		setValue('text', editMessage.text)
+	}, [editMessage, setValue])
 
 	return (
 		<>

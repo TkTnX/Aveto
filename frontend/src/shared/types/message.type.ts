@@ -7,6 +7,9 @@ export interface IMessage {
     chat: IChat
     chatId: string
 
+    replyTo?: IMessage
+    replyToId?: string
+
     text: string
 
     createdAt: string

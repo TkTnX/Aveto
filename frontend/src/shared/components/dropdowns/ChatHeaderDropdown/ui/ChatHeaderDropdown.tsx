@@ -25,7 +25,6 @@ interface Props {
 }
 
 export const ChatHeaderDropdown = ({ participant, ad }: Props) => {
-	console.log(participant)
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

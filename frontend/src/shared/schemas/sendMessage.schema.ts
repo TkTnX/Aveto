@@ -6,4 +6,4 @@ export const sendMessageSchema = z.object({
 })
 
 export type SendMessageSchemaType = z.infer<typeof sendMessageSchema> 
-export type FullSendMessageType = SendMessageSchemaType & {chatId: string}
+export type FullSendMessageType = SendMessageSchemaType & {chatId: string, replyTo?: string, messageId?:string}

@@ -9,7 +9,6 @@ export async function getUserChats() {
 
 export async function getChat(chatId: string) {
 
-	console.log(`chats/${chatId}`)
 	const { data } = await axiosInstance.get(`chats/${chatId}`)
 	return data
 }

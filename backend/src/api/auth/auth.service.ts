@@ -155,7 +155,6 @@ export class AuthService {
 		if (!refreshToken) return
 
 		const userPayload = await this.jwtService.decode(refreshToken)
-		console.log(userPayload)
 
 		const user = await this.prismaService.user.findUnique({
 			where: { id: userPayload.userId }

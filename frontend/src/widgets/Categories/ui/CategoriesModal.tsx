@@ -35,7 +35,6 @@ export const CategoriesModal = ({ onClose }: Props) => {
 	const parentCategories = data?.filter(cat => !cat.parentId)
 	const childCategories = parentCategories?.[activeParentCategoryIndex]
 
-	console.log(childCategories)
 	return (
 		<>
 			<div className='absolute right-0 left-0 z-7 h-[80dvh] overflow-hidden rounded-b-4xl bg-white py-10'>
