@@ -1,12 +1,25 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client'
 
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-import { SidebarAd } from '@/src/entities'
-import { SIDEBAR_SERVICES } from '@/src/shared'
-import { IAd } from '@/src/shared/types'
+
+
+import { SidebarAd } from '@/src/entities';
+import { SIDEBAR_SERVICES } from '@/src/shared';
+import { IAd } from '@/src/shared/types';
+
+
+
+
+
+
+
+
+
+
+
 
 export const HomeSidebar = () => {
 	const [recentWatched, setRecentWatched] = useState<IAd[]>([])
@@ -18,7 +31,7 @@ export const HomeSidebar = () => {
 
 
 	return (
-		<div className='hidden max-w-50 sm:block sm:max-w-max w-75'>
+		<div className='hidden w-75 max-w-50 sm:block sm:max-w-max'>
 			{recentWatched.length > 0 && (
 				<div>
 					<h6 className='font-black'>Вы смотрели</h6>
@@ -52,7 +65,7 @@ export const HomeSidebar = () => {
 				</div>
 			</div>
 			<p className='text-gray mt-3 border-t pt-4 text-xs'>
-				© ООО «TTX DEV» 2026 Авито использует рекомендательные
+				© ООО «TTX DEV» 2026 Авето использует рекомендательные
 				технологии.
 			</p>
 		</div>

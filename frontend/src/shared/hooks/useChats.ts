@@ -24,8 +24,8 @@ export function useChats() {
 
 	const deleteChatMutation = (chatId: string) =>
 		useMutation({
-			mutationKey: ['delete chat'],
-			mutationFn: () => deleteChat(chatId)
+			mutationKey: ['delete chat', chatId],
+			mutationFn: (chatId: string) => deleteChat(chatId)
 		})
 
 	return {

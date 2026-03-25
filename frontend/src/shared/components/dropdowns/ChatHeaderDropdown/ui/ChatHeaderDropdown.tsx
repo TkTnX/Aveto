@@ -1,23 +1,23 @@
-import {
-	Dot,
-	Flag,
-	MessageCirclePlus,
-	MoreHorizontal,
-	Pin,
-	PresentationIcon,
-	Trash,
-	User,
-	UserXIcon
-} from 'lucide-react'
-import Link from 'next/link'
+import { Dot, Flag, MessageCirclePlus, MoreHorizontal, Pin, PresentationIcon, Trash, User, UserXIcon } from 'lucide-react';
+import Link from 'next/link';
 
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuTrigger
-} from '@/src/shared/components/ui'
-import { formatPrice } from '@/src/shared/helpers'
-import { IAd, IChatUser } from '@/src/shared/types'
+
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/src/shared/components/ui';
+import { formatPrice } from '@/src/shared/helpers';
+import { IAd, IChatUser } from '@/src/shared/types';
+import { DeleteChatButton } from '@/src/features';
+
+
+
+
+
+
+
+
+
+
+
 
 interface Props {
 	participant: IChatUser
@@ -69,10 +69,7 @@ export const ChatHeaderDropdown = ({ participant, ad }: Props) => {
 					<Pin size={16} fill='#000' />
 					Закрепить
 				</button>
-				<button className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'>
-					<Trash size={16} fill='#000' />
-					Удалить
-				</button>
+				<DeleteChatButton chatId={participant.chatId} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

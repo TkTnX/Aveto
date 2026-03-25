@@ -63,7 +63,7 @@ export const AuthModal = ({ children }: Props) => {
 								>
 									Условия использования
 								</Link>{' '}
-								Авито.{' '}
+								Авето.{' '}
 								<Link
 									className='underline hover:text-[#999]! hover:opacity-80'
 									href={'#!'}

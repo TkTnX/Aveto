@@ -9,16 +9,12 @@ export const ChatsList = () => {
 	if (error) return <ErrorMessage error={error} />
 	return (
 		<div className='mt-5 flex flex-col gap-3'>
-			{isPending ? (
-				[...new Array(4)].map((_, index) => (
-					<Skeleton key={index} className='h-25 w-full' />
-				))
-			) : data.length > 0 ? (
-				data.map(chat => <Chat key={chat.id} chat={chat} />)
-			) : (
-				// TODO: После того, как чаты будут готовы, сделать "ЧАТОВ НЕТ"
-				<p className='text-gray'>Чатов нет!</p>
-			)}
+			{isPending
+				? [...new Array(4)].map((_, index) => (
+						<Skeleton key={index} className='h-25 w-full' />
+					))
+				: data.length > 0 &&
+					data.map(chat => <Chat key={chat.id} chat={chat} />)}
 		</div>
 	)
 }

@@ -11,6 +11,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { User } from 'src/api/auth/decorators/user.decorator'
 import { AuthGuard } from 'src/api/auth/guards/auth.guard'
 import { SendMessageRequst } from 'src/api/message/dto'
+import { MessageGateway } from 'src/api/message/message.gateway'
 import { IAuthPayload } from 'src/types'
 
 import { MessageService } from './message.service'
@@ -18,7 +19,10 @@ import { MessageService } from './message.service'
 @ApiTags('Сообщения')
 @Controller('messages')
 export class MessageController {
-	public constructor(private readonly messageService: MessageService) {}
+	public constructor(
+		private readonly messageService: MessageService,
+		private readonly gateway: MessageGateway
+	) {}
 
 	@Post(':chatId')
 	@UseGuards(AuthGuard)
@@ -27,7 +31,15 @@ export class MessageController {
 		@User() payload: IAuthPayload,
 		@Param('chatId') chatId: string
 	) {
-		return this.messageService.sendMessage(dto, payload.userId, chatId)
+		const message = await this.messageService.sendMessage(
+			dto,
+			payload.userId,
+			chatId
+		)
+
+		this.gateway.sendMessageEvent(chatId, message)
+
+		return message
 	}
 
 	@Patch(':messageId')

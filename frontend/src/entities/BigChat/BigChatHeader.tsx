@@ -1,22 +1,9 @@
-import { ArrowLeft } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
-
-
-import { ChatHeaderDropdown, useUserStore } from '@/src/shared';
-import { IAd, IChatUser } from '@/src/shared/types';
-
-
-
-
-
-
-
-
-
-
-
+import { ChatHeaderDropdown, useUserStore } from '@/src/shared'
+import { IAd, IChatUser } from '@/src/shared/types'
 
 interface Props {
 	ad: IAd
@@ -37,7 +24,7 @@ export const BigChatHeader = ({ ad, participants }: Props) => {
 					width={48}
 					height={48}
 					unoptimized
-					className='rounded-2xl object-cover'
+					className='rounded-2xl object-cover w-12 h-12'
 				/>
 				<div>
 					<h6 className='font-black'>{ad.title}</h6>
@@ -47,9 +34,11 @@ export const BigChatHeader = ({ ad, participants }: Props) => {
 			{user && (
 				<ChatHeaderDropdown
 					ad={ad}
-					participant={participants.find(
-						participant => participant.userId !== user.id
-					)!}
+					participant={
+						participants.find(
+							participant => participant.userId !== user.id
+						)!
+					}
 				/>
 			)}
 		</div>

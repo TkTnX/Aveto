@@ -1,15 +1,23 @@
 'use client'
-import { X } from 'lucide-react'
-import Link from 'next/link'
+import { X } from 'lucide-react';
+import Link from 'next/link';
 
-import { EnterCodeForm, EnterEmailForm } from '@/src/features'
-import {
-	AlertDialog,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle
-} from '@/src/shared/components/ui'
-import { useAuthStore } from '@/src/shared/stores'
+
+
+import { EnterCodeForm, EnterEmailForm } from '@/src/features';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from '@/src/shared/components/ui';
+import { useAuthStore } from '@/src/shared/stores';
+
+
+
+
+
+
+
+
+
+
+
 
 export const ConfirmEmailModal = () => {
 	const { openConfirm, setOpenConfirm, isCodeSent } = useAuthStore()
@@ -42,7 +50,7 @@ export const ConfirmEmailModal = () => {
 							>
 								Условия использования
 							</Link>{' '}
-							Авито.{' '}
+							Авето.{' '}
 							<Link
 								className='underline hover:text-[#999]! hover:opacity-80'
 								href={'#!'}

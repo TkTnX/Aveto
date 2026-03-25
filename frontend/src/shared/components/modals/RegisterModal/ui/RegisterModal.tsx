@@ -1,14 +1,22 @@
-import { X } from 'lucide-react'
-import Link from 'next/link'
+import { X } from 'lucide-react';
+import Link from 'next/link';
 
-import { RegisterForm } from '@/src/features'
-import {
-	AlertDialog,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogTitle
-} from '@/src/shared/components/ui'
-import { useAuthStore } from '@/src/shared/stores'
+
+
+import { RegisterForm } from '@/src/features';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle } from '@/src/shared/components/ui';
+import { useAuthStore } from '@/src/shared/stores';
+
+
+
+
+
+
+
+
+
+
+
 
 export const RegisterModal = () => {
 	const { openRegister, setOpenRegister } = useAuthStore()
@@ -32,7 +40,7 @@ export const RegisterModal = () => {
 						>
 							Условия использования
 						</Link>{' '}
-						Авито.{' '}
+						Авето.{' '}
 						<Link
 							className='underline hover:text-[#999]! hover:opacity-80'
 							href={'#!'}

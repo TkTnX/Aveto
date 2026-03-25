@@ -4,7 +4,7 @@ import { Camera, Mic, Plus, SendHorizonal, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Field, Input, useChatStore, useMessages } from '@/src/shared'
+import { Field, Input,  useChatStore, useMessages } from '@/src/shared'
 import { sendMessageSchema, SendMessageSchemaType } from '@/src/shared/schemas'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 
 export const SendMessageForm = ({ chatId }: Props) => {
 	const { replyTo, setReplyTo, editMessage } = useChatStore()
-	const { sendMessageMutation,editMessageMutation  } = useMessages()
+	const { sendMessageMutation, editMessageMutation } = useMessages()
 	const { mutate: sendMutate, isPending: sendPending } = sendMessageMutation()
 	const { mutate: editMutate, isPending: editPending } = editMessageMutation()
 	const isPending = sendPending || editPending
@@ -32,7 +32,12 @@ export const SendMessageForm = ({ chatId }: Props) => {
 
 	const onSubmit = (values: SendMessageSchemaType) => {
 		mutate(
-			{ ...values, chatId, replyTo: replyTo?.id, messageId: editMessage?.id },
+			{
+				...values,
+				chatId,
+				replyTo: replyTo?.id,
+				messageId: editMessage?.id
+			},
 			{
 				onSuccess: () => {
 					setValue('text', '')
