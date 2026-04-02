@@ -1,6 +1,8 @@
+import { Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { DeleteChatButton } from '@/src/features'
 import { UserAvatar } from '@/src/shared'
 import { IChat } from '@/src/shared/types'
 
@@ -47,6 +49,12 @@ export const Chat = ({ chat }: Props) => {
 					)}
 				</p>
 			)}
+
+			<DeleteChatButton
+				size='sm'
+				className='hover:text-red! absolute right-2 bottom-2 z-2 block! w-auto hover:bg-transparent'
+				chatId={chat.id}
+			/>
 		</div>
 	)
 }

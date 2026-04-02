@@ -26,7 +26,6 @@ export const CreateChatButton = ({ values }: Props) => {
 			{ adId: values.adId, user1Id: user.id, user2Id: values.user2Id },
 			{
 				onSuccess: data => {
-					console.log(data)
 					router.push(`/profile/messenger/chat/${data.id}`)
 				}
 			}
