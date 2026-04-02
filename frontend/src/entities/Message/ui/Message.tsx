@@ -9,8 +9,6 @@ interface Props {
 }
 
 export const Message = ({ message, isUserMessage }: Props) => {
-	console.log(message.updatedAt !== message.createdAt)
-	console.log(message.updatedAt, message.createdAt)
 	return (
 		<div
 			className={cn('group relative mb-4 flex items-end gap-2', {
@@ -30,7 +28,7 @@ export const Message = ({ message, isUserMessage }: Props) => {
 			)}
 			<div
 				className={cn(
-					'bg-gray-2 w-fit max-w-90 overflow-hidden rounded-xl px-3 pt-2.5 pb-3',
+					'bg-gray-2 w-fit max-w-90 overflow-hidden rounded-xl px-3 pt-2.5 pb-3 wrap-break-word',
 					{
 						'bg-[#e6f6ff]': isUserMessage
 					}
@@ -49,16 +47,8 @@ export const Message = ({ message, isUserMessage }: Props) => {
 						</div>
 					</div>
 				)}
-				<div
-					className={cn(
-						'bg-gray-2 w-fit max-w-90 rounded-xl pt-2.5 pb-3',
-						{
-							'bg-[#e6f6ff]': isUserMessage
-						}
-					)}
-				>
-					{message.text}
-				</div>
+
+				{message.text}
 				{message.updatedAt !== message.createdAt && (
 					<p className='text-gray text-xs'>Изменено</p>
 				)}

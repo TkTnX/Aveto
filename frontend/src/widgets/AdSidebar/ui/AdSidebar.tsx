@@ -3,7 +3,7 @@ import { Dot, SendHorizonal } from 'lucide-react'
 import Link from 'next/link'
 
 import { AdPrice } from '@/src/entities'
-import { AddAdToFavButton } from '@/src/features'
+import { AddAdToFavButton, CreateChatButton } from '@/src/features'
 import { Button, ShowPhoneModal, UserAvatar } from '@/src/shared'
 import { IAd } from '@/src/shared/types'
 import { UserReviews } from '@/src/widgets/UserReviews'
@@ -29,9 +29,7 @@ export const AdSidebar = ({ ad }: Props) => {
 						Показать телефон
 					</Button>
 				</ShowPhoneModal>
-				<Button className='bg-blue h-17 justify-center text-lg font-bold text-white'>
-					Написать сообщение
-				</Button>
+				<CreateChatButton values={{adId: ad.id, user2Id: ad.sellerId}} />
 			</div>
 
 			{ad.seller && (

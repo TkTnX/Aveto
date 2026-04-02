@@ -1,8 +1,8 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useEffect } from 'react'
-import { io } from 'socket.io-client'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef } from 'react'
 
 import { Message } from '@/src/entities'
 import { SendMessageForm } from '@/src/features'
@@ -22,6 +22,8 @@ interface Props {
 }
 
 export const BigChat = ({ chatId }: Props) => {
+	const router = useRouter()
+	const downRef = useRef<HTMLDivElement | null>(null)
 	const queryClient = useQueryClient()
 	const { setChatId } = useChatStore()
 	const { user } = useUserStore()
@@ -29,9 +31,16 @@ export const BigChat = ({ chatId }: Props) => {
 	const { data, isPending, error } = getChatQuery(chatId)
 
 	useEffect(() => {
-		if (!data) return
-		setChatId(data.id)
-	}, [data, setChatId])
+		if (!isPending && data) {
+			const isParticipant = data.participants.some(
+				p => p.userId === user?.id
+			)
+
+			if (!isParticipant) {
+				router.replace('/')
+			}
+		}
+	}, [isPending, data, user, router])
 
 	useEffect(() => {
 		if (!socket.connected) {
@@ -42,6 +51,12 @@ export const BigChat = ({ chatId }: Props) => {
 			socket.emit('join', chatId)
 		}
 	}, [chatId])
+
+	useEffect(() => {
+		downRef.current?.scrollIntoView({ behavior: 'smooth' })
+		if (!data) return
+		setChatId(data.id)
+	}, [data])
 
 	useEffect(() => {
 		const handler = () => {
@@ -57,6 +72,10 @@ export const BigChat = ({ chatId }: Props) => {
 
 	if (error) return <ErrorMessage error={error} />
 	if (isPending) return <Skeleton className='h-screen w-full max-w-157.5' />
+
+	const isParticipant = data.participants.some(p => p.userId === user?.id)
+	if (!isParticipant) return null
+
 	return (
 		<div className='sticky top-0 w-full max-w-157.5 rounded-lg'>
 			<BigChatHeader participants={data.participants} ad={data.ad} />
@@ -74,6 +93,7 @@ export const BigChat = ({ chatId }: Props) => {
 						Сообщений нет
 					</p>
 				)}
+				<div ref={downRef} />
 			</div>
 			<SendMessageForm chatId={chatId} />
 		</div>

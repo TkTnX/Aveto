@@ -16,10 +16,10 @@ export function useChats() {
 			queryFn: (): Promise<IChat> => getChat(chatId)
 		})
 
-	const createChatMutation = (values: IChatRequest) =>
+	const createChatMutation = () =>
 		useMutation({
 			mutationKey: ['create chat'],
-			mutationFn: () => createChat(values)
+			mutationFn: (values: IChatRequest) => createChat(values)
 		})
 
 	const deleteChatMutation = (chatId: string) =>

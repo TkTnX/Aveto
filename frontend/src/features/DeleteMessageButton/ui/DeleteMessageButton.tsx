@@ -1,25 +1,35 @@
+'use client'
 import { useQueryClient } from '@tanstack/react-query'
 import { Trash } from 'lucide-react'
 
-import { useChatStore, useMessages } from '@/src/shared'
+import { socket, useChatStore, useMessages } from '@/src/shared'
 
 interface Props {
 	messageId: string
 }
 
 export const DeleteMessageButton = ({ messageId }: Props) => {
-	const {chatId} = useChatStore()
+	const { chatId } = useChatStore()
 	const { deleteMessageMutation } = useMessages()
-	const { mutate, isPending } = deleteMessageMutation()
+	const { mutate, isPending } = deleteMessageMutation(messageId)
 	const queryClient = useQueryClient()
 	const onClick = () =>
-		mutate(messageId, {
+		mutate(chatId!, {
 			onSuccess: () => {
 				queryClient.invalidateQueries({
 					queryKey: ['get chat', chatId]
 				})
+
+				const handler = () => {
+					queryClient.invalidateQueries({
+						queryKey: ['get chat', chatId]
+					})
+				}
+
+				socket.on('deleteMessage', handler)
 			}
 		})
+
 	return (
 		<button
 			onClick={onClick}

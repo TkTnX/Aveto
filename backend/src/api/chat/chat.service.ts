@@ -73,6 +73,31 @@ export class ChatService {
 
 		if (!ad) throw new NotFoundException('Объявление не найдено')
 
+		const isChatExists = await this.prismaService.chat.findFirst({
+			where: {
+				AND: [
+					{
+						participants: {
+							some: {
+								userId: user1.id
+							}
+						}
+					},
+					{
+						participants: {
+							some: {
+								userId: user2.id
+							}
+						}
+					}
+				]
+			}
+		})
+
+		if (isChatExists) {
+			return { id: isChatExists.id }
+		}
+
 		const chat = await this.prismaService.chat.create({
 			data: {
 				adId,

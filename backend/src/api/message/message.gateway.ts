@@ -1,14 +1,12 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { Message } from "generated/prisma/client";
-import { Server } from "socket.io";
-
-
-
-
-
-
-
-
+import {
+	ConnectedSocket,
+	MessageBody,
+	SubscribeMessage,
+	WebSocketGateway,
+	WebSocketServer
+} from '@nestjs/websockets'
+import { Message } from 'generated/prisma/client'
+import { Server } from 'socket.io'
 
 @WebSocketGateway({
 	cors: {
@@ -17,22 +15,27 @@ import { Server } from "socket.io";
 })
 export class MessageGateway {
 	@WebSocketServer()
-    server: Server
-    
-    @SubscribeMessage('join')
-    handleJoin(@MessageBody() chatId: string, @ConnectedSocket() client: any) {
-        client.join(chatId)
-        }
+	server: Server
 
-	handleConnection(client: any) {
-		console.log('CLIENT CONNECTED', client.id)
-    }
-    
-    joinChat(client: any, chatId: string) {
-        client.join(chatId)
-    }
+	@SubscribeMessage('join')
+	handleJoin(@MessageBody() chatId: string, @ConnectedSocket() client: any) {
+		client.join(chatId)
+	}
 
-	sendMessageEvent(chatId: string,message: Message) {
+	joinChat(client: any, chatId: string) {
+		client.join(chatId)
+	}
+
+	sendMessageEvent(chatId: string, message: Message) {
 		this.server.to(chatId).emit('message', message)
+	}
+
+	editMessageEvent(chatId: string, messageId: string) {
+		this.server.to(chatId).emit('editMessage', messageId)
+	}
+
+	deleteMessageEvent(chatId: string, messageId: string) {
+
+		this.server.to(chatId).emit('deleteMessage', messageId)
 	}
 }

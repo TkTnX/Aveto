@@ -9,18 +9,19 @@ export async function sendMessage(values: FullSendMessageType) {
 }
 
 export async function editMessage(values: FullSendMessageType) {
-	console.log(values)
 	const { chatId, messageId, ...restValues } = values
 	const { data } = await axiosInstance.patch(
-		`messages/${messageId}`,
+		`messages/${chatId}/${messageId}`,
 		restValues
 	)
 
 	return data
 }
 
-export async function deleteMessage(messageId: string) {
-	const { data } = await axiosInstance.delete(`messages/${messageId}`)
+export async function deleteMessage(chatId: string, messageId: string) {
+	const { data } = await axiosInstance.delete(
+		`messages/${chatId}/${messageId}`
+	)
 
 	return data
 }

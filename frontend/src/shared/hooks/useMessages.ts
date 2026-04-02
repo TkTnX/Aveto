@@ -17,10 +17,10 @@ export function useMessages() {
 				editMessage(values)
 		})
 
-	const deleteMessageMutation = () =>
+	const deleteMessageMutation = (messageId: string) =>
 		useMutation({
-			mutationKey: ['delete message'],
-			mutationFn: (messageId: string) => deleteMessage(messageId)
+			mutationKey: ['delete message', messageId],
+			mutationFn: (chatId: string) => deleteMessage(chatId, messageId)
 		})
 
 	return {

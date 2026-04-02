@@ -1,10 +1,11 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { Camera, Mic, Plus, SendHorizonal, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Field, Input,  useChatStore, useMessages } from '@/src/shared'
+import { Field, Input, socket, useChatStore, useMessages } from '@/src/shared'
 import { sendMessageSchema, SendMessageSchemaType } from '@/src/shared/schemas'
 
 interface Props {
@@ -18,6 +19,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 	const { mutate: editMutate, isPending: editPending } = editMessageMutation()
 	const isPending = sendPending || editPending
 	const mutate = editMessage ? editMutate : sendMutate
+	const queryClient = useQueryClient()
 	const {
 		handleSubmit,
 		control,
@@ -42,6 +44,13 @@ export const SendMessageForm = ({ chatId }: Props) => {
 				onSuccess: () => {
 					setValue('text', '')
 					setReplyTo(null)
+
+					const handler = () => {
+						queryClient.invalidateQueries({
+							queryKey: ['get chat', chatId]
+						})
+					}
+					socket.on('editMessage', handler)
 				}
 			}
 		)

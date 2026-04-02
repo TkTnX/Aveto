@@ -8,7 +8,6 @@ import { ChatService } from 'src/api/chat/chat.service'
 import { SendMessageRequst } from 'src/api/message/dto'
 import { UserService } from 'src/api/user/user.service'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { IAuthPayload } from 'src/types'
 
 @Injectable()
 export class MessageService {
