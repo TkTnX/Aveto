@@ -1,4 +1,6 @@
 'use client'
+import { useEffect } from 'react'
+
 import {
 	Label,
 	RadioGroup,
@@ -13,11 +15,19 @@ import { SellerAds } from './SellerAds'
 
 interface Props {
 	ads: IAd[]
+	adId?: string
 }
 
-export const AddReview = ({ ads }: Props) => {
-	const { setIsBought, setHowFinished, ad, isBought, howFinished } =
+export const AddReview = ({ ads, adId }: Props) => {
+	const { setIsBought, setHowFinished, ad, isBought, howFinished, setAd } =
 		useAddReviewStore()
+
+	useEffect(() => {
+		const findAd = ads.find(ad => ad.id === adId)
+		if (findAd) {
+			setAd(findAd)
+		}
+	}, [adId])
 
 	return (
 		<div className='container mt-9 max-w-158!'>

@@ -69,7 +69,7 @@ export const ChatHeaderDropdown = ({ participant, ad }: Props) => {
 					<Pin size={16} fill='#000' />
 					Закрепить
 				</button>
-				<DeleteChatButton chatId={participant.chatId} />
+				<DeleteChatButton size='lg' chatId={participant.chatId} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

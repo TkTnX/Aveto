@@ -4,11 +4,11 @@ import { AddReview } from '@/src/widgets'
 const ReviewPage = async ({
 	searchParams
 }: {
-	searchParams: Promise<{ uid: string }>
+	searchParams: Promise<{ uid: string; adId?: string }>
 }) => {
-	const { uid } = await searchParams
+	const { uid, adId } = await searchParams
 	const data = await getAds({ sellerId: uid })
-	return <AddReview ads={data} />
+	return <AddReview adId={adId} ads={data} />
 }
 
 export default ReviewPage

@@ -89,6 +89,9 @@ export class ChatService {
 								userId: user2.id
 							}
 						}
+					},
+					{
+						adId: ad.id
 					}
 				]
 			}
