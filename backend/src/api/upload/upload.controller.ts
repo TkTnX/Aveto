@@ -6,14 +6,14 @@ import { extname } from 'path'
 
 import { UploadService } from './upload.service'
 
-@ApiTags('Публикация изображений')
+@ApiTags('Публикация файлов')
 @Controller('upload')
 export class UploadController {
 	constructor(private readonly uploadService: UploadService) {}
 
 	@Post()
 	@UseInterceptors(
-		FileInterceptor('image', {
+		FileInterceptor('file', {
 			storage: diskStorage({
 				destination: './uploads',
 				filename: (req, file, cb) => {
@@ -23,7 +23,7 @@ export class UploadController {
 			})
 		})
 	)
-	@ApiResponse({ description: 'Загрузка изображений на сервер' })
+	@ApiResponse({ description: 'Загрузка файлов на сервер' })
 	public uploadFile(@UploadedFile() file: Express.Multer.File) {
 		return this.uploadService.upload(file)
 	}
