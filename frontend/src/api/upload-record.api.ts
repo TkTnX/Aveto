@@ -6,6 +6,7 @@ export async function uploadRecord(formData: FormData) {
             'Content-Type': 'multipart/form-data'
         }
     })
+
     
     return data
 } 

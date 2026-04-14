@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty, IsString } from 'class-validator'
+import { EMessageType } from 'generated/prisma/enums'
 
 export class SendMessageRequst {
 	@ApiProperty({
@@ -9,7 +10,9 @@ export class SendMessageRequst {
 	})
 	@IsNotEmpty({ message: 'Текст обязателен!' })
 	@IsString({ message: 'Текст должен быть строкой!' })
-	text: string
+	text!: string
+
+	type?: EMessageType
 
 	
 	replyTo?: string

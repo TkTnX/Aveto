@@ -9,7 +9,7 @@ import {
 	DropdownMenuTrigger
 } from '@/src/shared/components/ui'
 import { useChatStore } from '@/src/shared/stores'
-import { IMessage } from '@/src/shared/types'
+import { EMessageType, IMessage } from '@/src/shared/types'
 
 interface Props {
 	isUserMessage: boolean
@@ -42,16 +42,18 @@ export const MessageDropdown = ({ isUserMessage, message }: Props) => {
 				</button>
 				{isUserMessage && (
 					<>
-						<button
-							onClick={() => {
-								setEditMessage(message)
-								setOpen(false)
-							}}
-							className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'
-						>
-							<Pen size={16} fill='#000' />
-							Изменить
-						</button>
+						{message.type !== EMessageType.VOICE && (
+							<button
+								onClick={() => {
+									setEditMessage(message)
+									setOpen(false)
+								}}
+								className='hover:bg-gray/20 flex w-full items-center gap-2 px-4 py-2.5 hover:text-black!'
+							>
+								<Pen size={16} fill='#000' />
+								Изменить
+							</button>
+						)}
 						<DeleteMessageButton messageId={message.id} />
 					</>
 				)}

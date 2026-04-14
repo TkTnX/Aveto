@@ -18,7 +18,7 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Название обязательно!' })
 	@IsString({ message: 'Название должно быть строкой!' })
-	title: string
+	title!: string
 
 	@ApiProperty({
 		title: 'Цена',
@@ -26,14 +26,14 @@ export class AdRequest {
 		type: Number
 	})
 	@IsNotEmpty({ message: 'Цена обязательна!' })
-	price: string
+	price!: string
 
 	@ApiProperty({
 		title: 'Количество товара',
 		example: 10,
 		type: Number
 	})
-	quantity: string
+	quantity?: string
 
 	@ApiProperty({
 		title: 'Скидка',
@@ -51,7 +51,7 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Адрес обязателен!' })
 	@IsString({ message: 'Адрес должен быть строкой!' })
-	address: string
+	address!: string
 
 	@ApiProperty({
 		title: 'Описание',
@@ -60,14 +60,14 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Описание обязательно!' })
 	@IsString({ message: 'Описание должно быть строкой!' })
-	description: string
+	description!: string
 
 	@ApiProperty({
 		title: 'Изображения',
 		example: ['https://example-image1.jpg', 'https://example-image2.jpg'],
 		type: [String]
 	})
-	images: string[]
+	images?: string[]
 
 	@ApiProperty({
 		title: 'Состояние',
@@ -79,7 +79,7 @@ export class AdRequest {
 	@IsEnum(EAdCondition, {
 		message: 'Состояние должно быть одним из предложенных!'
 	})
-	condition: EAdCondition
+	condition!: EAdCondition
 
 	@ApiProperty({
 		title: 'ID Категории',
@@ -88,7 +88,7 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Категория обязательна!' })
 	@IsString({ message: 'Категория должна быть строкой!' })
-	categoryId: string
+	categoryId!: string
 
 	@ApiProperty({
 		title: 'Почта',
@@ -97,7 +97,7 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Почта обязательна!' })
 	@IsEmail({}, { message: 'Неверный формат почты!' })
-	email: string
+	email!: string
 
 	@ApiProperty({
 		title: 'Телефон',
@@ -106,7 +106,7 @@ export class AdRequest {
 	})
 	@IsNotEmpty({ message: 'Телефон обязателен!' })
 	@IsPhoneNumber('RU', { message: 'Неверный формат телефона!' })
-	phone: string
+	phone!: string
 
 	@ApiProperty({
 		title: 'ID Характеристик',

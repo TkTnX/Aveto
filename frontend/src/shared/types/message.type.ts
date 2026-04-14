@@ -1,17 +1,25 @@
-import { IChat, IUser } from "."
+import { IChat, IUser } from '.'
 
 export interface IMessage {
-    id: string
-    user: IUser
-    userId: string
-    chat: IChat
-    chatId: string
+	id: string
+	user: IUser
+	userId: string
+	chat: IChat
+	chatId: string
 
-    replyTo?: IMessage
-    replyToId?: string
+	replyTo?: IMessage
+	replyToId?: string
 
-    text: string
+	text: string
 
-    createdAt: string
-    updatedAt: string
+	type: EMessageType
+
+	createdAt: string
+	updatedAt: string
+}
+
+export enum EMessageType {
+	TEXT = 'TEXT',
+	VOICE = 'VOICE',
+	IMAGE = 'IMAGE'
 }

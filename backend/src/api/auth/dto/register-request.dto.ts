@@ -18,7 +18,7 @@ export class RegisterRequest {
 	@Length(3, 50, {
 		message: 'Имя пользователя должно быть от 3 до 50 символов!'
 	})
-	name: string
+	name!: string
 
 	@ApiProperty({
 		title: 'Почта или телефон пользователя',
@@ -27,7 +27,7 @@ export class RegisterRequest {
 	})
 	@IsString({ message: 'Почта или телефон должны быть строкой!' })
 	@IsNotEmpty({ message: 'Почта или телефон обязательны!' })
-	emailOrPhone: string
+	emailOrPhone!: string
 
 	@ApiProperty({
 		title: 'Пароль',
@@ -37,5 +37,5 @@ export class RegisterRequest {
 	@IsOptional()
 	@IsString({ message: 'Пароль должен быть строкой!' })
 	@MinLength(8, { message: 'Минимальная длина пароля - 8 символов!' })
-	password: string
+	password!: string
 }

@@ -6,5 +6,5 @@ export class SendCodeRequest {
             example: 'test@example.com',
             type: String
         })
-    email: string
+    email!: string
 }

@@ -183,6 +183,8 @@ model Message {
   replyToId String?
   replied Message[] @relation(name: "replies")
 
+  type EMessageType @default(TEXT)
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -212,4 +214,10 @@ enum EProviders {
   GOOGLE
   VK
   YANDEX
+}
+
+enum EMessageType {
+  TEXT
+  VOICE
+  IMAGE
 }

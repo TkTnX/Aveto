@@ -1,61 +1,21 @@
 'use client'
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { Camera, Plus, SendHorizonal, X } from 'lucide-react';
-import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
+import { Camera, Plus, SendHorizonal, X } from 'lucide-react'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
+import { Field, Input, socket, useChatStore, useMessages } from '@/src/shared'
+import { sendMessageSchema, SendMessageSchemaType } from '@/src/shared/schemas'
+import { EMessageType } from '@/src/shared/types'
 
-
-import { Field, Input, socket, useChatStore, useMessages } from '@/src/shared';
-import { sendMessageSchema, SendMessageSchemaType } from '@/src/shared/schemas';
-
-
-
-import { VoiceRecorder } from './VoiceRecorder';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { VoiceRecorder } from './VoiceRecorder'
 
 interface Props {
 	chatId: string
 }
 
 export const SendMessageForm = ({ chatId }: Props) => {
-	console.log(
-		`${process.env.NEXT_PUBLIC_SERVER_URL}/uploads/1775975104783.webm`
-	)
 	const { replyTo, setReplyTo, editMessage } = useChatStore()
 	const { sendMessageMutation, editMessageMutation } = useMessages()
 	const { mutate: sendMutate, isPending: sendPending } = sendMessageMutation()
@@ -112,7 +72,18 @@ export const SendMessageForm = ({ chatId }: Props) => {
 					<div className='h-15 w-px bg-black' />
 					<div>
 						<p className='font-black'>{replyTo.user.name}</p>
-						<p>{replyTo.text.slice(0, 100)}</p>
+						{replyTo.type === EMessageType.TEXT ? (
+							<p>{replyTo.text.slice(0, 100)}</p>
+						) : replyTo.type === EMessageType.VOICE ? (
+							<audio
+								className='mt-2'
+								controls
+								preload='metadata'
+								src={`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}${replyTo.text.split('voice-message:')[1]}`}
+							/>
+						) : (
+							''
+						)}
 					</div>
 					<button
 						className='ml-auto'
@@ -161,13 +132,9 @@ export const SendMessageForm = ({ chatId }: Props) => {
 						>
 							<Camera size={24} />
 						</button>
-						<VoiceRecorder />
+						<VoiceRecorder chatId={chatId} />
 					</>
 				)}
-				<audio
-					controls
-					src={`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}/uploads/1775975104783.webm`}
-				/>
 			</form>
 		</>
 	)

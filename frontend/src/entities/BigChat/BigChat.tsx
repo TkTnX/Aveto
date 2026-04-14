@@ -1,21 +1,34 @@
 'use client'
 
-import { useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef } from 'react'
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef } from 'react';
 
-import { Message } from '@/src/entities'
-import { SendMessageForm } from '@/src/features'
-import {
-	ErrorMessage,
-	Skeleton,
-	socket,
-	useChats,
-	useChatStore,
-	useUserStore
-} from '@/src/shared'
 
-import { BigChatHeader } from './BigChatHeader'
+
+import { Message } from '@/src/entities';
+import { SendMessageForm } from '@/src/features';
+import { ErrorMessage, Skeleton, socket, useChats, useChatStore, useUserStore } from '@/src/shared';
+import { IMessage } from '@/src/shared/types';
+
+
+
+import { BigChatHeader } from './BigChatHeader';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 interface Props {
 	chatId: string
@@ -76,17 +89,45 @@ export const BigChat = ({ chatId }: Props) => {
 	const isParticipant = data.participants.some(p => p.userId === user?.id)
 	if (!isParticipant) return null
 
+	const messages = data.messages
+
+	const messagesByDate: { date: string; messages: IMessage[] }[] = []
+
+	messages.forEach(message => {
+		const messageDate = new Date(message.createdAt).toLocaleDateString(
+			'ru-RU'
+		)
+		const isAdded = messagesByDate.find(item => item.date === messageDate)
+		if (isAdded) {
+			messagesByDate
+				.find(item => item.date === messageDate)
+				?.messages.push(message)
+		} else {
+			messagesByDate.push({
+				date: messageDate,
+				messages: [message]
+			})
+		}
+	})
+
 	return (
 		<div className='sticky top-0 w-full max-w-157.5 rounded-lg'>
 			<BigChatHeader participants={data.participants} ad={data.ad} />
 			<div className='flex h-125 max-h-125 flex-col overflow-y-auto pt-20'>
-				{data.messages.length > 0 ? (
-					data.messages.map(message => (
-						<Message
-							isUserMessage={user?.id === message.userId}
-							key={message.id}
-							message={message}
-						/>
+				{messagesByDate.length > 0 ? (
+					messagesByDate.map(item => (
+						<>
+							<p className='text-gray my-5 text-center'>
+								{new Date(item.messages[0].createdAt).toLocaleDateString('ru-RU', {day: '2-digit', month: "long", year: 'numeric'})}
+							</p>
+							{item.messages.map(message => (
+								<Message
+									isUserMessage={user?.id === message.userId}
+									key={message.id}
+									message={message}
+								/>
+							))}
+						</>
 					))
 				) : (
 					<p className='text-gray my-auto text-center'>

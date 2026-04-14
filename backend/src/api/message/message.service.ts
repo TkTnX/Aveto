@@ -4,6 +4,7 @@ import {
 	NotFoundException,
 	UnauthorizedException
 } from '@nestjs/common'
+import { EMessageType } from 'generated/prisma/enums'
 import { ChatService } from 'src/api/chat/chat.service'
 import { SendMessageRequst } from 'src/api/message/dto'
 import { UserService } from 'src/api/user/user.service'
@@ -27,15 +28,16 @@ export class MessageService {
 
 		if (!chat.participants.find(par => par.userId === user.id))
 			throw new UnauthorizedException('У вас нет доступа к этому чату!')
-
 		const message = await this.prismaService.message.create({
 			data: {
 				text: dto.text,
 				chatId: chat.id,
 				userId: user.id,
-				replyToId: dto.replyTo
-			},
+				replyToId: dto.replyTo,
+				type: dto.type
+			}
 		})
+		console.log(message)
 		if (!message) throw new BadGatewayException('Сообщение не был создано!')
 
 		return message

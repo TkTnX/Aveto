@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { cn, MessageDropdown, UserAvatar } from '@/src/shared'
-import { IMessage } from '@/src/shared/types'
+import { EMessageType, IMessage } from '@/src/shared/types'
 
 interface Props {
 	message: IMessage
@@ -48,7 +48,18 @@ export const Message = ({ message, isUserMessage }: Props) => {
 					</div>
 				)}
 
-				{message.text}
+				{message.type === EMessageType.TEXT ? (
+					message.text
+				) : message.type === EMessageType.VOICE ? (
+					<audio
+						className='bg-transparent!'
+						controls
+						preload='metadata'
+						src={`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}${message.text.split('voice-message:')[1]}`}
+					/>
+				) : (
+					''
+				)}
 				{message.updatedAt !== message.createdAt && (
 					<p className='text-gray text-xs'>Изменено</p>
 				)}

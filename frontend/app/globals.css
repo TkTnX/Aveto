@@ -121,3 +121,7 @@ button {
 a {
 	@apply hover:text-red transition;
 }
+
+audio::-webkit-media-controls-panel {
+	background-color: #e6f6ff;
+}
