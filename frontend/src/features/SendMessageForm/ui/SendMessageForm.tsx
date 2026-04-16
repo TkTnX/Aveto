@@ -1,7 +1,7 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
-import { Camera, Plus, SendHorizonal, X } from 'lucide-react'
+import { Plus, SendHorizonal, X } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
@@ -9,6 +9,8 @@ import { Field, Input, socket, useChatStore, useMessages } from '@/src/shared'
 import { sendMessageSchema, SendMessageSchemaType } from '@/src/shared/schemas'
 import { EMessageType } from '@/src/shared/types'
 
+import { AddMediaButton } from './AddMediaButton'
+import { MediaList } from './MediaList'
 import { VoiceRecorder } from './VoiceRecorder'
 
 interface Props {
@@ -16,7 +18,7 @@ interface Props {
 }
 
 export const SendMessageForm = ({ chatId }: Props) => {
-	const { replyTo, setReplyTo, editMessage } = useChatStore()
+	const { replyTo, setReplyTo, editMessage, messageMedia } = useChatStore()
 	const { sendMessageMutation, editMessageMutation } = useMessages()
 	const { mutate: sendMutate, isPending: sendPending } = sendMessageMutation()
 	const { mutate: editMutate, isPending: editPending } = editMessageMutation()
@@ -68,7 +70,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 	return (
 		<>
 			{replyTo && (
-				<div className='flex w-full gap-2 bg-white px-4 py-2'>
+				<div className='flex flex-wrap w-full gap-2 bg-white px-4 py-2'>
 					<div className='h-15 w-px bg-black' />
 					<div>
 						<p className='font-black'>{replyTo.user.name}</p>
@@ -93,6 +95,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 					</button>
 				</div>
 			)}
+			{messageMedia.length > 0 && <MediaList />}
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex items-center gap-1'
@@ -126,12 +129,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 					</button>
 				) : (
 					<>
-						<button
-							className='hover:bg-gray/20 flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full'
-							type='button'
-						>
-							<Camera size={24} />
-						</button>
+						<AddMediaButton />
 						<VoiceRecorder chatId={chatId} />
 					</>
 				)}

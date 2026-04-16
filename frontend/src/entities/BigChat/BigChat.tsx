@@ -115,8 +115,8 @@ export const BigChat = ({ chatId }: Props) => {
 			<BigChatHeader participants={data.participants} ad={data.ad} />
 			<div className='flex h-125 max-h-125 flex-col overflow-y-auto pt-20'>
 				{messagesByDate.length > 0 ? (
-					messagesByDate.map(item => (
-						<>
+					messagesByDate.map((item, index) => (
+						<div key={index}>
 							<p className='text-gray my-5 text-center'>
 								{new Date(item.messages[0].createdAt).toLocaleDateString('ru-RU', {day: '2-digit', month: "long", year: 'numeric'})}
 							</p>
@@ -127,7 +127,7 @@ export const BigChat = ({ chatId }: Props) => {
 									message={message}
 								/>
 							))}
-						</>
+						</div>
 					))
 				) : (
 					<p className='text-gray my-auto text-center'>

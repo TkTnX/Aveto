@@ -15,7 +15,7 @@ import { Server } from 'socket.io'
 })
 export class MessageGateway {
 	@WebSocketServer()
-	server: Server
+	server!: Server
 
 	@SubscribeMessage('join')
 	handleJoin(@MessageBody() chatId: string, @ConnectedSocket() client: any) {

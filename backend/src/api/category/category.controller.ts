@@ -1,32 +1,8 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CategoryRequest } from 'src/api/category/dto';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import { CategoryRequest } from 'src/api/category/dto'
 
-
-
-import { CategoryService } from './category.service';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { CategoryService } from './category.service'
 
 @ApiTags('Категории')
 @Controller('categories')

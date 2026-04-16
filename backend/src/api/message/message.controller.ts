@@ -1,44 +1,20 @@
-import { Body, Controller, Delete, Param, Patch, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { User } from 'src/api/auth/decorators/user.decorator';
-import { AuthGuard } from 'src/api/auth/guards/auth.guard';
-import { SendMessageRequst } from 'src/api/message/dto';
-import { MessageGateway } from 'src/api/message/message.gateway';
-import { IAuthPayload } from 'src/types';
+import {
+	Body,
+	Controller,
+	Delete,
+	Param,
+	Patch,
+	Post,
+	UseGuards
+} from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
+import { User } from 'src/api/auth/decorators/user.decorator'
+import { AuthGuard } from 'src/api/auth/guards/auth.guard'
+import { SendMessageRequst } from 'src/api/message/dto'
+import { MessageGateway } from 'src/api/message/message.gateway'
+import { IAuthPayload } from 'src/types'
 
-
-
-import { MessageService } from './message.service';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { MessageService } from './message.service'
 
 @ApiTags('Сообщения')
 @Controller('messages')
@@ -92,7 +68,7 @@ export class MessageController {
 		@Body() dto: SendMessageRequst,
 		@User() payload: IAuthPayload
 	) {
-		const {chatId, messageId} = params
+		const { chatId, messageId } = params
 		const editedMessage = await this.messageService.editMessage(
 			messageId,
 			dto,
