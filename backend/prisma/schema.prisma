@@ -184,6 +184,7 @@ model Message {
   replied Message[] @relation(name: "replies")
 
   type EMessageType @default(TEXT)
+  media String[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -12,6 +12,13 @@ export class SendMessageRequst {
 	@IsString({ message: 'Текст должен быть строкой!' })
 	text!: string
 
+	@ApiProperty({
+		title: "Изображения, Видео и тд",
+		example: ['/uploads/123.jpg', '/uploads/media.mp3'],
+		type: String
+	})
+	media!: string[]
+	
 	type?: EMessageType
 
 	

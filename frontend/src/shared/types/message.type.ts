@@ -11,6 +11,7 @@ export interface IMessage {
 	replyToId?: string
 
 	text: string
+	media: string[]
 
 	type: EMessageType
 

@@ -1,6 +1,14 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
-import { cn, MessageDropdown, UserAvatar } from '@/src/shared'
+import {
+	cn,
+	getGridClass,
+	IMG_EXP,
+	MessageDropdown,
+	UserAvatar,
+	VIDEO_EXP
+} from '@/src/shared'
 import { EMessageType, IMessage } from '@/src/shared/types'
 
 interface Props {
@@ -9,6 +17,7 @@ interface Props {
 }
 
 export const Message = ({ message, isUserMessage }: Props) => {
+	console.log(message)
 	return (
 		<div
 			className={cn('group relative mb-4 flex items-end gap-2', {
@@ -47,7 +56,48 @@ export const Message = ({ message, isUserMessage }: Props) => {
 						</div>
 					</div>
 				)}
+				{message.media.length > 0 && (
+					<div
+						className={`grid items-stretch gap-1 ${getGridClass(message.media.length)}`}
+					>
+						{message.media.map((media, index) => {
+							const isImage = IMG_EXP.find(ext =>
+								media.toLowerCase().includes(ext)
+							)
+							const isVideo = VIDEO_EXP.find(ext =>
+								media.toLowerCase().includes(ext)
+							)
+							if (isImage) {
+								return (
+									// TODO: Сделать открывание картинки
+									<div
+										key={index}
+										className={`relative aspect-square min-h-25 w-full min-w-25 cursor-pointer ${message.media.length === 3 && index === 0 ? 'row-span-2' : ''} `}
+									>
+										<Image
+											src={`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}${media}`}
+											alt={media}
+											unoptimized
+											fill
+											className='rounded-2xl object-cover'
+										/>
+									</div>
+								)
+							} else if (isVideo) {
+								return (
+									// TODO: Сделать открывание видео
 
+									<video
+										className={`cursor-pointer rounded-2xl ${message.media.length === 3 && index === 0 ? 'row-span-2' : ''} `}
+										controls
+										key={index}
+										src={`${process.env.NEXT_PUBLIC_SERVER_DOMAIN}${media}`}
+									></video>
+								)
+							}
+						})}
+					</div>
+				)}
 				{message.type === EMessageType.TEXT ? (
 					message.text
 				) : message.type === EMessageType.VOICE ? (

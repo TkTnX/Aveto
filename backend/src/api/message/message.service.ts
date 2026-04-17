@@ -23,6 +23,7 @@ export class MessageService {
 		userId: string,
 		chatId: string
 	) {
+		const { text, replyTo: replyToId, type, media } = dto
 		const user = await this.userService.getBrand(userId)
 		const chat = await this.chatService.getChat(chatId)
 
@@ -30,14 +31,14 @@ export class MessageService {
 			throw new UnauthorizedException('У вас нет доступа к этому чату!')
 		const message = await this.prismaService.message.create({
 			data: {
-				text: dto.text,
+				text,
 				chatId: chat.id,
 				userId: user.id,
-				replyToId: dto.replyTo,
-				type: dto.type
+				replyToId,
+				type,
+				media
 			}
 		})
-		console.log(message)
 		if (!message) throw new BadGatewayException('Сообщение не был создано!')
 
 		return message

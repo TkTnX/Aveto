@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { Plus, SendHorizonal, X } from 'lucide-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { Field, Input, socket, useChatStore, useMessages } from '@/src/shared'
@@ -18,37 +18,37 @@ interface Props {
 }
 
 export const SendMessageForm = ({ chatId }: Props) => {
-	const { replyTo, setReplyTo, editMessage, messageMedia } = useChatStore()
+	const [text, setText] = useState('')
+	const { replyTo, setReplyTo, editMessage, messageMedia, setMessageMedia } =
+		useChatStore()
 	const { sendMessageMutation, editMessageMutation } = useMessages()
 	const { mutate: sendMutate, isPending: sendPending } = sendMessageMutation()
 	const { mutate: editMutate, isPending: editPending } = editMessageMutation()
 	const isPending = sendPending || editPending
 	const mutate = editMessage ? editMutate : sendMutate
 	const queryClient = useQueryClient()
-	const {
-		handleSubmit,
-		control,
-		setValue,
-		formState: { isValid }
-	} = useForm<SendMessageSchemaType>({
+	const { handleSubmit, control, setValue } = useForm<SendMessageSchemaType>({
 		resolver: zodResolver(sendMessageSchema),
 		defaultValues: {
 			text: editMessage?.text || ''
 		}
 	})
-
-	const onSubmit = (values: SendMessageSchemaType) => {
+	console.log(messageMedia)
+	const onSubmit = () => {
+		if (!text && messageMedia.length === 0) return null
 		mutate(
 			{
-				...values,
+				text,
 				chatId,
 				replyTo: replyTo?.id,
-				messageId: editMessage?.id
+				messageId: editMessage?.id,
+				messageMedia
 			},
 			{
 				onSuccess: () => {
-					setValue('text', '')
+					setText('')
 					setReplyTo(null)
+					setMessageMedia(null)
 
 					const handler = () => {
 						queryClient.invalidateQueries({
@@ -70,7 +70,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 	return (
 		<>
 			{replyTo && (
-				<div className='flex flex-wrap w-full gap-2 bg-white px-4 py-2'>
+				<div className='flex w-full flex-wrap gap-2 bg-white px-4 py-2'>
 					<div className='h-15 w-px bg-black' />
 					<div>
 						<p className='font-black'>{replyTo.user.name}</p>
@@ -115,12 +115,16 @@ export const SendMessageForm = ({ chatId }: Props) => {
 								disabled={isPending}
 								className='focus-visible:bg-white focus-visible:ring-[#80d4ff]'
 								{...field}
+								value={text}
+								onChange={e => setText(e.target.value)}
 								placeholder='Сообщение'
 							/>
 						</Field>
 					)}
 				/>
-				{isValid ? (
+				<AddMediaButton />
+
+				{text || messageMedia.length > 0 ? (
 					<button
 						className='hover:bg-gray/20 flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full'
 						type='submit'
@@ -128,10 +132,7 @@ export const SendMessageForm = ({ chatId }: Props) => {
 						<SendHorizonal />
 					</button>
 				) : (
-					<>
-						<AddMediaButton />
-						<VoiceRecorder chatId={chatId} />
-					</>
+					<VoiceRecorder chatId={chatId} />
 				)}
 			</form>
 		</>
