@@ -31,7 +31,7 @@ export class MessageService {
 			throw new UnauthorizedException('У вас нет доступа к этому чату!')
 		const message = await this.prismaService.message.create({
 			data: {
-				text,
+				text: text || '',
 				chatId: chat.id,
 				userId: user.id,
 				replyToId,

@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const UserAdsList = ({ user }: Props) => {
+	console.log(user)
 	const { user: profileUser } = useUserStore()
 	const data = user ? user : profileUser!
 	if (!data) return <Skeleton className='h-100 w-full' />

@@ -33,7 +33,6 @@ export const SendMessageForm = ({ chatId }: Props) => {
 			text: editMessage?.text || ''
 		}
 	})
-	console.log(messageMedia)
 	const onSubmit = () => {
 		if (!text && messageMedia.length === 0) return null
 		mutate(
@@ -100,12 +99,6 @@ export const SendMessageForm = ({ chatId }: Props) => {
 				onSubmit={handleSubmit(onSubmit)}
 				className='flex items-center gap-1'
 			>
-				<button
-					className='hover:bg-gray/20 flex h-11 min-h-11 w-11 min-w-11 items-center justify-center rounded-full'
-					type='button'
-				>
-					<Plus size={24} />
-				</button>
 				<Controller
 					name='text'
 					control={control}

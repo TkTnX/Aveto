@@ -8,9 +8,8 @@ export class SendMessageRequst {
 		example: 'Всё супер!',
 		type: String
 	})
-	@IsNotEmpty({ message: 'Текст обязателен!' })
 	@IsString({ message: 'Текст должен быть строкой!' })
-	text!: string
+	text?: string
 
 	@ApiProperty({
 		title: "Изображения, Видео и тд",

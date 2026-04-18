@@ -17,7 +17,6 @@ export const MessageMedia = ({ media }: Props) => {
 		IMG_EXP.find(ext => media.toLowerCase().includes(ext))
 	const isVideo = (media: string) =>
 		VIDEO_EXP.find(ext => media.toLowerCase().includes(ext))
-
 	return (
 		<>
 			<div
@@ -53,9 +52,9 @@ export const MessageMedia = ({ media }: Props) => {
 				})}
 			</div>
 			<Lightbox
-				index={open!}
+				index={open ?? 0}
 				plugins={[Video]}
-				open={!!open}
+				open={open !== null}
 				close={() => setOpen(null)}
 				slides={media.map(item => {
 					const src = `${process.env.NEXT_PUBLIC_SERVER_DOMAIN}${item}`

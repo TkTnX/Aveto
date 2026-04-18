@@ -37,7 +37,8 @@ export const VoiceRecorder = ({ chatId }: Props) => {
 				sendMessage({
 					text: `voice-message:${url}`,
 					chatId,
-					type: EMessageType['VOICE']
+					type: EMessageType['VOICE'],
+					messageMedia: []
 				})
 			}
 		})
